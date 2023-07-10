@@ -10,8 +10,8 @@ INC	=	$(addprefix -I,$(INCDIR))
 
 SRCSDIR = ./srcs
 OBJSDIR = ./objs
-SRCS	=	$(addprefix $(SRCSDIR)/,*.c)
-OBJS	=	$(patsubst $(SRCS_DIR)/%.c,$(OBJS_DIR)/%.o,$(SRCS))
+SRCS	=	$(wildcard $(SRCSDIR)/*.c)
+OBJS	=	$(patsubst $(SRCSDIR)/%.c,$(OBJSDIR)/%.o,$(SRCS))
 DEPS	=	$(OBJS:.o=.d)
 
 
@@ -27,7 +27,7 @@ ifeq ($(UNAME),Darwin)
 	RL_INCDIR = $(addprefix $(RL_DIR)/,include)
 endif
 
-LDFLAGS = -L $(RL_LIBDIR) -I $(RL_INCDIR)/readline
+LDFLAGS = -L $(LIBFTDIR) -lft -L $(RL_LIBDIR) -l $(RL_NAME)
 
 
 all: $(NAME)
@@ -36,16 +36,17 @@ $(NAME): $(OBJS) $(LIBFT)
 		$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(LDFLAGS) -o $(NAME)
 
 $(OBJSDIR)/%.o: $(SRCSDIR)/%.c
-	$(CC) $(CFLAGS) -I $(RL_DIR) -c -o $@ $<
+	@mkdir -p $(OBJSDIR)
+	$(CC) $(CFLAGS) $(INC) -c -o $@ $<
 
 $(LIBFT):
-		$(MAKE) -C $(LIBDIR)
+		$(MAKE) -C $(LIBFTDIR)
 
 -include $(DEPS)
 
 clean:
-		$(MAKE) fclean -C $(LIBDIR)
-		$(RM) $(OBJS)
+		$(MAKE) fclean -C $(LIBFTDIR)
+		$(RM) $(OBJS) $(DEPS)
 
 fclean: clean
 		$(RM) $(NAME)
