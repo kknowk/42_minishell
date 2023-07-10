@@ -1,1 +1,10 @@
 *.a
+minishell
+a.out*
+*.txt
+.vscode
+.DS_Store
+*.o
+*/debug*
+README.md
+*.dSYM
