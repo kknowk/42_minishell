@@ -4,15 +4,20 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror $(addprefix -I,$(INCDIR))
 
 INCDIR = ./includes
-INC	=	$(INCDIR)/philo.h
+INC	=	$(INCDIR)/$(addprefix -I,$(INCDIR))
 
-SRCDIR = ./srcs
-SRCS	=	$(addprefix -I,$(SRCDIR))
-OBJS = $(SRCS:%.c=%.o)
+SRCSDIR = ./srcs
+OBJSDIR = ./objs
+SRCS	=	$(addprefix $(SRCSDIR)/,$(SRCS))
+OBJS	=	$(patsubst $(SRCS_DIR)/%.c,$(OBJS_DIR)/%.o,$(SRCS))
+
+LIBFTDIR = ./libft
+LIBFT	=	$(LIBFTDIR)/libft.a
+
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) $(LIBFT)
 		$(CC) $(CFLAGS) $(SRCS) -o $(NAME)
 
 clean:
