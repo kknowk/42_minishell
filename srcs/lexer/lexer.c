@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/10 20:26:51 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/11 14:19:14 by minabe           ###   ########.fr       */
+/*   Created: 2023/07/11 14:17:39 by minabe            #+#    #+#             */
+/*   Updated: 2023/07/11 15:59:16 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "lexer.h"
 
-int	main(int argc, char *argv[], char *envp[])
+int	lexer(char *line)
 {
-	(void)argv;
-	if (argc == 1)
-		minishell(envp);
+	size_t	i;
+	t_token	*token;
+
+	i = 0;
+	while (line[i] != '\0')
+	{
+		/* pipeで分けてtokenごとにt_tokenへ保存する */
+		i++;
+	}
 	return (0);
 }

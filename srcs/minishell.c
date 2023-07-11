@@ -1,21 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/10 20:26:51 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/11 14:19:14 by minabe           ###   ########.fr       */
+/*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
+/*   Updated: 2023/07/11 16:01:48 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int argc, char *argv[], char *envp[])
+void	minishell(char *envp[])
 {
-	(void)argv;
-	if (argc == 1)
-		minishell(envp);
-	return (0);
+	char	*line;
+	t_token	*token;
+
+	(void)envp;
+	line = readline("minishell > ");
+	if (line)
+		add_history(line);
+	/* "ctrl-C, -Z, -/" の処理追加する */
+	token = lexer(line);
+
+	// debug
+	for (int i = 0; token->next != NULL; i++)
+		printf("str: %s\n", token->data);
+
+	tokenlist_clear(token);
 }
