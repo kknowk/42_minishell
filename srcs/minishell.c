@@ -6,22 +6,26 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/11 17:03:21 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/11 17:26:55 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "string.h"
+#include "builtins.h"
 
 void	minishell(char *envp[])
 {
 	char	*line;
-	t_token	*token;
+	// t_token	*token;
 
 	(void)envp;
 	rl_outstream = stderr; // defoultがstdoutのため
 	while (true)
 	{
 		line = readline("minishell$ ");
+		if (!strcmp(line, "pwd"))
+			ft_pwd();
 		if (line == NULL)
 			break ;
 		else
@@ -40,12 +44,12 @@ void	minishell(char *envp[])
 		// }
 
 		// debug
-		for (int i = 0; token->next != NULL; i++)
-			printf("str: %s\n", token->data);
+		// for (int i = 0; token->next != NULL; i++)
+		// 	printf("str: %s\n", token->data);
 
 		/* ここにpercerやエクスパンション、コマンド実行を書く */
 
-		tokenlist_clear(token);
+		// tokenlist_clear(token);
 		free(line);
 	}
 }

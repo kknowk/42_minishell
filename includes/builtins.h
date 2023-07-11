@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:54:35 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/11 17:12:12 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/11 17:23:27 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-# define PATH_MAX 256
+// # define PATH_MAX 256
 # define FAILURE 1
 # define SUCCESS 0
+
+int	ft_pwd(void);
 
 #endif

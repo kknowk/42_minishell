@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 16:13:54 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/11 17:04:06 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/11 17:17:12 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef enum e_token_status
 
 struct	s_token
 {
-	t_token_type	type;
+	t_tokentype		type;
 	char			*data;
 	t_token			*prev;
 	t_token			*next;
