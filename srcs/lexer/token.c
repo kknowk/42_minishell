@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 15:23:15 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/11 15:55:37 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/11 16:02:41 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	tokenlistadd_back(t_token *token, char *data)
 {
 	t_token	*new;
 
-	/* strがNULLの場合ある?? */
 	new = token_new(data);
 	if (token != NULL)
 	{
