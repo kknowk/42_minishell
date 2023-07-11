@@ -6,13 +6,30 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 15:23:15 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/11 16:02:41 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/11 16:23:30 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "minishell.h"
 
-t_token	token_new(char *data)
+int	check_tokentype(char *data)
+{
+	if (data[0] == '|')
+		return (CHAR_PIPE);
+	if (data[0] == '\'' && data[ft_strlen(data) - 1] == '\'')
+		return (CHAR_QUOTE);
+	if (data[0] == '\"' && data[ft_strlen(data) - 1] == '\"')
+		return (CHAR_DQUOTE);
+	/* << の場合どうしよう */
+	if (data[0] == '<')
+		return (CHAR_GREATER);
+	if (data[0] == '>')
+		return (CHAR_LESSER);
+	else
+		return (CHAR_GENERAL);
+}
+
+static t_token	token_new(char *data)
 {
 	t_token	*new;
 
@@ -22,7 +39,7 @@ t_token	token_new(char *data)
 		exit(EXIT_FAILURE);
 	new->data = data;
 	new->next = NULL;
-	new->type = -1; // check関数導入!!
+	new->type = check_tokentype(data);
 	new->prex = NULL;
 	return (new);
 }
@@ -47,6 +64,8 @@ void	tokenlist_clear(t_token *token)
 {
 	t_token	*tmp;
 
+	if (token == NULL)
+		return ;
 	while (token->next != NULL)
 	{
 		tmp = token->next;
