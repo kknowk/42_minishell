@@ -6,11 +6,11 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:05:49 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/11 13:37:10 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/11 14:00:29 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "builtins.h"
 
 int	ft_pwd(void)
 {

@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   builitins.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/11 13:55:46 by khorike          ###   ########.fr       */
+/*   Created: 2023/07/11 13:54:35 by khorike           #+#    #+#             */
+/*   Updated: 2023/07/11 13:55:59 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef BUILTINS_H
+# define BUILTINS_H
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -29,14 +29,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-typedef struct s_token	t_token;
-
-struct	s_token
-{
-	// t_token_type	type;
-	char			*data;
-	t_token			*prev;
-	t_token			*next;
-};
+# define PATH_MAX 256
+# define FAILURE 1
+# define SUCCESS 0
 
 #endif
