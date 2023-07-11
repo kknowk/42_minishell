@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   builitins.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/11 14:47:37 by minabe           ###   ########.fr       */
+/*   Created: 2023/07/11 13:54:35 by khorike           #+#    #+#             */
+/*   Updated: 2023/07/11 13:55:59 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef BUILTINS_H
+# define BUILTINS_H
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -28,10 +28,9 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <stdbool.h>
-// # include <limits.h>
-# include "lexer.h"
 
-void	minishell(char *envp[]);
+# define PATH_MAX 256
+# define FAILURE 1
+# define SUCCESS 0
 
 #endif
