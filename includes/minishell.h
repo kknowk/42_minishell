@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/11 16:23:41 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/11 17:07:40 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 // # include <limits.h>
 # include "lexer.h"
 # include "token.h"
+# include "libft.h"
 
 void	minishell(char *envp[]);
 

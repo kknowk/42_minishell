@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 16:13:54 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/11 16:15:21 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/11 17:06:12 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef enum e_token_status
 
 struct	s_token
 {
-	t_token_type	type;
+	t_tokentype		type;
 	char			*data;
 	t_token			*prev;
 	t_token			*next;
