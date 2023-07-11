@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:17:39 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/11 14:27:56 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/11 15:59:16 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,14 @@
 
 int	lexer(char *line)
 {
-	char	**lex;
+	size_t	i;
 	t_token	*token;
 
-	lex = ft_split(line, '|');
+	i = 0;
+	while (line[i] != '\0')
+	{
+		/* pipeで分けてtokenごとにt_tokenへ保存する */
+		i++;
+	}
 	return (0);
 }
