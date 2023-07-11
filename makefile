@@ -1,22 +1,52 @@
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror $(addprefix -I,$(INCDIR))
+CFLAGS = -Wall -Wextra -Werror -MMD -MP
+
 
 INCDIR = ./includes
-INC	=	$(INCDIR)/philo.h
+INC	=	$(addprefix -I,$(INCDIR))
 
-SRCDIR = ./srcs
-SRCS	=	$(addprefix -I,$(SRCDIR))
-OBJS = $(SRCS:%.c=%.o)
+
+SRCSDIR = ./srcs
+OBJSDIR = ./objs
+SRCS	=	$(wildcard $(SRCSDIR)/*.c)
+OBJS	=	$(patsubst $(SRCSDIR)/%.c,$(OBJSDIR)/%.o,$(SRCS))
+DEPS	=	$(OBJS:.o=.d)
+
+
+LIBFTDIR = ./libft
+LIBFT	=	$(LIBFTDIR)/libft.a
+
+UNAME = $(shell uname)
+
+RL_NAME = readline
+ifeq ($(UNAME),Darwin)
+	RL_DIR = $(shell brew --prefix readline)
+	RL_LIBDIR = $(addprefix $(RL_DIR)/,lib)
+	RL_INCDIR = $(addprefix $(RL_DIR)/,include)
+endif
+
+LDFLAGS = -L $(LIBFTDIR) -lft -L $(RL_LIBDIR) -l $(RL_NAME)
+
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-		$(CC) $(CFLAGS) $(SRCS) -o $(NAME)
+$(NAME): $(OBJS) $(LIBFT)
+		$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(LDFLAGS) -o $(NAME)
+
+$(OBJSDIR)/%.o: $(SRCSDIR)/%.c
+	@mkdir -p $(OBJSDIR)
+	$(CC) $(CFLAGS) $(INC) -c -o $@ $<
+
+$(LIBFT):
+		$(MAKE) -C $(LIBFTDIR)
+
+-include $(DEPS)
 
 clean:
-		$(RM) $(OBJS)
+		$(MAKE) fclean -C $(LIBFTDIR)
+		$(RM) $(OBJS) $(DEPS)
 
 fclean: clean
 		$(RM) $(NAME)

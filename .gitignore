@@ -5,6 +5,7 @@ a.out*
 .vscode
 .DS_Store
 *.o
+*.d
 */debug*
 README.md
 *.dSYM
