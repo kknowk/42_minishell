@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/10 21:43:21 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/11 13:37:21 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,20 @@
 # include <unistd.h>
 # include <signal.h>
 # include <sys/types.h>
+# include <sys/time.h>
+# include <sys/wait.h>
+# include <sys/stat.h>
+# include <sys/ioctl.h>
+# include <pthread.h>
+# include <stdint.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+
+# define PATH_MAX 256
+# define FAILURE 1
+# define SUCCESS 0
 
 typedef struct s_token	t_token;
 
