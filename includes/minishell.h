@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/11 17:07:40 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/11 17:31:10 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdbool.h>
-// # include <limits.h>
 # include "lexer.h"
 # include "token.h"
 # include "libft.h"
+# include "builtins.h"
 
 void	minishell(char *envp[]);
 
