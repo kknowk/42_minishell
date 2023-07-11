@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/11 16:43:26 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/11 17:03:21 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	minishell(char *envp[])
 			break ;
 		else
 			add_history(line); // lineが'\0'のときは履歴に登録しない
-		token = lexer(line);
+		// token = lexer(line);
 		/* "ctrl-C, -Z, -/" の処理 */
 		// if (signal(SIGINT, ) == SIG_ERR)
 		// {
