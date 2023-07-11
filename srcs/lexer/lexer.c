@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.h                                            :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/11 14:27:15 by minabe           ###   ########.fr       */
+/*   Created: 2023/07/11 14:17:39 by minabe            #+#    #+#             */
+/*   Updated: 2023/07/11 14:27:56 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEXER_H
-# define LEXER_H
+#include "lexer.h"
 
-# include "minishell.h"
-
-typedef struct s_token	t_token;
-
-struct	s_token
+int	lexer(char *line)
 {
-	// t_token_type	type;
-	char			*data;
-	t_token			*prev;
-	t_token			*next;
-};
+	char	**lex;
+	t_token	*token;
 
-int	lexer(char *line);
-
-#endif
+	lex = ft_split(line, '|');
+	return (0);
+}

@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.h                                            :+:      :+:    :+:   */
+/*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/11 14:27:15 by minabe           ###   ########.fr       */
+/*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
+/*   Updated: 2023/07/11 14:27:40 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEXER_H
-# define LEXER_H
+#include "minishell.h"
 
-# include "minishell.h"
-
-typedef struct s_token	t_token;
-
-struct	s_token
+void	minishell(char *envp[])
 {
-	// t_token_type	type;
-	char			*data;
-	t_token			*prev;
-	t_token			*next;
-};
+	char	*line;
 
-int	lexer(char *line);
-
-#endif
+	(void)envp;
+	line = readline("minishell > ");
+	if (line)
+		add_history(line);
+	/* ctrl+C, +Zの処理追加する */
+	lexer(line);
+}
