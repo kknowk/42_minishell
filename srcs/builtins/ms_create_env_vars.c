@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ms_create_env_vars.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 17:30:19 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/12 14:07:08 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/12 18:08:42 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
+#include "libft.h"
 
 // static size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 // {

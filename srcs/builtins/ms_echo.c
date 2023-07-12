@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ms_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:48:01 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/11 14:36:29 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/12 14:19:12 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
+#include "libft.h"
 
 // static int	ft_memcmp(const void *s1, const void *s2, size_t n)
 // {
