@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/11 17:06:37 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/12 18:42:12 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,24 @@
 # include "minishell.h"
 # include "token.h"
 
+typedef enum e_token_state
+{
+	STATE_IN_QUOTED,
+	STATE_IN_DQUOTED,
+	STATE_GENERAL,
+}	t_token_state;
+
 typedef struct	s_lexer
 {
-	size_t			str_len;
+	size_t			word_len;
+	size_t			word_start;
 	bool			is_quoted;
-	t_token_status	status;
+	char			quote_type;
+	t_token			*token;
+	t_token			*list_head;
+	t_token_state	status;
 }	t_lexer;
 
-int	lexer(char *line);
+t_token	*lexer(char *str);
 
 #endif

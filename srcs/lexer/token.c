@@ -6,21 +6,22 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 15:23:15 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/11 16:23:30 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/12 20:53:57 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_tokentype(char *data)
+static t_tokentype	judge_tokentype(char *data)
 {
+	if (data == NULL)
+		return (-1);
 	if (data[0] == '|')
 		return (CHAR_PIPE);
 	if (data[0] == '\'' && data[ft_strlen(data) - 1] == '\'')
 		return (CHAR_QUOTE);
 	if (data[0] == '\"' && data[ft_strlen(data) - 1] == '\"')
 		return (CHAR_DQUOTE);
-	/* << の場合どうしよう */
 	if (data[0] == '<')
 		return (CHAR_GREATER);
 	if (data[0] == '>')
@@ -29,35 +30,36 @@ int	check_tokentype(char *data)
 		return (CHAR_GENERAL);
 }
 
-static t_token	token_new(char *data)
+t_token	*token_new(char *data)
 {
 	t_token	*new;
 
-	/* strがNULLの場合ある?? */
 	new = malloc(sizeof(t_token));
 	if (!new)
 		exit(EXIT_FAILURE);
 	new->data = data;
 	new->next = NULL;
-	new->type = check_tokentype(data);
-	new->prex = NULL;
+	new->type = judge_tokentype(data);
+	new->prev = NULL;
 	return (new);
 }
 
-void	tokenlistadd_back(t_token *token, char *data)
+t_token *tokenlistadd_back(t_token *token, char *data)
 {
 	t_token	*new;
+	t_token	*head;
 
+	if (token == NULL)
+		return (token_new(data));
+	if (*data == '\0')
+		return (token);
+	head = token;
 	new = token_new(data);
-	if (token != NULL)
-	{
-		while (token->next != NULL)
-			token = token->next;
-		token->next = new;
-		new->prev = token;
-	}
-	else
-		token = new;
+	while (token->next != NULL)
+		token = token->next;
+	token->next = new;
+	new->prev = token;
+	return (head);
 }
 
 void	tokenlist_clear(t_token *token)
@@ -68,7 +70,9 @@ void	tokenlist_clear(t_token *token)
 		return ;
 	while (token->next != NULL)
 	{
+		puts("delete");
 		tmp = token->next;
+		free(token->data);
 		free(token);
 		token = tmp;
 	}

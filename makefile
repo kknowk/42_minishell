@@ -2,6 +2,7 @@ NAME = minishell
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -MMD -MP
+CFLAGS += -g -fsanitize=address
 
 
 INCDIR = ./includes
@@ -10,7 +11,7 @@ INC	=	$(addprefix -I,$(INCDIR))
 
 SRCSDIR = ./srcs
 OBJSDIR = ./objs
-SRCS	=	$(wildcard $(SRCSDIR)/*.c)
+SRCS	=	$(wildcard $(SRCSDIR)/*.c $(SRCSDIR)/*/*.c)
 OBJS	=	$(patsubst $(SRCSDIR)/%.c,$(OBJSDIR)/%.o,$(SRCS))
 DEPS	=	$(OBJS:.o=.d)
 
@@ -36,7 +37,7 @@ $(NAME): $(OBJS) $(LIBFT)
 		$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(LDFLAGS) -o $(NAME)
 
 $(OBJSDIR)/%.o: $(SRCSDIR)/%.c
-	@mkdir -p $(OBJSDIR)
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(INC) -c -o $@ $<
 
 $(LIBFT):
