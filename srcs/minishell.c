@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/12 14:33:17 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/12 16:19:58 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,9 @@ void	minishell(char *envp[])
 		// 	exit(EXIT_FAILURE);
 		// }
 
-		printf("hello\n");
 		// debug
-		for (int i = 0; token->next != NULL; i++)
-			printf("str: %s\n", token->data);
+		// for (int i = 0; token->next != NULL; i++)
+		// 	printf("i: %d str: %s\n", i, token->data);
 
 		/* ここにpercerやエクスパンション、コマンド実行を書く */
 
