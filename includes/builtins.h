@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:54:35 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/12 13:36:17 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/12 14:31:05 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-# define PATH_MAX 256
+# define PATH_MAX 1024
 # define FAILURE 1
 # define SUCCESS 0
 
@@ -43,9 +43,17 @@ typedef struct s_env_var
 	struct s_env_var	*next;
 }	t_env_var;
 
-int	ft_echo(char **str, int max_words);
-int	ft_env(char *envp[]);
-int	ft_pwd(void);
-int	error_failure(char *str);
+typedef struct s_directory
+{
+	char	path[PATH_MAX];
+}	t_directory;
+
+int			ft_echo(char **str, int max_words);
+int			ft_env(t_env_var *head);
+int			ft_export(t_env_var **head, char *env_str);
+int			ft_unset(t_env_var **head, char *key);
+int			ft_pwd(t_directory *dir);
+int			error_failure(char *str);
+t_env_var	*create_env_vars(char *envp[]);
 
 #endif
