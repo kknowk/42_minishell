@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:47:53 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/12 16:51:21 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/12 18:08:53 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,16 +162,23 @@ int	ft_export(t_env_var **head, char *env_str)
 // 		printf("Key: %s, Value: %s\n", current->key, current->value);
 // 		current = current->next;
 // 	}
-// 	current = env_vars;
-// 	t_env_var *next;
+// 	ft_unset(&env_vars, "KEY1");
+// 	ft_unset(&env_vars, "KEY2");
 // 	while (current != NULL)
 // 	{
-// 		next = current->next;
-// 		free(current->key);
-// 		free(current->value);
-// 		free(current);
-// 		current = next;
+// 		printf("Key: %s, Value: %s\n", current->key, current->value);
+// 		current = current->next;
 // 	}
+// 	current = env_vars;
+// 	// t_env_var *next;
+// 	// while (current != NULL)
+// 	// {
+// 	// 	next = current->next;
+// 	// 	free(current->key);
+// 	// 	free(current->value);
+// 	// 	free(current);
+// 	// 	current = next;
+// 	// }
 // 	return (0);
 // }
 
