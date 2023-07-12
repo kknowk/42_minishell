@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/12 17:57:32 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/12 18:42:12 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef enum e_token_state
 
 typedef struct	s_lexer
 {
-	size_t			str_len;
+	size_t			word_len;
 	size_t			word_start;
 	bool			is_quoted;
 	char			quote_type;
