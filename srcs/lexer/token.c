@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 15:23:15 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/11 16:23:30 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/12 11:06:14 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,19 @@ int	check_tokentype(char *data)
 		return (CHAR_QUOTE);
 	if (data[0] == '\"' && data[ft_strlen(data) - 1] == '\"')
 		return (CHAR_DQUOTE);
-	/* << の場合どうしよう */
+	if (data[0] == '<' && data[1] == '<')
+		return (CHAR_DGREATER);
 	if (data[0] == '<')
 		return (CHAR_GREATER);
+	if (data[0] == '>' && data[1] == '>')
+		return (CHAR_DLESSER);
 	if (data[0] == '>')
 		return (CHAR_LESSER);
 	else
 		return (CHAR_GENERAL);
 }
 
-static t_token	token_new(char *data)
+static t_token	*token_new(char *data)
 {
 	t_token	*new;
 
@@ -40,7 +43,7 @@ static t_token	token_new(char *data)
 	new->data = data;
 	new->next = NULL;
 	new->type = check_tokentype(data);
-	new->prex = NULL;
+	new->prev = NULL;
 	return (new);
 }
 

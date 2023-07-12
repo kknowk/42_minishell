@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 16:13:54 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/11 17:06:12 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/12 11:03:32 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@ typedef enum e_tokentype
 	CHAR_DQUOTE,
 	CHAR_PIPE,
 	CHAR_WHITESPACE,
-	CHAR_GRATER,
+	CHAR_GREATER,
 	CHAR_LESSER,
+	CHAR_DGREATER,
+	CHAR_DLESSER,
 }	t_tokentype;
 
 typedef enum e_token_status
