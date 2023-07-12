@@ -6,11 +6,122 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:47:53 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/12 16:48:38 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/12 16:51:21 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
+
+// static size_t	ft_strlcpy(char *dest, const char *src, size_t size)
+// {
+// 	size_t	i;
+
+// 	i = 0;
+// 	if (size > 0)
+// 	{
+// 		while (src[i] && i < size - 1)
+// 		{
+// 			dest[i] = src[i];
+// 			i++;
+// 		}
+// 		dest[i] = '\0';
+// 	}
+// 	while (src[i])
+// 		i++;
+// 	return (i);
+// }
+
+// static int	count_words(char const *s, char c)
+// {
+// 	int	count;
+// 	int	in_word;
+
+// 	count = 0;
+// 	in_word = 0;
+// 	while (*s)
+// 	{
+// 		if (*s == c)
+// 			in_word = 0;
+// 		else if (!in_word)
+// 		{
+// 			in_word = 1;
+// 			count++;
+// 		}
+// 		s++;
+// 	}
+// 	return (count);
+// }
+
+// static char	*get_word(char const **s, char c)
+// {
+// 	char const	*start;
+// 	char		*word;
+// 	int			len;
+
+// 	start = *s;
+// 	len = 0;
+// 	while (**s && **s != c)
+// 	{
+// 		(*s)++;
+// 		len++;
+// 	}
+// 	word = (char *)malloc(sizeof(char) * (len + 1));
+// 	if (!word)
+// 		return (NULL);
+// 	ft_strlcpy(word, start, len + 1);
+// 	return (word);
+// }
+
+// static void	check_malloc(char **ptr, int word_count)
+// {
+// 	int	i;
+
+// 	if (!ptr)
+// 	{
+// 		i = 0;
+// 		while (i < word_count)
+// 		{
+// 			free(ptr[i]);
+// 			i++;
+// 		}
+// 		free(ptr);
+// 	}
+// }
+
+// static void	split_string(char const *s, char c, char **result)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (*s)
+// 	{
+// 		if (*s != c)
+// 		{
+// 			result[i] = get_word(&s, c);
+// 			if (!result[i])
+// 				check_malloc(result, i);
+// 			i++;
+// 		}
+// 		else
+// 			s++;
+// 	}
+// 	result[i] = NULL;
+// }
+
+// static char	**ft_split(char const *s, char c)
+// {
+// 	char	**result;
+// 	int		word_count;
+
+// 	if (!s)
+// 		return (NULL);
+// 	word_count = count_words(s, c);
+// 	result = (char **)malloc(sizeof(char *) * (word_count + 1));
+// 	if (!result)
+// 		return (NULL);
+// 	split_string(s, c, result);
+// 	return (result);
+// }
 
 int	ft_export(t_env_var **head, char *env_str)
 {
@@ -67,5 +178,4 @@ int	ft_export(t_env_var **head, char *env_str)
 // __attribute__((destructor)) static void destructor()
 // {
 // 	system("leaks -q a.out");
->>>>>>> b19f72669f62552a416f65e5ae9fbe72d0888494
 // }

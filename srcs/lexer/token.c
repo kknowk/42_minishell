@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 15:23:15 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/12 16:02:23 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/12 17:55:22 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,8 @@ static t_tokentype	judge_tokentype(char *data)
 		return (CHAR_QUOTE);
 	if (data[0] == '\"' && data[ft_strlen(data) - 1] == '\"')
 		return (CHAR_DQUOTE);
-	// if (data[0] == '<' && data[1] == '<')
-	// 	return (CHAR_DGREATER);
 	if (data[0] == '<')
 		return (CHAR_GREATER);
-	// if (data[0] == '>' && data[1] == '>')
-	// 	return (CHAR_DLESSER);
 	if (data[0] == '>')
 		return (CHAR_LESSER);
 	else
@@ -72,6 +68,7 @@ void	tokenlist_clear(t_token *token)
 	{
 		puts("delete");
 		tmp = token->next;
+		free(token->data);
 		free(token);
 		token = tmp;
 	}

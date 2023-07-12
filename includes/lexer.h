@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/12 16:36:42 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/12 17:57:32 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ typedef struct	s_lexer
 	size_t			word_start;
 	bool			is_quoted;
 	char			quote_type;
-	t_token			*head;
 	t_token			*token;
+	t_token			*list_head;
 	t_token_state	status;
 }	t_lexer;
 
