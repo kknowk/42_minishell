@@ -6,13 +6,13 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 15:23:15 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/12 11:06:14 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/12 14:05:06 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_tokentype(char *data)
+static int	check_tokentype(char *data)
 {
 	if (data[0] == '|')
 		return (CHAR_PIPE);

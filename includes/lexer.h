@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/12 10:39:39 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/12 14:29:47 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 
 # include "minishell.h"
 # include "token.h"
+
+typedef enum e_token_status
+{
+	IN_QUOTED,
+	IN_DQUOTED,
+	GENERAL,
+}	t_token_status;
 
 typedef struct	s_lexer
 {

@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 16:13:54 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/12 11:03:32 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/12 14:29:43 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define TOKEN_H
 
 # include "minishell.h"
+# include "lexer.h"
 
 typedef struct s_token	t_token;
 
@@ -29,13 +30,6 @@ typedef enum e_tokentype
 	CHAR_DGREATER,
 	CHAR_DLESSER,
 }	t_tokentype;
-
-typedef enum e_token_status
-{
-	IN_QUOTED,
-	IN_DQUOTE,
-	GENERAL,
-}	t_token_status;
 
 struct	s_token
 {
