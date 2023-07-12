@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:54:35 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/11 19:15:15 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/12 13:36:17 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ typedef struct s_env_var
 int	ft_echo(char **str, int max_words);
 int	ft_env(char *envp[]);
 int	ft_pwd(void);
+int	error_failure(char *str);
 
 #endif
