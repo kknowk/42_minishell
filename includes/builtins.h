@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:54:35 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/12 18:08:35 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/12 21:09:56 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@
 # include <readline/history.h>
 # include "libft.h"
 
-# ifndef PATH_MAX
-#  define PATH_MAX 1024
-# endif
+# define PATH_MAX 1024
 # define FAILURE 1
 # define SUCCESS 0
 
