@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 15:23:15 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/12 19:31:54 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/12 20:53:57 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ t_token *tokenlistadd_back(t_token *token, char *data)
 
 	if (token == NULL)
 		return (token_new(data));
+	if (*data == '\0')
+		return (token);
 	head = token;
 	new = token_new(data);
 	while (token->next != NULL)
