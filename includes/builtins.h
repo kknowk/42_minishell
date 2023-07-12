@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:54:35 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/12 14:31:05 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/12 20:53:43 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # include <readline/history.h>
 
 # define PATH_MAX 1024
+# define MAX_COMMAND_LENGTH 1024
 # define FAILURE 1
 # define SUCCESS 0
 
