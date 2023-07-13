@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/13 19:18:24 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/13 19:24:14 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef enum e_token_state
 	STATE_GENERAL,
 }	t_token_state;
 
-typedef struct	s_lexer
+typedef struct s_lexer
 {
 	size_t			word_len;
 	size_t			word_start;

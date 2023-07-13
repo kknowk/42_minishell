@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/13 19:18:46 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/13 19:24:21 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@
 # include "builtins.h"
 
 void	minishell(char *envp[]);
+void	ft_select(t_token *token, t_directory *dir, t_env_var **env_vars);
 
 #endif

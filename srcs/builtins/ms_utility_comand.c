@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 17:10:32 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/13 16:31:27 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/13 19:15:35 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,10 @@ static void	error_put(char *str)
 
 static void	error_str(char *str)
 {
-	write(STDERR_FILENO, "bash: command not found", 23);
+	write(STDERR_FILENO, "bash", 4);
 	write(STDERR_FILENO, ": ", 2);
 	write(STDERR_FILENO, str, ft_strlen(str));
+	write(STDERR_FILENO, ": command not found", 19);
 	write(STDERR_FILENO, "\n", 1);
 }
 
