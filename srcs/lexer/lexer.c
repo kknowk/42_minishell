@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:17:39 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/12 20:58:51 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/13 14:57:16 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ void	tokenize(t_lexer *lex, char *str)
 {
 	if (lex->is_quoted)
 	{
-		lex->word_len = 1;
+			printf("\n");
+		lex->word_len = 0;
 		while (str[lex->word_start + lex->word_len] != '\0')
 		{
 			if (str[lex->word_start + lex->word_len] == lex->quote_type)
@@ -51,6 +52,7 @@ void	tokenize(t_lexer *lex, char *str)
 				tokenlistadd_back(lex->token, ft_substr(str, lex->word_start, lex->word_len));
 				return ;
 			}
+			printf("\n");
 			lex->word_len++;
 		}
 		tokenlistadd_back(lex->token, ft_substr(str, lex->word_start, lex->word_len));
@@ -60,9 +62,31 @@ void	tokenize(t_lexer *lex, char *str)
 		lex->word_len = 0;
 		while (str[lex->word_start] == ' ')
 			lex->word_start++;
-		while (str[lex->word_start + lex->word_len] != '\0' && !is_special(str[lex->word_start + lex->word_len]))
-			lex->word_len++;
-		tokenlistadd_back(lex->token, ft_substr(str, lex->word_start, lex->word_len)); // substrの引数の型変更する必要あるかも?
+		if (!is_special(str[lex->word_start + lex->word_len]))
+		{
+			while (str[lex->word_start + lex->word_len] != '\0' && str[lex->word_start + lex->word_len] != ' ')
+				lex->word_len++;
+			tokenlistadd_back(lex->token, ft_substr(str, lex->word_start, lex->word_len)); // substrの引数の型変更する必要あるかも?
+		}
+		else
+		{
+			if ((str[lex->word_start + lex->word_len] == '<' && str[lex->word_start + lex->word_len + 1] == '<')
+					|| (str[lex->word_start + lex->word_len] == '>' && str[lex->word_start + lex->word_len + 1] == '>'))
+			{
+				lex->word_len += 2;
+				tokenlistadd_back(lex->token, ft_substr(str, lex->word_start, 2));
+			}
+			// else if (str[lex->word_start + lex->word_len] == ' ')
+			// {
+			// 	lex->word_start++;
+			// 	return ;
+			// }
+			else
+			{
+				lex->word_len++;
+				tokenlistadd_back(lex->token, ft_substr(str, lex->word_start, 1));
+			}
+		}
 	}
 }
 
