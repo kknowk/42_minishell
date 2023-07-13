@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:04:13 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/13 19:21:06 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/13 19:37:24 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,17 @@
 
 # include "minishell.h"
 
-typedef enum	e_wordtype
+typedef enum e_wordtype
 {
 	HELLO,
 }	t_wordtype;
 
-typedef struct	s_tree
+typedef struct s_tree
 {
 	t_wordtype		type;
 	char			*data;
 	struct s_tree	*right;
 	struct s_tree	*left;
 }	t_tree;
-
 
 #endif

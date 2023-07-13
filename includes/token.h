@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 16:13:54 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/13 19:31:39 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/13 19:37:55 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef enum e_tokentype
 	CHAR_LESSER = '>',
 }	t_tokentype;
 
-typedef struct	s_token
+typedef struct s_token
 {
 	t_tokentype		type;
 	char			*data;
