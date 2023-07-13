@@ -6,13 +6,15 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/13 16:53:29 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/13 17:12:09 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "lexer.h"
 #include "token.h"
+
+volatile sig_atomic_t	g_interrupted = 0;
 
 void	handle_signal(int signal)
 {
@@ -33,6 +35,7 @@ void	minishell(char *envp[])
 	struct sigaction	sa;
 	char				*line;
 	t_token				*token;
+	t_directory			dir;
 
 	(void)envp;
 	sa.sa_handler = handle_signal;
@@ -41,6 +44,11 @@ void	minishell(char *envp[])
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT, &sa, NULL);
 	sigaction(SIGTERM, &sa, NULL);
+	if (getcwd(dir.path, sizeof(dir.path)) == NULL)
+	{
+		perror("getcwd() error");
+		exit(1);
+	}
 	rl_outstream = stderr; // defoultがstdoutのため
 	while (true)
 	{
@@ -51,6 +59,8 @@ void	minishell(char *envp[])
 		else
 			add_history(line); // lineが'\0'のときは履歴に登録しない
 		token = lexer(line);
+		if (!ft_strcmp(token->next->data, "pwd"))
+			ft_pwd(&dir);
 		if (g_interrupted)
 			continue ;
 		// debug
