@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:04:13 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/13 19:37:24 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/13 19:53:22 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 
 typedef enum e_wordtype
 {
-	HELLO,
+	COMMAND,
+	PIPE,
 }	t_wordtype;
 
 typedef struct s_tree
