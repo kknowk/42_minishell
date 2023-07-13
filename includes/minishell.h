@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/13 17:00:32 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/13 19:18:46 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdbool.h>
+
 # include "lexer.h"
+# include "parser.h"
 # include "token.h"
 # include "libft.h"
 # include "builtins.h"
