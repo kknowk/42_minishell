@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/13 17:12:09 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/13 17:50:25 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,7 @@ void	minishell(char *envp[])
 	sigaction(SIGQUIT, &sa, NULL);
 	sigaction(SIGTERM, &sa, NULL);
 	if (getcwd(dir.path, sizeof(dir.path)) == NULL)
-	{
-		perror("getcwd() error");
 		exit(1);
-	}
 	rl_outstream = stderr; // defoultがstdoutのため
 	while (true)
 	{
@@ -59,8 +56,7 @@ void	minishell(char *envp[])
 		else
 			add_history(line); // lineが'\0'のときは履歴に登録しない
 		token = lexer(line);
-		if (!ft_strcmp(token->next->data, "pwd"))
-			ft_pwd(&dir);
+		ft_select(token, &dir);
 		if (g_interrupted)
 			continue ;
 		// debug

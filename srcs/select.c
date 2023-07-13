@@ -1,39 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.h                                            :+:      :+:    :+:   */
+/*   select.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/13 17:39:00 by khorike          ###   ########.fr       */
+/*   Created: 2023/07/13 17:26:36 by khorike           #+#    #+#             */
+/*   Updated: 2023/07/13 17:49:52 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEXER_H
-# define LEXER_H
+#include "minishell.h"
+#include "lexer.h"
+#include "token.h"
 
-# include "minishell.h"
-# include "token.h"
-
-typedef enum e_token_state
+void	ft_select(t_token *token, t_directory *dir)
 {
-	STATE_IN_QUOTED,
-	STATE_IN_DQUOTED,
-	STATE_GENERAL,
-}	t_token_state;
-
-typedef struct s_lexer
-{
-	size_t			word_len;
-	size_t			word_start;
-	bool			is_quoted;
-	char			quote_type;
-	t_token			*token;
-	t_token			*list_head;
-	t_token_state	status;
-}	t_lexer;
-
-t_token	*lexer(char *str);
-
-#endif
+	if (!ft_strcmp(token->next->data, "pwd"))
+		ft_pwd(dir);
+	if (!ft_strcmp(token->next->data, "cd"))
+		ft_cd(dir, token->next->next->data);
+	if (!ft_strcmp(token->next->data, "exit"))
+		ft_exit();
+}

@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 14:08:10 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/12 16:52:59 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/13 17:43:49 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@
 // 	return (srclen);
 // }
 
-char	*ft_realpath(const char *path, char *resolved_path)
+static char	*ft_realpath(const char *path, char *resolved_path)
 {
 	if (path == NULL || resolved_path == NULL)
 		return (NULL);
