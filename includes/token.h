@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 16:13:54 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/12 16:03:07 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/13 16:54:51 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ struct	s_token
 	t_token			*next;
 };
 
-t_token *tokenlistadd_back(t_token *token, char *data);
+t_token	*tokenlistadd_back(t_token *token, char *data);
 void	tokenlist_clear(t_token *token);
 t_token	*token_new(char *data);
 
