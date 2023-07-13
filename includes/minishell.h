@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/11 17:31:10 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/13 16:49:04 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@
 # include "token.h"
 # include "libft.h"
 # include "builtins.h"
+
+volatile sig_atomic_t	g_interrupted = 0;
 
 void	minishell(char *envp[]);
 

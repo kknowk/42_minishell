@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:54:35 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/12 21:09:56 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/13 16:34:58 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,8 @@ int			ft_unset(t_env_var **head, char *key);
 int			ft_pwd(t_directory *dir);
 int			error_failure(char *str);
 t_env_var	*create_env_vars(char *envp[]);
+
+void		execute_command(char *command);
+void		ft_exit(void);
 
 #endif

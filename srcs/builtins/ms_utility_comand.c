@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 17:10:32 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/13 15:34:32 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/13 16:31:27 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static size_t	ft_strspn(const char *s1, const char *s2)
 	return (count);
 }
 
-char	*ft_strtok(char *str, const char *delim)
+static char	*ft_strtok(char *str, const char *delim)
 {
 	static char	*last_token = NULL;
 	char		*token;
