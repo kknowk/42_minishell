@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/13 17:29:52 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/13 18:32:28 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	minishell(char *envp[])
 	char				*line;
 	t_token				*token;
 	t_directory			dir;
+	t_env_var			*env_vars;
 
 	(void)envp;
 	sa.sa_handler = handle_signal;
@@ -44,11 +45,9 @@ void	minishell(char *envp[])
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT, &sa, NULL);
 	sigaction(SIGTERM, &sa, NULL);
+	env_vars = create_env_vars(envp);
 	if (getcwd(dir.path, sizeof(dir.path)) == NULL)
-	{
-		perror("getcwd() error");
 		exit(1);
-	}
 	rl_outstream = stderr; // defoultがstdoutのため
 	while (true)
 	{
@@ -59,6 +58,9 @@ void	minishell(char *envp[])
 		else
 			add_history(line); // lineが'\0'のときは履歴に登録しない
 		token = lexer(line);
+		ft_select(token, &dir, &env_vars);
+		if (g_interrupted)
+			continue ;
 		// if (!ft_strcmp(token->next->data, "pwd"))
 		// 	ft_pwd(&dir);
 		// if (g_interrupted)

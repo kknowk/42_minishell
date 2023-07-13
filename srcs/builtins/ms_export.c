@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:47:53 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/12 18:08:53 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/13 18:07:55 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,10 +131,10 @@ int	ft_export(t_env_var **head, char *env_str)
 	t_env_var	*new_var;
 
 	split_result = ft_split(env_str, '=');
-	key = split_result[0];
-	value = split_result[1];
 	if (!split_result)
 		return (error_failure("Splitting string failed"));
+	key = split_result[0];
+	value = split_result[1];
 	new_var = malloc(sizeof(t_env_var));
 	if (!new_var)
 		return (error_failure("Memory allocation failed"));
