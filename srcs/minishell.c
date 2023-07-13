@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/13 17:12:09 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/13 17:29:52 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ void	minishell(char *envp[])
 		else
 			add_history(line); // lineが'\0'のときは履歴に登録しない
 		token = lexer(line);
-		if (!ft_strcmp(token->next->data, "pwd"))
-			ft_pwd(&dir);
-		if (g_interrupted)
-			continue ;
+		// if (!ft_strcmp(token->next->data, "pwd"))
+		// 	ft_pwd(&dir);
+		// if (g_interrupted)
+		// 	continue ;
 		// debug
 		for (int i = 0; token != NULL; i++, token = token->next)
 			printf("#%d\tstr: %s\tlen: %zu\ttype: %d\n", i, token->data, ft_strlen(token->data), token->type);
