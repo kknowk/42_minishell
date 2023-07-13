@@ -6,46 +6,14 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 17:10:32 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/12 21:01:50 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/13 15:34:32 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-static size_t	ft_strlen(const char *s)
-{
-	size_t	i;
-
-	if (s == NULL)
-		return (0);
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
-
-static char	*ft_strdup(const char *s1)
-{
-	size_t	i;
-	size_t	len;
-	char	*cpy;
-
-	len = ft_strlen(s1);
-	cpy = malloc(sizeof(char) * (len + 1));
-	if (cpy == NULL)
-		perror("malloc failed");
-	i = 0;
-	while (s1[i])
-	{
-		cpy[i] = s1[i];
-		i++;
-	}
-	cpy[i] = '\0';
-	return (cpy);
-}
-
 static void	execute_command_from_path(char *command_path,
-		char *args[MAX_COMMAND_LENGTH])
+		char *args[PATH_MAX])
 {
 	if (access(command_path, X_OK) == 0)
 	{
@@ -71,24 +39,75 @@ static void	error_put(char *str)
 
 static void	error_str(char *str)
 {
-	write(STDERR_FILENO, "bash: command not found", 19);
+	write(STDERR_FILENO, "bash: command not found", 23);
 	write(STDERR_FILENO, ": ", 2);
 	write(STDERR_FILENO, str, ft_strlen(str));
 	write(STDERR_FILENO, "\n", 1);
 }
 
-static void	helper_execute(char	*args[MAX_COMMAND_LENGTH])
+static size_t	ft_strcspn(const char *s1r, const char *s2r)
+{
+	const char	*s1 = s1r;
+	const char	*s2;
+
+	while (*s1)
+	{
+		s2 = s2r;
+		while (*s2)
+		{
+			if (*s1 == *s2++)
+				return (s1 - s1r);
+		}
+		s1++;
+	}
+	return (s1 - s1r);
+}
+
+static size_t	ft_strspn(const char *s1, const char *s2)
+{
+	size_t		count;
+
+	count = 0;
+	while (*s1)
+	{
+		if (ft_strchr(s2, *s1))
+			count++;
+		else
+			break ;
+		s1++;
+	}
+	return (count);
+}
+
+char	*ft_strtok(char *str, const char *delim)
+{
+	static char	*last_token = NULL;
+	char		*token;
+
+	if (str != NULL)
+		last_token = str;
+	if (last_token == NULL || *last_token == '\0')
+		return (NULL);
+	last_token += ft_strspn(last_token, delim);
+	token = last_token;
+	last_token += ft_strcspn(last_token, delim);
+	if (*last_token != '\0')
+		*last_token++ = '\0';
+	return (token);
+}
+
+static void	helper_execute(char	*args[PATH_MAX])
 {
 	char	*path;
 	char	*path_copy;
 	char	*path_token;
-	char	command_path[MAX_COMMAND_LENGTH];
+	char	command_path[PATH_MAX];
 
 	path = getenv("PATH");
 	path_copy = ft_strdup(path);
 	if (path_copy == NULL)
 		error_put("Memory allocation failed");
-	path_token = strtok(path_copy, ":");
+	path_token = ft_strtok(path_copy, ":");
 	while (path_token != NULL)
 	{
 		strcpy(command_path, path_token);
@@ -100,58 +119,58 @@ static void	helper_execute(char	*args[MAX_COMMAND_LENGTH])
 			free(path_copy);
 			return ;
 		}
-		path_token = strtok(NULL, ":");
+		path_token = ft_strtok(NULL, ":");
 	}
 	free(path_copy);
-	fprintf(stderr, "Command not found: %s\n", args[0]);
+	error_str(args[0]);
 }
 
 void	execute_command(char *command)
 {
-	char	command_buffer[MAX_COMMAND_LENGTH];
+	char	command_buffer[PATH_MAX];
 	char	*command_name;
-	char	*args[MAX_COMMAND_LENGTH];
+	char	*args[PATH_MAX];
 	int		args_count;
 
-	strcpy(command_buffer, command);
-	command_name = strtok(command_buffer, " ");
+	ft_strlcpy(command_buffer, command, ft_strlen(command) + 1);
+	command_name = ft_strtok(command_buffer, " ");
 	args_count = 0;
 	while (command_name != NULL)
 	{
 		args[args_count] = command_name;
-		command_name = strtok(NULL, " ");
+		command_name = ft_strtok(NULL, " ");
 		args_count++;
 	}
 	args[args_count] = NULL;
 	helper_execute(args);
 }
 
-#include <string.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+// #include <string.h>
+// #include <readline/readline.h>
+// #include <readline/history.h>
 
-int	main(void)
-{
-	char	*command;
+// int	main(void)
+// {
+// 	char	*command;
 
-	while (1)
-	{
-		command = readline(">> ");
-		if (command == NULL)
-			break ;
-		if (strcmp(command, "exit") == 0)
-		{
-			free(command);
-			break ;
-		}
-		add_history(command);
-		execute_command(command);
-		free(command);
-	}
-	return (0);
-}
+// 	while (1)
+// 	{
+// 		command = readline(">> ");
+// 		if (command == NULL)
+// 			break ;
+// 		if (strcmp(command, "exit") == 0)
+// 		{
+// 			free(command);
+// 			break ;
+// 		}
+// 		add_history(command);
+// 		execute_command(command);
+// 		free(command);
+// 	}
+// 	return (0);
+// }
 
-__attribute__((destructor)) static void destructor()
-{
-	system("leaks -q a.out");
-}
+// __attribute__((destructor)) static void destructor()
+// {
+// 	system("leaks -q a.out");
+// }
