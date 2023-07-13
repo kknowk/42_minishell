@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 15:23:15 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/12 20:53:57 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/13 17:35:12 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,17 @@ t_token *tokenlistadd_back(t_token *token, char *data)
 	t_token	*head;
 
 	if (token == NULL)
-		return (token_new(data));
+	{
+		token = token_new(data);
+		return (token);
+	}
 	if (*data == '\0')
 		return (token);
+	if (token->data == NULL)
+	{
+		token->data = data;
+		return (token);
+	}
 	head = token;
 	new = token_new(data);
 	while (token->next != NULL)
@@ -70,7 +78,6 @@ void	tokenlist_clear(t_token *token)
 		return ;
 	while (token->next != NULL)
 	{
-		puts("delete");
 		tmp = token->next;
 		free(token->data);
 		free(token);

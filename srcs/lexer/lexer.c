@@ -6,17 +6,16 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:17:39 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/13 16:50:00 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/13 17:34:05 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
-t_lexer	*init_lexer(t_lexer *lex, char *str)
+t_lexer	*init_lexer(t_lexer *lex)
 {
 	t_token	*head;
 
-	(void)str;
 	head = token_new(NULL);
 	lex->word_start = 0;
 	lex->word_len = 0;
@@ -83,7 +82,7 @@ t_token	*lexer(char *str)
 {
 	t_lexer lex;
 
-	init_lexer(&lex, str);
+	init_lexer(&lex);
 	lex.word_start = 0;
 	while (str[lex.word_start] != '\0')
 	{

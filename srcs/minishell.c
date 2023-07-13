@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/13 17:50:25 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/13 17:52:59 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,10 @@ void	minishell(char *envp[])
 		ft_select(token, &dir);
 		if (g_interrupted)
 			continue ;
+		// if (!ft_strcmp(token->next->data, "pwd"))
+		// 	ft_pwd(&dir);
+		// if (g_interrupted)
+		// 	continue ;
 		// debug
 		for (int i = 0; token != NULL; i++, token = token->next)
 			printf("#%d\tstr: %s\tlen: %zu\ttype: %d\n", i, token->data, ft_strlen(token->data), token->type);
