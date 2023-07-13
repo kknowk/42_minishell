@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:48:01 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/12 14:19:12 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/13 18:59:11 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,17 @@ static void	helper_ft_echo(char **str, int max_words)
 	printf("\n");
 }
 
-int	ft_echo(char **str, int max_words)
+int	ft_echo(char *str, int max_words)
 {
 	int	i;
 
 	i = 0;
-	if (str[0] == NULL)
+	if (str == NULL)
 	{
 		printf("\n");
 		return (SUCCESS);
 	}
-	if (ft_memcmp(str[0], "-n", 3) == 0)
+	if (ft_memcmp(str, "-n", 3) == 0)
 	{
 		i++;
 		while (i < max_words - 1)

@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 14:08:10 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/13 17:43:49 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/13 17:55:15 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,9 @@ static char	*ft_realpath(const char *path, char *resolved_path)
 	if (path == NULL || resolved_path == NULL)
 		return (NULL);
 	if (chdir(path) != 0)
-	{
-		perror("chdir() error");
 		return (NULL);
-	}
 	if (getcwd(resolved_path, PATH_MAX) == NULL)
-	{
-		perror("getcwd() error");
 		return (NULL);
-	}
 	return (resolved_path);
 }
 

@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/13 17:42:04 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/13 18:32:34 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,6 @@
 # include "builtins.h"
 
 void	minishell(char *envp[]);
-void	ft_select(t_token *token, t_directory *dir);
+void	ft_select(t_token *token, t_directory *dir, t_env_var **env_vars);
 
 #endif
