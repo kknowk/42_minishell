@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 17:10:32 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/13 19:15:35 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/14 18:03:11 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,55 +31,6 @@ static void	execute_command_from_path(char *command_path,
 	}
 }
 
-static void	error_put(char *str)
-{
-	perror(str);
-	exit(1);
-}
-
-static void	error_str(char *str)
-{
-	write(STDERR_FILENO, "bash", 4);
-	write(STDERR_FILENO, ": ", 2);
-	write(STDERR_FILENO, str, ft_strlen(str));
-	write(STDERR_FILENO, ": command not found", 19);
-	write(STDERR_FILENO, "\n", 1);
-}
-
-static size_t	ft_strcspn(const char *s1r, const char *s2r)
-{
-	const char	*s1 = s1r;
-	const char	*s2;
-
-	while (*s1)
-	{
-		s2 = s2r;
-		while (*s2)
-		{
-			if (*s1 == *s2++)
-				return (s1 - s1r);
-		}
-		s1++;
-	}
-	return (s1 - s1r);
-}
-
-static size_t	ft_strspn(const char *s1, const char *s2)
-{
-	size_t		count;
-
-	count = 0;
-	while (*s1)
-	{
-		if (ft_strchr(s2, *s1))
-			count++;
-		else
-			break ;
-		s1++;
-	}
-	return (count);
-}
-
 static char	*ft_strtok(char *str, const char *delim)
 {
 	static char	*last_token = NULL;
@@ -97,6 +48,31 @@ static char	*ft_strtok(char *str, const char *delim)
 	return (token);
 }
 
+char	*add_current_directory_to_path(void)
+{
+	char	*original_path;
+	char	cwd[PATH_MAX];
+	char	*new_path;
+
+	original_path = getenv("PATH");
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
+	{
+		new_path = malloc(strlen(original_path) + strlen(cwd) + 2);
+		if (new_path == NULL)
+		{
+			perror("malloc failed");
+			exit(EXIT_FAILURE);
+		}
+		ms_cpca(new_path, original_path, ":", cwd);
+		return (new_path);
+	}
+	else
+	{
+		perror("getcwd() error");
+		return (NULL);
+	}
+}
+
 static void	helper_execute(char	*args[PATH_MAX])
 {
 	char	*path;
@@ -104,16 +80,15 @@ static void	helper_execute(char	*args[PATH_MAX])
 	char	*path_token;
 	char	command_path[PATH_MAX];
 
-	path = getenv("PATH");
+	path = add_current_directory_to_path();
+	ms_free(path);
 	path_copy = ft_strdup(path);
 	if (path_copy == NULL)
 		error_put("Memory allocation failed");
 	path_token = ft_strtok(path_copy, ":");
 	while (path_token != NULL)
 	{
-		strcpy(command_path, path_token);
-		strcat(command_path, "/");
-		strcat(command_path, args[0]);
+		ms_cpca(command_path, path_token, "/", args[0]);
 		execute_command_from_path(command_path, args);
 		if (access(command_path, X_OK) == 0)
 		{
