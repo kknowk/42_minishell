@@ -6,8 +6,12 @@ CFLAGS += -g -fsanitize=address
 
 
 INCDIR = ./includes
-INC	=	$(addprefix -I,$(INCDIR))
+INC	=	$(addprefix -I,$(INCDIR)) -I$(RL_INCDIR)
 
+# INC 変数に-I$(RL_INCDIR)を追加
+# readline.h ヘッダーファイルを見つけるためにコンパイラが
+# 使用する検索パスに readline の include ディレクトリが追加されます。
+# 最新版の関数rl_replace_lineが使えるようになります。
 
 SRCSDIR = ./srcs
 OBJSDIR = ./objs
