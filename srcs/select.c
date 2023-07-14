@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:26:36 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/13 19:19:49 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/14 13:42:17 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ void	ft_select(t_token *token, t_directory *dir, t_env_var **env_vars)
 	}
 	if (!ft_strcmp(token->data, "unset"))
 		ft_unset(env_vars, token->next->data);
-	else
+	else if (ft_strcmp(token->data, "pwd"))
 		execute_command(token->data);
 	// if (!ft_strcmp(token->data, "echo"))
-	// 	ft_echo(token->next->data, int max_words);
+	// 	ft_echo(toke->next->data, int max_words);
 	
 	// while (current)
 	// {
