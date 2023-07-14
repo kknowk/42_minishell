@@ -1,39 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.h                                            :+:      :+:    :+:   */
+/*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/13 19:31:37 by minabe           ###   ########.fr       */
+/*   Created: 2023/07/13 18:04:13 by minabe            #+#    #+#             */
+/*   Updated: 2023/07/13 19:53:22 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEXER_H
-# define LEXER_H
+#ifndef PARSER_H
+# define PARSER_H
 
 # include "minishell.h"
-# include "token.h"
 
-typedef enum e_token_state
+typedef enum e_wordtype
 {
-	STATE_IN_QUOTED,
-	STATE_IN_DQUOTED,
-	STATE_GENERAL,
-}	t_token_state;
+	COMMAND,
+	PIPE,
+}	t_wordtype;
 
-typedef struct s_lexer
+typedef struct s_tree
 {
-	size_t			word_len;
-	size_t			word_start;
-	bool			is_quoted;
-	char			quote_type;
-	t_token			*token;
-	t_token			*list_head;
-	t_token_state	status;
-}	t_lexer;
-
-t_token	*lexer(char *str);
+	t_wordtype		type;
+	char			*data;
+	struct s_tree	*right;
+	struct s_tree	*left;
+}	t_tree;
 
 #endif

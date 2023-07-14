@@ -6,11 +6,11 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:17:39 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/13 17:34:05 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/13 19:26:56 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "minishell.h"
 
 t_lexer	*init_lexer(t_lexer *lex)
 {
