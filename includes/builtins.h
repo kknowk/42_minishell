@@ -3,34 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:54:35 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/13 19:05:14 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/13 19:30:52 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-# include <stdio.h>
-# include <stdlib.h>
 # include <string.h>
-# include <unistd.h>
-# include <signal.h>
-# include <sys/types.h>
-# include <sys/time.h>
-# include <sys/wait.h>
-# include <sys/stat.h>
-# include <sys/ioctl.h>
-# include <pthread.h>
-# include <stdint.h>
-# include <stdbool.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "libft.h"
+
+# include "minishell.h"
 
 # define PATH_MAX 1024
 # define FAILURE 1
@@ -57,6 +42,9 @@ int			ft_pwd(t_directory *dir);
 int			ft_cd(t_directory *dir, char *path);
 int			error_failure(char *str);
 t_env_var	*create_env_vars(char *envp[]);
+
+// 場所は任せた！！ by minabe
+void		ft_select(t_token *token, t_directory *dir, t_env_var **env_vars);
 
 void		execute_command(char *command);
 void		ft_exit(void);

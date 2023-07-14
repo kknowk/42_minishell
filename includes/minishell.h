@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/13 18:32:34 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/13 19:29:44 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-# include <readline/history.h>
 # include <stdbool.h>
+
 # include "lexer.h"
+# include "parser.h"
 # include "token.h"
 # include "libft.h"
 # include "builtins.h"
 
 void	minishell(char *envp[]);
-void	ft_select(t_token *token, t_directory *dir, t_env_var **env_vars);
 
 #endif
