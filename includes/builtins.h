@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:54:35 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/13 19:30:52 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/14 18:39:23 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,16 @@ int			ft_export(t_env_var **head, char *env_str);
 int			ft_unset(t_env_var **head, char *key);
 int			ft_pwd(t_directory *dir);
 int			ft_cd(t_directory *dir, char *path);
+
 int			error_failure(char *str);
+void		error_put(char *str);
+void		error_str(char *str);
+size_t		ft_strcspn(const char *s1r, const char *s2r);
+size_t		ft_strspn(const char *s1, const char *s2);
+
+void		ms_free(char *str);
+void		ms_cpca(char *s1, char *s2, char *s3, char *s4);
+
 t_env_var	*create_env_vars(char *envp[]);
 
 // 場所は任せた！！ by minabe
