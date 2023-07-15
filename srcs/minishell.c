@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/13 19:24:31 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/15 14:19:04 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,6 @@ void	minishell(char *envp[])
 		// 	ft_pwd(&dir);
 		if (g_interrupted)
 			continue ;
-		// debug
-		for (int i = 0; token != NULL; i++, token = token->next)
-			printf("#%d\tstr: %s\tlen: %zu\ttype: %d\n", i, token->data, ft_strlen(token->data), token->type);
-
 		/* ここにpercerやエクスパンション、コマンド実行を書く */
 
 		tokenlist_clear(token);
