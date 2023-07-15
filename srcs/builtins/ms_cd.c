@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 14:08:10 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/13 17:55:15 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/14 12:43:14 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	ft_cd(t_directory *dir, char *path)
 
 	if (ft_realpath(path, resolved_path) == NULL)
 	{
-		write(STDERR_FILENO, "cd: no such file or directory", 19);
+		write(STDERR_FILENO, "cd: no such file or directory", 29);
 		write(STDERR_FILENO, ": ", 2);
 		write(STDERR_FILENO, path, ft_strlen(path));
 		write(STDERR_FILENO, "\n", 1);
@@ -86,7 +86,7 @@ int	ft_cd(t_directory *dir, char *path)
 	}
 	if (chdir(resolved_path) != 0)
 	{
-		write(STDERR_FILENO, "cd: no such file or directory", 19);
+		write(STDERR_FILENO, "cd: no such file or directory", 29);
 		write(STDERR_FILENO, ": ", 2);
 		write(STDERR_FILENO, path, ft_strlen(path));
 		write(STDERR_FILENO, "\n", 1);
