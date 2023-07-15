@@ -6,60 +6,49 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 14:08:10 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/14 12:43:14 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/15 14:54:18 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-// static size_t	ft_strlen(const char *s)
-// {
-// 	size_t	i;
+static int	check_permission(char *path)
+{
+	struct stat	statbuf;
 
-// 	if (s == NULL)
-// 		return (0);
-// 	i = 0;
-// 	while (s[i])
-// 		i++;
-// 	return (i);
-// }
+	if (stat(path, &statbuf) != 0)
+	{
+		perror("stat failed");
+		return (FAILURE);
+	}
+	if ((statbuf.st_mode & S_IRUSR) == 0)
+	{
+		write(STDERR_FILENO, "cd: Permission denied", 21);
+		write(STDERR_FILENO, ": ", 2);
+		write(STDERR_FILENO, path, ft_strlen(path));
+		write(STDERR_FILENO, "\n", 1);
+		return (FAILURE);
+	}
+	return (SUCCESS);
+}
 
-// static void	*ft_memcpy(void *dst, const void *src, size_t n)
-// {
-// 	size_t		i;
-// 	char		*to;
-// 	const char	*from;
+static int	check_fd_o_dir(char *path)
+{
+	int	fd;
 
-// 	to = (char *)dst;
-// 	from = (const char *)src;
-// 	if (dst == NULL && src == NULL)
-// 		return (NULL);
-// 	i = 0;
-// 	while (i < n)
-// 	{
-// 		to[i] = from[i];
-// 		i++;
-// 	}
-// 	return (dst);
-// }
-
-// static size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
-// {
-// 	size_t	srclen;
-
-// 	srclen = ft_strlen(src);
-// 	if (srclen + 1 < dstsize)
-// 	{
-// 		ft_memcpy(dst, src, srclen + 1);
-// 		dst[srclen] = '\0';
-// 	}
-// 	else if (dstsize != 0)
-// 	{
-// 		ft_memcpy(dst, src, dstsize - 1);
-// 		dst[dstsize - 1] = '\0';
-// 	}
-// 	return (srclen);
-// }
+	fd = open(path, O_RDONLY);
+	if (fd > 0)
+	{
+		write(STDERR_FILENO, "cd: not a directory", 19);
+		write(STDERR_FILENO, ": ", 2);
+		write(STDERR_FILENO, path, ft_strlen(path));
+		write(STDERR_FILENO, "\n", 1);
+		close(fd);
+		return (FAILURE);
+	}
+	close(fd);
+	return (SUCCESS);
+}
 
 static char	*ft_realpath(const char *path, char *resolved_path)
 {
@@ -78,6 +67,8 @@ int	ft_cd(t_directory *dir, char *path)
 
 	if (ft_realpath(path, resolved_path) == NULL)
 	{
+		if (check_fd_o_dir(path) || check_permission(path))
+			return (FAILURE);
 		write(STDERR_FILENO, "cd: no such file or directory", 29);
 		write(STDERR_FILENO, ": ", 2);
 		write(STDERR_FILENO, path, ft_strlen(path));
