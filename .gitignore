@@ -7,6 +7,6 @@ a.out*
 *.o
 *.d
 */debug*
-*/*/debug*
+# */*/debug*
 README.md
 *.dSYM
