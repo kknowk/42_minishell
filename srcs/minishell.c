@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/16 19:31:55 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/16 19:46:57 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	minishell(char *envp[])
 	struct sigaction	sa;
 	char				*line;
 	t_token				*token;
+	t_node				*node;
 	t_directory			dir;
 	t_env_var			*env_vars;
 
@@ -62,7 +63,8 @@ void	minishell(char *envp[])
 		else
 			add_history(line); // lineが'\0'のときは履歴に登録しない
 		token = lexer(line);
-		parser(token);
+		node = parser(token);
+		(void)node;
 		ft_select(token, &dir, &env_vars);
 		if (g_interrupted == 1)
 		{
