@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:54:35 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/14 18:39:23 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/16 16:13:57 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define BUILTINS_H
 
 # include <string.h>
+# include <ctype.h>
 
 # include "minishell.h"
 
@@ -32,6 +33,7 @@ typedef struct s_env_var
 typedef struct s_directory
 {
 	char	path[PATH_MAX];
+	int		error;
 }	t_directory;
 
 int			ft_echo(char **str, int max_words);
@@ -43,7 +45,7 @@ int			ft_cd(t_directory *dir, char *path);
 
 int			error_failure(char *str);
 void		error_put(char *str);
-void		error_str(char *str);
+int			error_str(char *str);
 size_t		ft_strcspn(const char *s1r, const char *s2r);
 size_t		ft_strspn(const char *s1, const char *s2);
 
@@ -55,7 +57,7 @@ t_env_var	*create_env_vars(char *envp[]);
 // 場所は任せた！！ by minabe
 void		ft_select(t_token *token, t_directory *dir, t_env_var **env_vars);
 
-void		execute_command(char *command);
+int			execute_command(char *command);
 void		ft_exit(void);
 
 #endif

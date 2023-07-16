@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/14 17:54:35 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/16 15:50:10 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	minishell(char *envp[])
 	if (getcwd(dir.path, sizeof(dir.path)) == NULL)
 		exit(1);
 	rl_outstream = stderr; // defoultがstdoutのため
+	dir.error = 0;
 	while (true)
 	{
 		line = readline("minishell$ ");
