@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:26:36 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/15 13:58:30 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/16 16:14:55 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,32 @@
 
 void	ft_select(t_token *token, t_directory *dir, t_env_var **env_vars)
 {
-	t_env_var	*current;
+	t_env_var			*current;
 
 	current = *env_vars;
 	if (token->data == NULL)
 		return ;
 	if (!ft_strcmp(token->data, "pwd"))
-		ft_pwd(dir);
+		dir->error = ft_pwd(dir);
 	if (!ft_strcmp(token->data, "cd"))
-		ft_cd(dir, token->next->data);
+		dir->error = ft_cd(dir, token->next->data);
 	if (!ft_strcmp(token->data, "exit"))
 		ft_exit();
 	if (!ft_strcmp(token->data, "env"))
-		ft_env(*env_vars);
+		dir->error = ft_env(*env_vars);
 	if (!ft_strcmp(token->data, "export"))
 	{
 		if (ft_export(env_vars, token->next->data))
 			exit(1);
+		else
+			dir->error = 0;
 	}
 	if (!ft_strcmp(token->data, "unset"))
-		ft_unset(env_vars, token->next->data);
+		dir->error = ft_unset(env_vars, token->next->data);
+	if (!ft_strcmp(token->data, "$?"))
+	{
+		printf("%d\n", dir->error);
+	}
 	else if (ft_strcmp(token->data, "cd") && ft_strcmp(token->data, "pwd"))
 	{
 		if (access(token->data, X_OK) == 0)
@@ -53,7 +59,7 @@ void	ft_select(t_token *token, t_directory *dir, t_env_var **env_vars)
 			}
 		}
 		else
-			execute_command(token->data);
+			dir->error = execute_command(token->data);
 	}
 }
 

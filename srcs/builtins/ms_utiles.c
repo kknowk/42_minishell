@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 13:33:45 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/14 16:35:03 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/16 16:12:41 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,14 @@ void	error_put(char *str)
 	exit(1);
 }
 
-void	error_str(char *str)
+int	error_str(char *str)
 {
 	write(STDERR_FILENO, "bash", 4);
 	write(STDERR_FILENO, ": ", 2);
 	write(STDERR_FILENO, str, ft_strlen(str));
 	write(STDERR_FILENO, ": command not found", 19);
 	write(STDERR_FILENO, "\n", 1);
+	return (FAILURE);
 }
 
 size_t	ft_strcspn(const char *s1r, const char *s2r)
