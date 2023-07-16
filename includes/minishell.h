@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/13 19:29:44 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/16 17:26:15 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@
 # include "token.h"
 # include "libft.h"
 # include "builtins.h"
+
+# ifndef DEBUG
+#  define DEBUG 1
+# endif
 
 void	minishell(char *envp[]);
 

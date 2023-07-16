@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/15 14:26:03 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/15 17:43:49 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	minishell(char *envp[])
 		else
 			add_history(line); // lineが'\0'のときは履歴に登録しない
 		token = lexer(line);
+		parser(token);
 		ft_select(token, &dir, &env_vars);
 		if (g_interrupted == 1)
 		{
