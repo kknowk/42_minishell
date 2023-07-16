@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/16 18:50:21 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/16 19:31:55 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,6 @@ void	minishell(char *envp[])
 			g_interrupted = 0;
 			continue ;
 		}
-		// if (!ft_strcmp(token->next->data, "pwd"))
-		// 	ft_pwd(&dir);
-		if (g_interrupted)
-			continue ;
-		/* ここにpercerやエクスパンション、コマンド実行を書く */
 		tokenlist_clear(token);
 		free(line);
 	}

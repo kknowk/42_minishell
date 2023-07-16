@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:41:09 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/16 18:37:58 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/16 19:16:31 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	store_data(t_node *node, t_token **token)
 	size = data_size((*token));
 	printf("size: %zu\n", size);
 	node->data = ft_calloc(size + 1, sizeof(char *));
-	if (!node->data) // エラー処理いる？？
+	if (!node->data) // エラー処理必要
 		exit(EXIT_FAILURE);
 	i = 0;
 	while (i < size + 1 && (*token)->type != CHAR_PIPE)
@@ -70,13 +70,11 @@ t_node	*parser(t_token *token)
 	t_node	*node;
 	t_node	*left;
 	t_node	*right;
-	
 
 	node = node_new();
 	store_data(node, &token);
 	while (token != NULL && token->type == CHAR_PIPE)
 	{
-		printf("data: %s\n", token->data);
 		token = token->next;
 		left = node;
 		right = node_new();
