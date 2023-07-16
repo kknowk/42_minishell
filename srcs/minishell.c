@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/15 17:43:49 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/16 18:50:21 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	minishell(char *envp[])
 	if (getcwd(dir.path, sizeof(dir.path)) == NULL)
 		exit(1);
 	rl_outstream = stderr; // defoultがstdoutのため
+	dir.error = 0;
 	while (true)
 	{
 		line = readline("minishell$ ");

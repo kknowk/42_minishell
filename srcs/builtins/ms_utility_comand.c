@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 17:10:32 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/14 18:03:11 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/16 16:13:04 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	*add_current_directory_to_path(void)
 	}
 }
 
-static void	helper_execute(char	*args[PATH_MAX])
+static int	helper_execute(char	*args[PATH_MAX])
 {
 	char	*path;
 	char	*path_copy;
@@ -81,8 +81,8 @@ static void	helper_execute(char	*args[PATH_MAX])
 	char	command_path[PATH_MAX];
 
 	path = add_current_directory_to_path();
-	ms_free(path);
 	path_copy = ft_strdup(path);
+	ms_free(path);
 	if (path_copy == NULL)
 		error_put("Memory allocation failed");
 	path_token = ft_strtok(path_copy, ":");
@@ -93,15 +93,15 @@ static void	helper_execute(char	*args[PATH_MAX])
 		if (access(command_path, X_OK) == 0)
 		{
 			free(path_copy);
-			return ;
+			return (SUCCESS);
 		}
 		path_token = ft_strtok(NULL, ":");
 	}
 	free(path_copy);
-	error_str(args[0]);
+	return (error_str(args[0]));
 }
 
-void	execute_command(char *command)
+int	execute_command(char *command)
 {
 	char	command_buffer[PATH_MAX];
 	char	*command_name;
@@ -118,7 +118,7 @@ void	execute_command(char *command)
 		args_count++;
 	}
 	args[args_count] = NULL;
-	helper_execute(args);
+	return (helper_execute(args));
 }
 
 // #include <string.h>
