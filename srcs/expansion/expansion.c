@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 15:13:18 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/17 14:22:58 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/17 15:53:48 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,19 +77,34 @@ char	*expand_and_replace(char *input, t_env_var **head)
 	start = input;
 	while (*start != '\0')
 	{
-		if (*start == '$' && *(start + 1) == '{')
+		if (*start == '$')
 		{
-			end = ft_strstr(start, "}");
-			if (end)
+			if (*(start + 1) == '{')
 			{
-				ft_strlcpy(varname, start + 2, end - start - 1);
-				value = search(head, varname);
-				if (value)
-					ft_strcat(result, value);
-				start = end + 1;
+				end = ft_strstr(start, "}");
+				if (end)
+				{
+					ft_strlcpy(varname, start + 2, end - start - 1);
+					start = end + 1;
+				}
+				else
+					break ;
 			}
 			else
-				break ;
+			{
+				end = start + 1;
+				while (ft_isalnum(*end) || *end == '_')
+					end++;
+				ft_strlcpy(varname, start + 1, end - start);
+				start = end;
+			}
+			value = search(head, varname);
+			if (value)
+			{
+				temp = result;
+				result = ft_strjoin(result, value);
+				free(temp);
+			}
 		}
 		else
 		{

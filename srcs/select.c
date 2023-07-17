@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:26:36 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/17 13:34:16 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/17 16:02:35 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,20 @@ void	ft_select(t_token *token, t_directory *dir, t_env_var **env_vars)
 {
 	t_env_var	*current;
 	char		*str;
+	char		*str1;
 
 	current = *env_vars;
 	if (token->data == NULL)
 		return ;
 	str = doru_handl(token->data, dir, env_vars);
-	if (!str)
+	if (token->next)
+		str1 = doru_handl(token->next->data, dir, env_vars);
+	if (!str || !str1)
 		return ;
 	if (!ft_strcmp(str, "pwd"))
 		dir->error = ft_pwd(dir);
 	if (!ft_strcmp(str, "cd"))
-		dir->error = ft_cd(dir, token->next->data);
+		dir->error = ft_cd(dir, str1);
 	if (!ft_strcmp(str, "exit"))
 		ft_exit();
 	if (!ft_strcmp(str, "env"))
@@ -38,7 +41,10 @@ void	ft_select(t_token *token, t_directory *dir, t_env_var **env_vars)
 		if (ft_export(env_vars, token->next->data))
 			exit(1);
 		else
+		{
 			dir->error = 0;
+			return ;
+		}
 	}
 	if (!ft_strcmp(str, "unset"))
 		dir->error = ft_unset(env_vars, token->next->data);

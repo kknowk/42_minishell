@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:04:13 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/15 17:53:42 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/17 15:10:25 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,3 +39,13 @@ t_node	*parser(t_token *token);
 void		debug_parser(t_node *node);
 
 #endif
+
+// ex)
+
+// echo aaa | ls | cat aaaa
+
+// node->data[0] = '|'
+// node->right->data = cat aaaa
+// node->left->data[0] = '|'
+// node->left->left->data = echo aaa
+// node->left->right->data = ls
