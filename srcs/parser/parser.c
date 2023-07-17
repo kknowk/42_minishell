@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:41:09 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/16 21:21:14 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/17 16:55:30 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,6 @@ static size_t	data_size(t_token *token)
 		token = token->next;
 	}
 	return (size);
-}
-
-void	redirect(t_node *node, t_token **token)
-{
-	/* リダイレクトのエラーも追加 */
-	(void)node;
-	puts("redirect");
-	if ((*token)->type == '<' && (*token)->next->type == '<')
-		printf("D_LESSER\n");
 }
 
 void	store_data(t_node *node, t_token **token)
