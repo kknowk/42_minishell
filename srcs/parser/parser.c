@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:41:09 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/16 19:16:31 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/16 21:21:14 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static t_node	*node_new(void)
 		exit(EXIT_FAILURE);
 	node->type = NODE_COMMAND;
 	node->data = NULL;
+	node->redirects = NULL;
 	node->right = NULL;
 	node->left = NULL;
 	return (node);
@@ -41,21 +42,30 @@ static size_t	data_size(t_token *token)
 	return (size);
 }
 
+void	redirect(t_node *node, t_token **token)
+{
+	/* リダイレクトのエラーも追加 */
+	(void)node;
+	puts("redirect");
+	if ((*token)->type == '<' && (*token)->next->type == '<')
+		printf("D_LESSER\n");
+}
+
 void	store_data(t_node *node, t_token **token)
 {
 	size_t	i;
 	size_t	size;
 
 	size = data_size((*token));
-	printf("size: %zu\n", size);
 	node->data = ft_calloc(size + 1, sizeof(char *));
 	if (!node->data) // エラー処理必要
 		exit(EXIT_FAILURE);
 	i = 0;
 	while (i < size + 1 && (*token)->type != CHAR_PIPE)
 	{
-		printf("#%zu data: %s\n", i, (*token)->data);
 		node->data[i] = (*token)->data;
+		if ((*token)->type == '<' || (*token)->type == '>')
+			redirect(node, token);
 		if((*token)->next != NULL)
 			(*token) = (*token)->next;
 		else

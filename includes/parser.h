@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:04:13 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/15 17:53:42 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/16 20:54:33 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ typedef enum e_nodetype
 
 typedef struct s_redirects
 {
+	char				*direction;
+	char				*filename;
 	struct s_redirects	*prev;
 	struct s_redirects	*next;
 }	t_redirects;
@@ -31,6 +33,7 @@ typedef struct s_node
 {
 	t_nodetype		type;
 	char			**data;
+	t_redirects		*redirects;
 	struct s_node	*right;
 	struct s_node	*left;
 }	t_node;
