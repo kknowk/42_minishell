@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 14:08:10 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/16 15:32:56 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/17 13:21:18 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ static int	check_permission(char *path)
 
 	if (stat(path, &statbuf) != 0)
 	{
-		perror("stat failed");
+		write(STDERR_FILENO, "cd: no such file or directory", 29);
+		write(STDERR_FILENO, ": ", 2);
+		write(STDERR_FILENO, path, ft_strlen(path));
+		write(STDERR_FILENO, "\n", 1);
 		return (FAILURE);
 	}
 	if ((statbuf.st_mode & S_IRUSR) == 0)
@@ -68,7 +71,9 @@ int	ft_cd(t_directory *dir, char *path)
 	if (ft_realpath(path, resolved_path) == NULL)
 	{
 		if (check_fd_o_dir(path) || check_permission(path))
+		{
 			return (FAILURE);
+		}
 		write(STDERR_FILENO, "cd: no such file or directory", 29);
 		write(STDERR_FILENO, ": ", 2);
 		write(STDERR_FILENO, path, ft_strlen(path));

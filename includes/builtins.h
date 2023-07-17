@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:54:35 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/16 16:13:57 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/17 12:39:36 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,9 @@ void		ft_select(t_token *token, t_directory *dir, t_env_var **env_vars);
 
 int			execute_command(char *command);
 void		ft_exit(void);
+
+char		*doru_handl(char *str, t_directory *dir, t_env_var **head);
+char		*search(t_env_var **head, char *key);
+char		*expand_and_replace(char *input, t_env_var **head);
 
 #endif

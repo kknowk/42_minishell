@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 15:13:18 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/16 15:38:39 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/17 14:22:58 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,20 @@ int	has_error(char *input)
 	return (0);
 }
 
-void	expand_and_print(char *input)
+char	*expand_and_replace(char *input, t_env_var **head)
 {
 	char		varname[256];
 	char		*start;
 	char		*end;
 	char		*value;
+	char		*result;
+	char		*buffer;
+	char		*temp;
 
+	result = (char *)malloc(INT_MAX * sizeof(char));
+	if (!result)
+		return (NULL);
+	result[0] = '\0';
 	start = input;
 	while (*start != '\0')
 	{
@@ -75,11 +82,10 @@ void	expand_and_print(char *input)
 			end = ft_strstr(start, "}");
 			if (end)
 			{
-				strncpy(varname, start + 2, end - start - 2);
-				varname[end - start - 2] = '\0';
-				value = getenv(varname);
+				ft_strlcpy(varname, start + 2, end - start - 1);
+				value = search(head, varname);
 				if (value)
-					printf("%s", value);
+					ft_strcat(result, value);
 				start = end + 1;
 			}
 			else
@@ -87,12 +93,21 @@ void	expand_and_print(char *input)
 		}
 		else
 		{
-			ft_putchar(*start);
+			buffer = (char *)malloc(2 * sizeof(char));
+			if (!buffer)
+				return (NULL);
+			buffer[0] = *start;
+			buffer[1] = '\0';
+			temp = result;
+			result = ft_strjoin(result, buffer);
+			free(temp);
+			free(buffer);
 			start++;
 		}
 	}
-	printf("\n");
+	return (result);
 }
+
 
 // int	main(int ac, char *av[])
 // {
