@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 16:13:54 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/18 18:47:04 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/18 20:44:02 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,8 @@ typedef struct s_token
 t_token	*tokenlistadd_back(t_token *token, char *data);
 void	tokenlist_clear(t_token *token);
 t_token	*token_new(char *data);
+
+bool	is_quote(char c);
+bool	is_redirect(char c);
 
 #endif

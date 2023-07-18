@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/15 14:08:57 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/18 20:36:38 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "minishell.h"
 # include "token.h"
+
+# define D_REDIR_SIZE 2
 
 typedef enum e_token_state
 {
