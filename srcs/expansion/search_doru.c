@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 16:51:32 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/17 14:34:33 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/18 14:37:06 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,53 +26,44 @@ char	*search(t_env_var **head, char *key)
 	return (NULL);
 }
 
-static char	*cpy_itoa(char *tmp, char *str, char *common, t_directory *dir)
+static char	*cpy_itoa(char *tmp, char *str, t_directory *dir)
 {
 	char	*num;
-	char	*num2;
+	char	*result;
 
 	num = ft_itoa(dir->error);
-	num2 = ft_itoa(127);
-	if (num && num2)
+	if (!num)
+		return (NULL);
+	result = malloc(ft_strlen(str) + ft_strlen(num) - 1);
+	if (!result)
 	{
-		if (dir->error != 127)
-		{
-			ft_strlcpy(common, str, (tmp - str) + 1);
-			ft_strlcpy(common + (tmp - str), num, 2);
-			ft_strlcpy(common + (tmp - str) + 1, tmp + 2, ft_strlen(tmp) - 1);
-			free(num);
-		}
-		else
-		{
-			ft_strlcpy(common, str, (tmp - str) + 1);
-			ft_strlcpy(common + (tmp - str), num2, 4);
-			ft_strlcpy(common + (tmp - str) + 3, tmp + 2, ft_strlen(tmp) - 1);
-			free(num2);
-		}
-		return (common);
+		free(num);
+		return (NULL);
 	}
-	return (NULL);
+	ft_memcpy(result, str, tmp - str);
+	result[tmp - str] = '\0';
+	ft_strcat(result, num);
+	ft_strcat(result, tmp + 2);
+	free(num);
+	return (result);
 }
 
 char	*doru_handl(char *str, t_directory *dir, t_env_var **head)
 {
 	char	*tmp;
-	char	*common;
 	char	*processed;
 
 	tmp = ft_strchr(str, '$');
 	if (!tmp)
 		return (str);
-	common = (char *)malloc(INT_MAX * sizeof(char));
-	if (!common)
-		return (NULL);
 	while (tmp)
 	{
 		if ((tmp + 1)[0] == '?')
 		{
-			processed = cpy_itoa(tmp, str, common, dir);
+			processed = cpy_itoa(tmp, str, dir);
 			if (processed)
 			{
+				free(str);
 				str = processed;
 				tmp = ft_strchr(str, '$');
 			}
@@ -84,6 +75,7 @@ char	*doru_handl(char *str, t_directory *dir, t_env_var **head)
 			processed = expand_and_replace(str, head);
 			if (processed)
 			{
+				free(str);
 				str = processed;
 				tmp = ft_strchr(str, '$');
 			}

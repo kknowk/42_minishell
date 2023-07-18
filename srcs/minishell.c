@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/17 15:02:49 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/18 14:43:20 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,7 @@ void	minishell(char *envp[])
 			add_history(line); // lineが'\0'のときは履歴に登録しない
 		token = lexer(line);
 		node = parser(token);
-		(void)node;
-		ft_select(token, &dir, &env_vars);
+		ft_select(node->data, &dir, &env_vars);
 		if (g_interrupted == 1)
 		{
 			free(line);
