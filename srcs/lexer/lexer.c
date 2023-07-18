@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:17:39 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/16 17:26:42 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/18 14:19:23 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ void	tokenize(t_lexer *lex, char *str)
 				lex->is_quoted = false;
 				lex->quote_type = 0;
 				lex->word_len++;
-				tokenlistadd_back(lex->token, ft_substr(str, lex->word_start, lex->word_len));
+				tokenlistadd_back(lex->token, ft_substr(str, lex->word_start, lex->word_len)); // substrの引数の型変更する必要あるかも?
 				return ;
 			}
 		}
-		tokenlistadd_back(lex->token, ft_substr(str, lex->word_start, lex->word_len));
+		tokenlistadd_back(lex->token, ft_substr(str, lex->word_start, lex->word_len)); // substrの引数の型変更する必要あるかも?
 	}
 	else
 	{
@@ -62,18 +62,8 @@ void	tokenize(t_lexer *lex, char *str)
 		}
 		else
 		{
-			/* "<<" ">>" の扱いをどうするかParcerに任せる */
-			// if ((str[lex->word_start + lex->word_len] == '<' && str[lex->word_start + lex->word_len + 1] == '<')
-			// 		|| (str[lex->word_start + lex->word_len] == '>' && str[lex->word_start + lex->word_len + 1] == '>'))
-			// {
-			// 	lex->word_len += 2;
-			// 	tokenlistadd_back(lex->token, ft_substr(str, lex->word_start, 2));
-			// }
-			// else
-			// {
-				lex->word_len++;
-				tokenlistadd_back(lex->token, ft_substr(str, lex->word_start, 1));
-			// }
+			lex->word_len++;
+			tokenlistadd_back(lex->token, ft_substr(str, lex->word_start, 1)); // substrの引数の型変更する必要あるかも?
 		}
 	}
 }

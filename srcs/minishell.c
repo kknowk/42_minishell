@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/16 19:46:57 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/18 15:14:53 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <readline/history.h>
 
 volatile sig_atomic_t	g_interrupted = 0;
+int						g_syntax_error;
 
 void	handle_signal(int signal)
 {
@@ -64,6 +65,8 @@ void	minishell(char *envp[])
 			add_history(line); // lineが'\0'のときは履歴に登録しない
 		token = lexer(line);
 		node = parser(token);
+		if (g_syntax_error)
+			puts("syntax error");
 		(void)node;
 		ft_select(token, &dir, &env_vars);
 		if (g_interrupted == 1)
