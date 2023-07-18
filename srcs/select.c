@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:26:36 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/18 15:49:02 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/18 18:41:24 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_select(char **cmds, t_directory *dir, t_env_var **env_vars)
 {
 	t_env_var	*current;
 	char		*str;
-	char		*str1;
+	char		*str1 = NULL;
 
 	current = *env_vars;
 	if (cmds[0] == NULL)
@@ -26,7 +26,7 @@ void	ft_select(char **cmds, t_directory *dir, t_env_var **env_vars)
 	str = doru_handl(cmds[0], dir, env_vars);
 	if (cmds[1])
 		str1 = doru_handl(cmds[1], dir, env_vars);
-	if (!str || !str1)
+	if (!str)
 		return ;
 	if (!ft_strcmp(str, "pwd"))
 		dir->error = ft_pwd(dir);
@@ -53,13 +53,13 @@ void	ft_select(char **cmds, t_directory *dir, t_env_var **env_vars)
 		i++;
 	if (!ft_strcmp(str, "echo"))
 		ft_echo(cmds + 1, i - 1);
-	else if (ft_strcmp(str, "cd") && ft_strcmp(str, "pwd"))
+	else if (ft_strcmp(str, "cd") && ft_strcmp(str, "pwd") && ft_strcmp(str, "unset"))
 	{
-		if (access(str, X_OK) == 0)
+		if (access(cmds[0], X_OK) == 0)
 		{
 			if (fork() == 0)
 			{
-				execve(str, &str, NULL);
+				execve(cmds[0], cmds, NULL);
 				perror("execve failed");
 				exit(1);
 			}
@@ -70,7 +70,7 @@ void	ft_select(char **cmds, t_directory *dir, t_env_var **env_vars)
 			}
 		}
 		else
-			dir->error = execute_command(str) * 127;
+			dir->error = execute_command(str, cmds) * 127;
 	}
 	// if (str)
 	// 	free(str);

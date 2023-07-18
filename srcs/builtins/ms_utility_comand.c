@@ -6,20 +6,20 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 17:10:32 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/17 16:02:02 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/18 17:39:44 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
 static void	execute_command_from_path(char *command_path,
-		char *args[PATH_MAX])
+		char **cmds)
 {
 	if (access(command_path, X_OK) == 0)
 	{
 		if (fork() == 0)
 		{
-			execve(command_path, args, NULL);
+			execve(command_path, cmds, NULL);
 			perror("execve failed");
 			exit(1);
 		}
@@ -73,7 +73,7 @@ char	*add_current_directory_to_path(void)
 	}
 }
 
-static int	helper_execute(char	*args[PATH_MAX])
+static int	helper_execute(char	*args[PATH_MAX], char **cmds)
 {
 	char	*path;
 	char	*path_copy;
@@ -89,7 +89,7 @@ static int	helper_execute(char	*args[PATH_MAX])
 	while (path_token != NULL)
 	{
 		ms_cpca(command_path, path_token, "/", args[0]);
-		execute_command_from_path(command_path, args);
+		execute_command_from_path(command_path, cmds);
 		if (access(command_path, X_OK) == 0)
 		{
 			free(path_copy);
@@ -101,7 +101,7 @@ static int	helper_execute(char	*args[PATH_MAX])
 	return (error_str(args[0]));
 }
 
-int	execute_command(char *command)
+int	execute_command(char *command, char **cmds)
 {
 	char	command_buffer[PATH_MAX];
 	char	*command_name;
@@ -118,7 +118,7 @@ int	execute_command(char *command)
 		args_count++;
 	}
 	args[args_count] = NULL;
-	return (helper_execute(args));
+	return (helper_execute(args, cmds));
 }
 
 // #include <string.h>
