@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:26:36 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/16 16:14:55 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/18 15:49:02 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,41 +14,52 @@
 #include "lexer.h"
 #include "token.h"
 
-void	ft_select(t_token *token, t_directory *dir, t_env_var **env_vars)
+void	ft_select(char **cmds, t_directory *dir, t_env_var **env_vars)
 {
-	t_env_var			*current;
+	t_env_var	*current;
+	char		*str;
+	char		*str1;
 
 	current = *env_vars;
-	if (token->data == NULL)
+	if (cmds[0] == NULL)
 		return ;
-	if (!ft_strcmp(token->data, "pwd"))
+	str = doru_handl(cmds[0], dir, env_vars);
+	if (cmds[1])
+		str1 = doru_handl(cmds[1], dir, env_vars);
+	if (!str || !str1)
+		return ;
+	if (!ft_strcmp(str, "pwd"))
 		dir->error = ft_pwd(dir);
-	if (!ft_strcmp(token->data, "cd"))
-		dir->error = ft_cd(dir, token->next->data);
-	if (!ft_strcmp(token->data, "exit"))
+	if (!ft_strcmp(str, "cd"))
+		dir->error = ft_cd(dir, cmds[1], env_vars);
+	if (!ft_strcmp(str, "exit"))
 		ft_exit();
-	if (!ft_strcmp(token->data, "env"))
+	if (!ft_strcmp(str, "env"))
 		dir->error = ft_env(*env_vars);
-	if (!ft_strcmp(token->data, "export"))
+	if (!ft_strcmp(str, "export"))
 	{
-		if (ft_export(env_vars, token->next->data))
+		if (ft_export(env_vars, str1))
 			exit(1);
 		else
+		{
 			dir->error = 0;
+			return ;
+		}
 	}
-	if (!ft_strcmp(token->data, "unset"))
-		dir->error = ft_unset(env_vars, token->next->data);
-	if (!ft_strcmp(token->data, "$?"))
+	if (!ft_strcmp(str, "unset"))
+		dir->error = ft_unset(env_vars, str1);
+	int	i = 0;
+	while (cmds[i])
+		i++;
+	if (!ft_strcmp(str, "echo"))
+		ft_echo(cmds + 1, i - 1);
+	else if (ft_strcmp(str, "cd") && ft_strcmp(str, "pwd"))
 	{
-		printf("%d\n", dir->error);
-	}
-	else if (ft_strcmp(token->data, "cd") && ft_strcmp(token->data, "pwd"))
-	{
-		if (access(token->data, X_OK) == 0)
+		if (access(str, X_OK) == 0)
 		{
 			if (fork() == 0)
 			{
-				execve(token->data, &token->data, NULL);
+				execve(str, &str, NULL);
 				perror("execve failed");
 				exit(1);
 			}
@@ -59,12 +70,12 @@ void	ft_select(t_token *token, t_directory *dir, t_env_var **env_vars)
 			}
 		}
 		else
-			dir->error = execute_command(token->data);
+			dir->error = execute_command(str) * 127;
 	}
+	// if (str)
+	// 	free(str);
 }
 
-	// if (!ft_strcmp(token->data, "echo"))
-	// 	ft_echo(toke->next->data, int max_words);
 	
 	// while (current)
 	// {

@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:54:35 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/16 16:13:57 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/18 15:28:25 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int			ft_env(t_env_var *head);
 int			ft_export(t_env_var **head, char *env_str);
 int			ft_unset(t_env_var **head, char *key);
 int			ft_pwd(t_directory *dir);
-int			ft_cd(t_directory *dir, char *path);
+int			ft_cd(t_directory *dir, char *path, t_env_var **head);
 
 int			error_failure(char *str);
 void		error_put(char *str);
@@ -55,9 +55,13 @@ void		ms_cpca(char *s1, char *s2, char *s3, char *s4);
 t_env_var	*create_env_vars(char *envp[]);
 
 // 場所は任せた！！ by minabe
-void		ft_select(t_token *token, t_directory *dir, t_env_var **env_vars);
+void		ft_select(char **cmds, t_directory *dir, t_env_var **env_vars);
 
 int			execute_command(char *command);
 void		ft_exit(void);
+
+char		*doru_handl(char *str, t_directory *dir, t_env_var **head);
+char		*search(t_env_var **head, char *key);
+char		*expand_and_replace(char *input, t_env_var **head);
 
 #endif

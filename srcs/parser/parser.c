@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:41:09 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/17 16:55:30 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/18 15:58:27 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ void	store_data(t_node *node, t_token **token)
 	while (i < size + 1 && (*token)->type != CHAR_PIPE)
 	{
 		node->data[i] = (*token)->data;
-		if ((*token)->type == '<' || (*token)->type == '>')
-			redirect(node, token);
+		// if ((*token)->type == '<' || (*token)->type == '>')
+		// 	redirect(node, token);
 		if((*token)->next != NULL)
 			(*token) = (*token)->next;
 		else

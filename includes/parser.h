@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:04:13 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/17 18:31:43 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/18 15:55:44 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,3 +51,13 @@ void		debug_parser(t_node *node);
 void	redirect(t_node *node, t_token **token);
 
 #endif
+
+// ex)
+
+// echo aaa | ls | cat aaaa
+
+// node->data[0] = '|'
+// node->right->data = cat aaaa
+// node->left->data[0] = '|'
+// node->left->left->data = echo aaa
+// node->left->right->data = ls
