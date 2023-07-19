@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:26:36 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/19 14:48:49 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/19 19:18:00 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,25 @@ void	ft_select(char **cmds, t_directory *dir, t_env_var **env_vars)
 	if (cmds[0] == NULL)
 		return ;
 	int j = 0;
-	while (cmds[j])
+	if (search_quot(cmds))
 	{
-		cmds[j] = doru_handl(cmds[j], dir, env_vars);
-		j++;
+		while (cmds[j])
+		{
+			cmds[j] = quot_handl(cmds[j], dir, env_vars);
+			j++;
+		}
+	}
+	else
+	{
+		while (cmds[j])
+		{
+			cmds[j] = doru_handl(cmds[j], dir, env_vars);
+			j++;
+		}
 	}
 	if (!cmds)
+		return ;
+	if (cmds[0][0] == '\0')
 		return ;
 	if (!ft_strcmp(cmds[0], "pwd"))
 		dir->error = ft_pwd(dir);

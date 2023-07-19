@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:54:35 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/18 18:21:22 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/19 15:29:25 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,9 @@ char		*doru_handl(char *str, t_directory *dir, t_env_var **head);
 char		*search(t_env_var **head, char *key);
 char		*expand_and_replace(char *input, t_env_var **head);
 
-void		handle_commands(t_node *node, t_directory *dir, t_env_var **env_vars);
+void		handle_commands(t_node *node, t_directory *dir,
+				t_env_var **env_vars);
+char		*search_quot(char **cmds);
+char		*quot_handl(char *str, t_directory *dir, t_env_var **env_vars);
 
 #endif

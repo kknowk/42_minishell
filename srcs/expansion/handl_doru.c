@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   search_doru.c                                      :+:      :+:    :+:   */
+/*   handl_doru.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 16:51:32 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/18 14:37:06 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/19 19:00:25 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ char	*search(t_env_var **head, char *key)
 	current = *head;
 	while (current)
 	{
-		if (ft_strcmp(current->key, key) == 0)
+		if (ft_strncmp(current->key, key, ft_strlen(key) + 1) == 0)
+		{
 			return (current->value);
+		}
 		current = current->next;
 	}
 	return (NULL);
