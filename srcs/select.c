@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:26:36 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/18 18:41:24 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/19 14:48:49 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,29 @@
 void	ft_select(char **cmds, t_directory *dir, t_env_var **env_vars)
 {
 	t_env_var	*current;
-	char		*str;
-	char		*str1 = NULL;
 
 	current = *env_vars;
 	if (cmds[0] == NULL)
 		return ;
-	str = doru_handl(cmds[0], dir, env_vars);
-	if (cmds[1])
-		str1 = doru_handl(cmds[1], dir, env_vars);
-	if (!str)
-		return ;
-	if (!ft_strcmp(str, "pwd"))
-		dir->error = ft_pwd(dir);
-	if (!ft_strcmp(str, "cd"))
-		dir->error = ft_cd(dir, cmds[1], env_vars);
-	if (!ft_strcmp(str, "exit"))
-		ft_exit();
-	if (!ft_strcmp(str, "env"))
-		dir->error = ft_env(*env_vars);
-	if (!ft_strcmp(str, "export"))
+	int j = 0;
+	while (cmds[j])
 	{
-		if (ft_export(env_vars, str1))
+		cmds[j] = doru_handl(cmds[j], dir, env_vars);
+		j++;
+	}
+	if (!cmds)
+		return ;
+	if (!ft_strcmp(cmds[0], "pwd"))
+		dir->error = ft_pwd(dir);
+	if (!ft_strcmp(cmds[0], "cd"))
+		dir->error = ft_cd(dir, cmds[1], env_vars);
+	if (!ft_strcmp(cmds[0], "exit"))
+		ft_exit();
+	if (!ft_strcmp(cmds[0], "env"))
+		dir->error = ft_env(*env_vars);
+	if (!ft_strcmp(cmds[0], "export"))
+	{
+		if (ft_export(env_vars, cmds[1]))
 			exit(1);
 		else
 		{
@@ -46,14 +47,14 @@ void	ft_select(char **cmds, t_directory *dir, t_env_var **env_vars)
 			return ;
 		}
 	}
-	if (!ft_strcmp(str, "unset"))
-		dir->error = ft_unset(env_vars, str1);
+	if (!ft_strcmp(cmds[0], "unset"))
+		dir->error = ft_unset(env_vars, cmds[1]);
 	int	i = 0;
 	while (cmds[i])
 		i++;
-	if (!ft_strcmp(str, "echo"))
-		ft_echo(cmds + 1, i - 1);
-	else if (ft_strcmp(str, "cd") && ft_strcmp(str, "pwd") && ft_strcmp(str, "unset"))
+	if (!ft_strcmp(cmds[0], "echo"))
+		ft_echo(cmds, i - 1);
+	else if (ft_strcmp(cmds[0], "cd") && ft_strcmp(cmds[0], "pwd") && ft_strcmp(cmds[0], "unset"))
 	{
 		if (access(cmds[0], X_OK) == 0)
 		{
@@ -70,7 +71,7 @@ void	ft_select(char **cmds, t_directory *dir, t_env_var **env_vars)
 			}
 		}
 		else
-			dir->error = execute_command(str, cmds) * 127;
+			dir->error = execute_command(cmds[0], cmds) * 127;
 	}
 	// if (str)
 	// 	free(str);
