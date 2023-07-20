@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/18 15:56:14 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/20 15:35:05 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	minishell(char *envp[])
 		node = parser(token);
 		if (g_syntax_error)
 			puts("syntax error");
-		ft_select(node->data, &dir, &env_vars);
 		handle_commands(node, &dir, &env_vars);
 		if (g_interrupted == 1)
 		{

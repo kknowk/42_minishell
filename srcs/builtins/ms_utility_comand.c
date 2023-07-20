@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 17:10:32 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/18 17:39:44 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/20 13:52:25 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,28 @@
 static void	execute_command_from_path(char *command_path,
 		char **cmds)
 {
-	if (access(command_path, X_OK) == 0)
+	struct stat	s;
+
+	if (stat(command_path, &s) == 0)
 	{
-		if (fork() == 0)
+		if (S_ISDIR(s.st_mode))
 		{
-			execve(command_path, cmds, NULL);
-			perror("execve failed");
-			exit(1);
-		}
-		else
-		{
-			wait(NULL);
+			printf("%s: is a directory\n", command_path);
 			return ;
+		}
+		else if (access(command_path, X_OK) == 0)
+		{
+			if (fork() == 0)
+			{
+				execve(command_path, cmds, NULL);
+				perror("execve failed");
+				exit(1);
+			}
+			else
+			{
+				wait(NULL);
+				return ;
+			}
 		}
 	}
 }

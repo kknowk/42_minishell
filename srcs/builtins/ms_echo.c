@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:48:01 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/19 13:34:29 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/20 12:54:09 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,9 @@ int	ft_echo(char **str, int max_words)
 			i++;
 		}
 		if (str[i])
-			printf("%s", str[i]);
+		{
+			ft_putstr(str[i]);
+		}
 	}
 	else
 		helper_ft_echo(str, max_words);
