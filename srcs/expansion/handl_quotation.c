@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 15:09:39 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/19 17:56:02 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/20 15:38:33 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ typedef enum e_parse_state
 	STATE_IN_DQUOTE
 }	t_parse_state;
 
-int	get_var_length(const char *str)
+int get_var_length(const char *str)
 {
 	int	len;
 
 	len = 1;
-	while (str[len] != '\0'
-		&& str[len] != '\"' && str[len] != '$' && !isspace(str[len]))
+	while (str[len] != '\0' && str[len] != '\"' && str[len] != '\'' && !isspace(str[len]))
+// 	while (str[len] != '\0' && str[len] != '\"' && str[len] != '$' && !isspace(str[len]))
 		len++;
 	return (len);
 }
@@ -72,6 +72,7 @@ void	process_dquote_state(const char *str, size_t *i, char *result, int *j,
 	}
 	else
 		result[(*j)++] = str[(*i)++];
+	*state = STATE_NORMAL;
 }
 
 char	*quot_handl(char *str, t_directory *dir, t_env_var **env_vars)
@@ -99,6 +100,12 @@ char	*quot_handl(char *str, t_directory *dir, t_env_var **env_vars)
 				state = STATE_IN_DQUOTE;
 			}
 			else
+			{
+				// if (result[j] == '\0')
+				// {
+				// 	result[j] = str[i++];
+				// 	j++;
+				// }
 				result[j++] = str[i++];
 		}
 		else if (state == STATE_IN_DQUOTE)

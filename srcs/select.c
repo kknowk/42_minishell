@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:26:36 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/19 19:18:00 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/20 14:06:31 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,18 +69,29 @@ void	ft_select(char **cmds, t_directory *dir, t_env_var **env_vars)
 		ft_echo(cmds, i - 1);
 	else if (ft_strcmp(cmds[0], "cd") && ft_strcmp(cmds[0], "pwd") && ft_strcmp(cmds[0], "unset"))
 	{
-		if (access(cmds[0], X_OK) == 0)
+			struct stat	s;
+
+		if (stat(cmds[0], &s) == 0)
 		{
-			if (fork() == 0)
+			if (S_ISDIR(s.st_mode))
 			{
-				execve(cmds[0], cmds, NULL);
-				perror("execve failed");
-				exit(1);
-			}
-			else
-			{
-				wait(NULL);
+				printf("%s: is a directory\n", cmds[0]);
+				dir->error = 126;
 				return ;
+			}
+			else if (access(cmds[0], X_OK) == 0)
+			{
+				if (fork() == 0)
+				{
+					execve(cmds[0], cmds, NULL);
+					perror("execve failed");
+					exit(1);
+				}
+				else
+				{
+					wait(NULL);
+					return ;
+				}
 			}
 		}
 		else
