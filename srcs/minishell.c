@@ -68,6 +68,7 @@ void	minishell(char *envp[])
 		if (g_syntax_error)
 			puts("syntax error");
 		ft_select(node->data, &dir, &env_vars);
+		handle_commands(node, &dir, &env_vars);
 		if (g_interrupted == 1)
 		{
 			free(line);
