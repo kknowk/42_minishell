@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 16:06:37 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/20 20:46:38 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/20 21:08:22 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,15 @@ void	redirect(t_node *node, t_token **token)
 		node->redirects->fd = STDIN_FILENO;
 	}
 	else if ((*token)->next->type == CHAR_GREATER)
+	{
 		node->redirects->type = REDIRECT_OUTPUT;
+		node->redirects->fd = STDOUT_FILENO;
+	}
 	else if ((*token)->next->type == CHAR_D_LESSER)
+	{
 		node->redirects->type = REDIRECT_HERE_DOC;
+		node->redirects->fd = STDOUT_FILENO;
+	}
 	else
 		node->redirects->type = REDIRECT_APPEND_OUTPUT;
 	
