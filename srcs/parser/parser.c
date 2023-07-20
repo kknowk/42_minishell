@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:41:09 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/18 18:45:36 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/20 15:21:33 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,15 @@ void	store_data(t_node *node, t_token **token)
 	size_t	size;
 
 	size = data_size((*token));
-	// printf("size: %zu\n", size);
 	node->data = ft_calloc(size + 1, sizeof(char *));
 	if (!node->data) // エラー処理必要
 		exit(EXIT_FAILURE);
 	i = 0;
 	while (i < size + 1 && (*token)->type != CHAR_PIPE)
 	{
-		// printf("#%zu data: %s\n", i, (*token)->data);
 		node->data[i] = (*token)->data;
-		// if ((*token)->type == '<' || (*token)->type == '>')
-		// 	redirect(node, token);
+		if (is_redirect((*token)->type))
+			redirect(node, token);
 		if((*token)->next != NULL)
 			(*token) = (*token)->next;
 		else
