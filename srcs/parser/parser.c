@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:41:09 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/20 15:23:28 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/20 19:08:13 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,7 @@ void	store_data(t_node *node, t_token **token)
 	{
 		node->data[i] = (*token)->data;
 		if (is_redirect((*token)->type))
-			printf("redirect!!!\n");
-			// redirect(node, token);
+			redirect(node, token);
 		if((*token)->next != NULL)
 			(*token) = (*token)->next;
 		else
