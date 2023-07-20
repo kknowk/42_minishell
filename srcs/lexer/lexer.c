@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:17:39 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/18 20:36:40 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/20 18:22:04 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,67 +27,62 @@ t_lexer	*init_lexer(t_lexer *lex)
 	return (lex);
 }
 
-bool	is_special(char c)
+static void	switch_quote_state(t_lexer *lex, char c)
 {
-	if (c == '\'' || c == '\"' || c == '|' || c == ' ' || c == '<' || c == '>')
-		return (true);
-	return (false);
-}
-
-static void	tokenize_quoted(t_lexer *lex, char *str)
-{
-	size_t	start;
-
-	start = lex->word_start;
-	while (str[start + lex->word_len] != '\0')
+	if (lex->is_quoted == false && is_quote(c))
 	{
-		lex->word_len++;
-		if (str[start + lex->word_len] == lex->quote_type)
-		{
-			lex->is_quoted = false;
-			lex->quote_type = 0;
-			lex->word_len++;
-			tokenlistadd_back(lex->token, ft_substr(str, start, lex->word_len));
-			return ;
-		}
+		lex->is_quoted = true;
+		lex->quote_type = c;
 	}
-	tokenlistadd_back(lex->token, ft_substr(str, start, lex->word_len));
+	else if (lex->is_quoted == true && is_quote(c) && c == lex->quote_type)
+	{
+		lex->is_quoted = false;
+		lex->quote_type = 0;
+	}
 }
 
-static void	tokenize_general(t_lexer *lex, char *str)
+static void	lexer_error(t_lexer *lex, char *str)
+{
+	t_token	*token;
+	t_token	*tmp;
+
+	printf("%s\n", str);
+	token = lex->list_head;
+	while(token != NULL)
+	{
+		tmp = token->next;
+		free(token);
+		token = tmp;
+	}
+	free(lex);
+	exit(EXIT_FAILURE);
+}
+
+static void	tokenize(t_lexer *lex, char *str)
 {
 	size_t	start;
 	char	c;
 
 	start = lex->word_start;
-	c = str[start + lex->word_len];
-	if (is_special(c))
+	while(str[start + lex->word_len] != '\0')
 	{
-		if (is_redirect(c) && str[start + lex->word_len + 1] == c)
+		c = str[start + lex->word_len];
+		if (c == '|' || c == '<' || c == '>')
 		{
-			lex->word_len += D_REDIR_SIZE;
-			tokenlistadd_back(lex->token, ft_substr(str, lex->word_start, 2));
+			if (is_redirect(c) && str[start + lex->word_len + 1] == c)
+				lex->word_len += D_REDIR_SIZE;
+			else
+				lex->word_len++;
+			break ;
 		}
-		else
-		{
-			lex->word_len++;
-			tokenlistadd_back(lex->token, ft_substr(str, lex->word_start, 1));
-		}
+		switch_quote_state(lex, c);
+		if (is_whitespace(c) && lex->is_quoted == false)
+			break ;
+		lex->word_len++;
 	}
-	else
-	{
-		while (str[start + lex->word_len] != '\0' && !is_special(str[start + lex->word_len]))
-			lex->word_len++;
-		tokenlistadd_back(lex->token, ft_substr(str, start, lex->word_len));
-	}
-}
-
-void	tokenize(t_lexer *lex, char *str)
-{
 	if (lex->is_quoted == true)
-		tokenize_quoted(lex, str);
-	else
-		tokenize_general(lex, str);
+		lexer_error(lex, "error: Quoted string not closed");
+	tokenlistadd_back(lex->token, ft_substr(str, start, lex->word_len));
 }
 
 t_token	*lexer(char *str)
@@ -104,11 +99,6 @@ t_token	*lexer(char *str)
 			continue ;
 		}
 		lex.word_len = 0;
-		if (lex.is_quoted == false && is_quote(str[lex.word_start]))
-		{
-			lex.is_quoted = true;
-			lex.quote_type = str[lex.word_start];
-		}
 		tokenize(&lex, str);
 		lex.word_start += lex.word_len;
 	}
