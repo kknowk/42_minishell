@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 15:13:18 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/17 15:53:48 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/19 18:55:35 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,11 @@ char	*expand_and_replace(char *input, t_env_var **head)
 				temp = result;
 				result = ft_strjoin(result, value);
 				free(temp);
+			}
+			else
+			{
+				result[ft_strlen(result)] = '\0';
+				return (result);
 			}
 		}
 		else

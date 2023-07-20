@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 14:08:10 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/18 15:50:08 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/19 14:52:16 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	ft_cd(t_directory *dir, char *path, t_env_var **head)
 {
 	char	resolved_path[PATH_MAX];
 
-	if (!path)
+	if (!path || path[0] == '~')
 		return (home(dir, head));
 	if (ft_realpath(path, resolved_path) == NULL)
 	{

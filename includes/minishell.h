@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/18 19:18:23 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/19 14:57:30 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # include "builtins.h"
 
 # ifndef DEBUG
-#  define DEBUG 0
+#  define DEBUG 1
 # endif
 
 void	minishell(char *envp[]);
