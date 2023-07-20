@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handl_quotation.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 15:09:39 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/20 15:38:33 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/20 16:18:19 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ char	*quot_handl(char *str, t_directory *dir, t_env_var **env_vars)
 				// 	j++;
 				// }
 				result[j++] = str[i++];
+			}
 		}
 		else if (state == STATE_IN_DQUOTE)
 		{
