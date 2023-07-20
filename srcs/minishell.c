@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/18 18:35:41 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/18 15:56:14 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <readline/history.h>
 
 volatile sig_atomic_t	g_interrupted = 0;
+int						g_syntax_error;
 
 void	handle_signal(int signal)
 {
@@ -64,6 +65,9 @@ void	minishell(char *envp[])
 			add_history(line); // lineが'\0'のときは履歴に登録しない
 		token = lexer(line);
 		node = parser(token);
+		if (g_syntax_error)
+			puts("syntax error");
+		ft_select(node->data, &dir, &env_vars);
 		handle_commands(node, &dir, &env_vars);
 		if (g_interrupted == 1)
 		{

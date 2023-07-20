@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 14:06:41 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/15 14:22:58 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/18 20:42:57 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,13 @@ static void	print_token(t_token *token)
 		else if (token->type == CHAR_QUOTE)
 			type = "CHAR_QUOTE";
 		else if (token->type == CHAR_DQUOTE)
-			type = " CHAR_DQUOTE";
+			type = "CHAR_DQUOTE";
 		else if (token->type == CHAR_WHITESPACE)
 			type = "CHAR_WHITESPACE";
+		else if (token->type == CHAR_D_LESSER)
+			type = "CHAR_D_LESSER";
+		else if (token->type == CHAR_D_GREATER)
+			type = "CHAR_D_GREATER";
 		else
 			type = "GENERAL";
 		printf("#%d str: %s\t\tlen: %zu\t\ttype: %s\n", i, token->data, ft_strlen(token->data), type);

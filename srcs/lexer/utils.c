@@ -1,31 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/10 17:19:45 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/18 19:10:17 by minabe           ###   ########.fr       */
+/*   Created: 2023/07/18 18:52:19 by minabe            #+#    #+#             */
+/*   Updated: 2023/07/18 18:56:29 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "minishell.h"
 
-char	*ft_substr(char const *s, size_t start, size_t len)
+bool	is_quote(char c)
 {
-	size_t	slen;
-	char	*str;
+	if (c == '\'' || c == '\"')
+		return (true);
+	return (false);
+}
 
-	slen = ft_strlen(s);
-	if (slen <= start)
-		str = ft_strdup("");
-	else
-	{
-		str = malloc(sizeof(char) * (slen - start + 1));
-		if (!str)
-			ft_error("malloc failed");
-		ft_strlcpy(str, s + start, len + 1);
-	}
-	return (str);
+bool	is_whitespace(char c)
+{
+	// if (c == ' ' || c == '\t')
+	if (c == ' ')
+		return (true);
+	return (false);
+}
+
+bool	is_redirect(char c)
+{
+	if (c == '<' || c == '>')
+		return (true);
+	return (false);
 }

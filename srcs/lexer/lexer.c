@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:17:39 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/16 17:26:42 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/18 20:36:40 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,48 +34,60 @@ bool	is_special(char c)
 	return (false);
 }
 
-void	tokenize(t_lexer *lex, char *str)
+static void	tokenize_quoted(t_lexer *lex, char *str)
 {
-	if (lex->is_quoted)
+	size_t	start;
+
+	start = lex->word_start;
+	while (str[start + lex->word_len] != '\0')
 	{
-		while (str[lex->word_start + lex->word_len] != '\0')
+		lex->word_len++;
+		if (str[start + lex->word_len] == lex->quote_type)
 		{
+			lex->is_quoted = false;
+			lex->quote_type = 0;
 			lex->word_len++;
-			if (str[lex->word_start + lex->word_len] == lex->quote_type)
-			{
-				lex->is_quoted = false;
-				lex->quote_type = 0;
-				lex->word_len++;
-				tokenlistadd_back(lex->token, ft_substr(str, lex->word_start, lex->word_len));
-				return ;
-			}
+			tokenlistadd_back(lex->token, ft_substr(str, start, lex->word_len));
+			return ;
 		}
-		tokenlistadd_back(lex->token, ft_substr(str, lex->word_start, lex->word_len));
 	}
-	else
+	tokenlistadd_back(lex->token, ft_substr(str, start, lex->word_len));
+}
+
+static void	tokenize_general(t_lexer *lex, char *str)
+{
+	size_t	start;
+	char	c;
+
+	start = lex->word_start;
+	c = str[start + lex->word_len];
+	if (is_special(c))
 	{
-		if (!is_special(str[lex->word_start + lex->word_len]))
+		if (is_redirect(c) && str[start + lex->word_len + 1] == c)
 		{
-			while (str[lex->word_start + lex->word_len] != '\0' && !is_special(str[lex->word_start + lex->word_len]))
-				lex->word_len++;
-			tokenlistadd_back(lex->token, ft_substr(str, lex->word_start, lex->word_len)); // substrの引数の型変更する必要あるかも?
+			lex->word_len += D_REDIR_SIZE;
+			tokenlistadd_back(lex->token, ft_substr(str, lex->word_start, 2));
 		}
 		else
 		{
-			/* "<<" ">>" の扱いをどうするかParcerに任せる */
-			// if ((str[lex->word_start + lex->word_len] == '<' && str[lex->word_start + lex->word_len + 1] == '<')
-			// 		|| (str[lex->word_start + lex->word_len] == '>' && str[lex->word_start + lex->word_len + 1] == '>'))
-			// {
-			// 	lex->word_len += 2;
-			// 	tokenlistadd_back(lex->token, ft_substr(str, lex->word_start, 2));
-			// }
-			// else
-			// {
-				lex->word_len++;
-				tokenlistadd_back(lex->token, ft_substr(str, lex->word_start, 1));
-			// }
+			lex->word_len++;
+			tokenlistadd_back(lex->token, ft_substr(str, lex->word_start, 1));
 		}
 	}
+	else
+	{
+		while (str[start + lex->word_len] != '\0' && !is_special(str[start + lex->word_len]))
+			lex->word_len++;
+		tokenlistadd_back(lex->token, ft_substr(str, start, lex->word_len));
+	}
+}
+
+void	tokenize(t_lexer *lex, char *str)
+{
+	if (lex->is_quoted == true)
+		tokenize_quoted(lex, str);
+	else
+		tokenize_general(lex, str);
 }
 
 t_token	*lexer(char *str)
@@ -92,7 +104,7 @@ t_token	*lexer(char *str)
 			continue ;
 		}
 		lex.word_len = 0;
-		if (lex.is_quoted == false && (str[lex.word_start] == '\'' || str[lex.word_start] == '\"'))
+		if (lex.is_quoted == false && is_quote(str[lex.word_start]))
 		{
 			lex.is_quoted = true;
 			lex.quote_type = str[lex.word_start];
