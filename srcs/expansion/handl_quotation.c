@@ -43,6 +43,7 @@ int get_var_length(const char *str)
 
 	len = 1;
 	while (str[len] != '\0' && str[len] != '\"' && str[len] != '\'' && !isspace(str[len]))
+// 	while (str[len] != '\0' && str[len] != '\"' && str[len] != '$' && !isspace(str[len]))
 		len++;
 	return (len);
 }
@@ -106,7 +107,6 @@ char	*quot_handl(char *str, t_directory *dir, t_env_var **env_vars)
 				// 	j++;
 				// }
 				result[j++] = str[i++];
-			}
 		}
 		else if (state == STATE_IN_DQUOTE)
 		{
