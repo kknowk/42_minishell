@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:41:09 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/18 19:19:50 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/18 18:45:36 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static t_node	*node_new(void)
 		exit(EXIT_FAILURE);
 	node->type = NODE_COMMAND;
 	node->data = NULL;
+	node->redirects = NULL;
 	node->right = NULL;
 	node->left = NULL;
 	return (node);
@@ -56,6 +57,8 @@ void	store_data(t_node *node, t_token **token)
 	{
 		// printf("#%zu data: %s\n", i, (*token)->data);
 		node->data[i] = (*token)->data;
+		// if ((*token)->type == '<' || (*token)->type == '>')
+		// 	redirect(node, token);
 		if((*token)->next != NULL)
 			(*token) = (*token)->next;
 		else
