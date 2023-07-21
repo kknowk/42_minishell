@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 15:23:15 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/18 20:44:22 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/21 15:55:57 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,10 @@ void	tokenlist_clear(t_token *token)
 	while (token->next != NULL)
 	{
 		tmp = token->next;
-		free(token->data);
-		free(token);
+		if (token->data)
+			free(token->data);
+		if (token)
+			free(token);
 		token = tmp;
 	}
 }

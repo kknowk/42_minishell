@@ -6,14 +6,16 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 13:33:45 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/16 16:12:41 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/21 13:33:36 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-int	error_failure(char *str)
+int	error_failure(char *str, char **str1)
 {
+	if (str1)
+		free(str1);
 	perror(str);
 	return (FAILURE);
 }
