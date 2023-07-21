@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 14:06:41 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/18 20:42:57 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/20 19:48:32 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ static void	print_token(t_token *token)
 	for (int i = 0; token != NULL; i++, token = token->next)
 	{
 		if (token->type == CHAR_PIPE)
-			type = "PIPE";
+			type = "CHAR_PIPE";
 		else if (token->type == CHAR_GREATER)
-			type = "GREATER";
+			type = "CHAR_GREATER";
 		else if (token->type == CHAR_LESSER)
-			type = "LESSER";
+			type = "CHAR_LESSER";
 		else if (token->type == CHAR_QUOTE)
 			type = "CHAR_QUOTE";
 		else if (token->type == CHAR_DQUOTE)

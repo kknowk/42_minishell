@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 16:06:37 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/18 18:40:08 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/20 21:08:22 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,25 +28,48 @@ static t_redirects	*create_redirect(void)
 	return (redirect);
 }
 
+static t_redirect_type	judge_redir_type(t_token **token)
+{
+	if ((*token)->type == '<')
+		return (REDIRECT_INPUT);
+	else if ((*token)->type == '>')
+		return (REDIRECT_OUTPUT);
+	else if ((*token)->type == CHAR_D_GREATER)
+		return (REDIRECT_APPEND_OUTPUT);
+	else
+		return (REDIRECT_HERE_DOC);
+}
+
 void	redirect(t_node *node, t_token **token)
 {
+	printf("redirect!!!\n");
 	if (node->redirects == NULL)
 		node->redirects = create_redirect();
 	else
-		puts("Todo");
-	/* 現在は '<' '>' の場合のみ */
-	node->redirects->filename = (*token)->next;
-	/* 無効な入力は弾く機能を追加する */
-	filefd = open_redir_file(node->redirects->filename->data);
-	int	targetfd = 1;
-	stashed_targetfd = stashfd(targetfd);
-	if (filefd != targetfd)
+		puts("ToDo");
+	if ((*token)->next->type != CHAR_GENERAL)
 	{
-		dup2(filefd, targetfd);
-		close(filefd);
+		puts("syntax error: ToDo");
+		exit(EXIT_FAILURE); // エラー処理する
 	}
-	// exec_command();
-	dup2(stashed_targetfd, targetfd);
-	// if ((*token)->type == '<' && (*token)->next->type == '<')
-	// 	printf("D_LESSER\n");
+	node->redirects->type = judge_redir_type(token);
+	node->redirects->filename = (*token)->next;
+	if ((*token)->next->type == CHAR_LESSER)
+	{
+		node->redirects->type = REDIRECT_INPUT;
+		node->redirects->fd = STDIN_FILENO;
+	}
+	else if ((*token)->next->type == CHAR_GREATER)
+	{
+		node->redirects->type = REDIRECT_OUTPUT;
+		node->redirects->fd = STDOUT_FILENO;
+	}
+	else if ((*token)->next->type == CHAR_D_LESSER)
+	{
+		node->redirects->type = REDIRECT_HERE_DOC;
+		node->redirects->fd = STDOUT_FILENO;
+	}
+	else
+		node->redirects->type = REDIRECT_APPEND_OUTPUT;
+	
 }

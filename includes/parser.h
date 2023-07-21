@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:04:13 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/18 15:55:44 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/20 20:03:57 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,14 @@ typedef enum e_redirect_type
 	REDIRECT_INPUT,
 	REDIRECT_OUTPUT,
 	REDIRECT_APPEND_OUTPUT,
+	REDIRECT_HERE_DOC,
 }	t_redirect_type;
 
 typedef struct s_redirects
 {
 	t_redirect_type		type;
+	int					fd;
+	int					fd_backup;
 	t_token				*filename;
 	struct s_redirects	*prev;
 	struct s_redirects	*next;

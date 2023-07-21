@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 16:13:54 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/18 20:44:02 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/20 16:31:20 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef enum e_tokentype
 	CHAR_WHITESPACE = ' ',
 	CHAR_GREATER = '<',
 	CHAR_LESSER = '>',
-	CHAR_D_GREATER,
+	CHAR_D_GREATER = -4,
 	CHAR_D_LESSER,
 	CHAR_IO_NUMBER,
 }	t_tokentype;
@@ -44,5 +44,6 @@ t_token	*token_new(char *data);
 
 bool	is_quote(char c);
 bool	is_redirect(char c);
+bool	is_whitespace(char c);
 
 #endif
