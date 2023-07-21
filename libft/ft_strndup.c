@@ -1,19 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expansion.h                                        :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/15 15:15:23 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/21 16:20:52 by khorike          ###   ########.fr       */
+/*   Created: 2023/07/21 13:57:01 by khorike           #+#    #+#             */
+/*   Updated: 2023/07/21 14:00:17 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXPANSION_H
-# define EXPANSION_H
+#include "../includes/libft.h"
 
-# include "minishell.h"
-# include "builtins.h"
+char	*ft_strndup(const char *s, size_t n)
+{
+	char			*res;
+	unsigned int	i;
 
-#endif
+	i = 0;
+	res = malloc(sizeof(char) * (n + 1));
+	if (res == NULL)
+		return (NULL);
+	while (i < n)
+	{
+		res[i] = s[i];
+		i++;
+	}
+	res[i] = '\0';
+	return (res);
+}

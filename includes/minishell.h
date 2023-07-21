@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/20 12:36:08 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/21 16:14:56 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # include "token.h"
 # include "libft.h"
 # include "builtins.h"
+# include "expansion.h"
 
 # ifndef DEBUG
 #  define DEBUG 1

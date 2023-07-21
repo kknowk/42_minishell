@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:14:49 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/18 19:10:33 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/21 13:58:49 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ char	*ft_strcpy(char *dest, char *src);
 char	*ft_strstr(char *str, char *to_find);
 int		ft_strcmp(char *str1, char *str2);
 char	*ft_strdup(const char *s1);
+char	*ft_strndup(const char *s, size_t n);
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 char	*ft_strjoin(char *s1, char *s2);
 

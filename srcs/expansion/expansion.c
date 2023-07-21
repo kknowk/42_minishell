@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 15:13:18 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/19 18:55:35 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/21 16:27:11 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,115 +19,96 @@ int	is_valid_varname(char *varname)
 	char	*p;
 
 	if (varname[0] == '\0')
-		return (0);
+		return (SUCCESS);
 	if (ft_isdigit((unsigned char)varname[0]))
-		return (0);
+		return (SUCCESS);
 	p = varname;
 	while (*p != '\0')
 	{
 		if (!ft_isalnum((unsigned char)*p) && *p != '_')
-			return (0);
+			return (SUCCESS);
 		p++;
 	}	
-	return (1);
+	return (FAILURE);
 }
 
-int	has_error(char *input)
+static void	temp_result(t_expand *exp, char **result)
 {
-	char		varname[256];
-	char		*start;
-	char		*end;
+	exp->temp = *result;
+	*result = ft_strjoin(*result, exp->value);
+	free(exp->temp);
+	exp->temp = NULL;
+}
 
-	start = input;
-	while (*start != '\0')
+static void	handle_dollar_sign_1(t_expand *exp, char *varname,
+	char **result, t_env_var **head)
+{
+	if (*(exp->start + 1) == '{')
 	{
-		if (*start == '$' && *(start + 1) == '{')
+		exp->end = ft_strstr(exp->start, "}");
+		if (exp->end)
 		{
-			end = ft_strstr(start, "}");
-			if (end)
-			{
-				ft_strlcpy(varname, start + 2, end - start - 2 + 1);
-				if (!is_valid_varname(varname))
-					return (1);
-				start = end + 1;
-			}
-			else
-				return (1);
+			ft_strlcpy(varname, exp->start + 2, exp->end - exp->start - 1);
+			exp->start = exp->end + 1;
 		}
-		else
-			start++;
 	}
-	return (0);
+	else
+	{
+		exp->end = exp->start + 1;
+		while (ft_isalnum(*exp->end) || *exp->end == '_')
+			exp->end++;
+		ft_strlcpy(varname, exp->start + 1, exp->end - exp->start);
+		exp->start = exp->end;
+	}
+	exp->value = search(head, varname);
+	if (exp->value)
+		temp_result(exp, result);
+	else
+		*result[ft_strlen(*result)] = '\0';
+}
+
+static void	handle_no_dollar_sign(t_expand *exp, char **result)
+{
+	char	*buffer;
+
+	buffer = (char *)malloc(2 * sizeof(char));
+	if (!buffer)
+		return ;
+	buffer[0] = *exp->start;
+	buffer[1] = '\0';
+	exp->temp = *result;
+	*result = ft_strjoin(*result, buffer);
+	free(exp->temp);
+	exp->temp = NULL;
+	free(buffer);
+	buffer = NULL;
+	exp->start++;
 }
 
 char	*expand_and_replace(char *input, t_env_var **head)
 {
 	char		varname[256];
-	char		*start;
-	char		*end;
-	char		*value;
 	char		*result;
-	char		*buffer;
-	char		*temp;
+	t_expand	exp;
 
 	result = (char *)malloc(INT_MAX * sizeof(char));
 	if (!result)
 		return (NULL);
 	result[0] = '\0';
-	start = input;
-	while (*start != '\0')
+	exp.start = input;
+	while (*exp.start != '\0')
 	{
-		if (*start == '$')
+		if (*exp.start == '$')
 		{
-			if (*(start + 1) == '{')
-			{
-				end = ft_strstr(start, "}");
-				if (end)
-				{
-					ft_strlcpy(varname, start + 2, end - start - 1);
-					start = end + 1;
-				}
-				else
-					break ;
-			}
-			else
-			{
-				end = start + 1;
-				while (ft_isalnum(*end) || *end == '_')
-					end++;
-				ft_strlcpy(varname, start + 1, end - start);
-				start = end;
-			}
-			value = search(head, varname);
-			if (value)
-			{
-				temp = result;
-				result = ft_strjoin(result, value);
-				free(temp);
-			}
-			else
-			{
-				result[ft_strlen(result)] = '\0';
-				return (result);
-			}
+			handle_dollar_sign_1(&exp, varname, &result, head);
 		}
 		else
 		{
-			buffer = (char *)malloc(2 * sizeof(char));
-			if (!buffer)
-				return (NULL);
-			buffer[0] = *start;
-			buffer[1] = '\0';
-			temp = result;
-			result = ft_strjoin(result, buffer);
-			free(temp);
-			free(buffer);
-			start++;
+			handle_no_dollar_sign(&exp, &result);
 		}
 	}
 	return (result);
 }
-
 
 // int	main(int ac, char *av[])
 // {

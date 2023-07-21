@@ -3,117 +3,92 @@
 /*                                                        :::      ::::::::   */
 /*   handl_quotation.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 15:09:39 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/20 16:18:19 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/21 17:51:50 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-char	*search_quot(char **cmds)
+void	process_dquote_state(t_parse_context *ctx, t_parse_state *state)
 {
-	int	i;
-	int	j;
+	int		var_length;
+	char	*substring;
+	char	*expanded;
+	int		expanded_length;
 
-	i = 0;
-	while (cmds[i])
+	if (ctx->str[ctx->i] == '\"')
+		change_nomal_pluss(ctx, state);
+	else if (ctx->str[ctx->i] == '$')
 	{
-		j = 0;
-		while (cmds[i][j])
+		var_length = get_var_length(ctx->str + ctx->i);
+		substring = ft_strndup(ctx->str + ctx->i, var_length);
+		expanded = doru_handl(substring, ctx->dir, ctx->env_vars);
+		expanded_length = ft_strlen(expanded);
+		if (expanded_length < MAX_BUFFER_SIZE - ctx->j)
 		{
-			if (cmds[i][j] == '\'' || cmds[i][j] == '\"')
-				return (cmds[i]);
-			j++;
-		}
-		i++;
-	}
-	return (NULL);
-}
-typedef enum e_parse_state
-{
-	STATE_NORMAL,
-	STATE_IN_DQUOTE
-}	t_parse_state;
-
-int get_var_length(const char *str)
-{
-	int	len;
-
-	len = 1;
-	while (str[len] != '\0' && str[len] != '\"' && str[len] != '\'' && !isspace(str[len]))
-// 	while (str[len] != '\0' && str[len] != '\"' && str[len] != '$' && !isspace(str[len]))
-		len++;
-	return (len);
-}
-
-void	process_dquote_state(const char *str, size_t *i, char *result, int *j,
-	t_directory *dir, t_env_var **env_vars, t_parse_state *state)
-{
-	if (str[*i] == '\"')
-	{
-		*state = STATE_NORMAL;
-		(*i)++;
-	}
-	else if (str[*i] == '$')
-	{
-		int var_length = get_var_length(str + *i);
-		char *substring = strndup(str + *i, var_length);
-		char *expanded = doru_handl(substring, dir, env_vars);
-		int expanded_length = strlen(expanded);
-		if (expanded_length < 1024 - *j) {
-			ft_strlcpy(result + *j, expanded, expanded_length + 1);
-			*j += expanded_length;
-			*i += var_length;
+			ft_strlcpy(ctx->result + ctx->j, expanded, expanded_length + 1);
+			ctx->j += expanded_length;
+			ctx->i += var_length;
 		}
 		free(expanded);
-		// free(substring);
 	}
 	else
-		result[(*j)++] = str[(*i)++];
+		ctx->result[(ctx->j)++] = ctx->str[(ctx->i)++];
 	*state = STATE_NORMAL;
+}
+
+static t_parse_context	init_parse_context(char *str, t_directory *dir,
+	t_env_var **env_vars)
+{
+	t_parse_context	ctx;
+
+	ctx.str = str;
+	ctx.i = 0;
+	ctx.result = ft_calloc(MAX_BUFFER_SIZE, 1);
+	ctx.j = 0;
+	ctx.dir = dir;
+	ctx.env_vars = env_vars;
+	return (ctx);
+}
+
+static void	parse_and_append_char(t_parse_state *state, t_parse_context *ctx)
+{
+	if (ctx->str[ctx->i] == '\'')
+	{
+		ctx->i++;
+		while (ctx->str[ctx->i] != '\'' && ctx->str[ctx->i] != '\0')
+			ctx->result[ctx->j++] = ctx->str[ctx->i++];
+		if (ctx->str[ctx->i] == '\'')
+			ctx->i++;
+	}
+	else if (ctx->str[ctx->i] == '\"')
+	{
+		ctx->i++;
+		*state = STATE_IN_DQUOTE;
+	}
+	else
+		ctx->result[ctx->j++] = ctx->str[ctx->i++];
 }
 
 char	*quot_handl(char *str, t_directory *dir, t_env_var **env_vars)
 {
-	size_t i = 0;
-	char *result = ft_calloc(4048, 1);
-	int j = 0;
-	t_parse_state state = STATE_NORMAL;
+	t_parse_context	ctx;
+	t_parse_state	state;
 
-	while (str[i] != '\0')
+	ctx = init_parse_context(str, dir, env_vars);
+	if (!ctx.result)
+		return (NULL);
+	state = STATE_NORMAL;
+	while (ctx.str[ctx.i] != '\0')
 	{
 		if (state == STATE_NORMAL)
-		{
-			if (str[i] == '\'')
-			{
-				i++;
-				while (str[i] != '\'' && str[i] != '\0')
-					result[j++] = str[i++];
-				if (str[i] == '\'')
-					i++;
-			}
-			else if (str[i] == '\"')
-			{
-				i++;
-				state = STATE_IN_DQUOTE;
-			}
-			else
-			{
-				// if (result[j] == '\0')
-				// {
-				// 	result[j] = str[i++];
-				// 	j++;
-				// }
-				result[j++] = str[i++];
-			}
-		}
+			parse_and_append_char(&state, &ctx);
 		else if (state == STATE_IN_DQUOTE)
-		{
-			process_dquote_state(str, &i, result, &j, dir, env_vars, &state);
-		}
+			process_dquote_state(&ctx, &state);
 	}
-	result[j] = '\0';
-	return (result);
+	ctx.result[ctx.j] = '\0';
+	return (ctx.result);
 }

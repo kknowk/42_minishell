@@ -6,122 +6,59 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:47:53 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/13 18:07:55 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/21 19:07:35 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-// static size_t	ft_strlcpy(char *dest, const char *src, size_t size)
-// {
-// 	size_t	i;
+static char	**ft_split_first(const char *s, char c)
+{
+	char	**arr;
+	char	*location;
 
-// 	i = 0;
-// 	if (size > 0)
-// 	{
-// 		while (src[i] && i < size - 1)
-// 		{
-// 			dest[i] = src[i];
-// 			i++;
-// 		}
-// 		dest[i] = '\0';
-// 	}
-// 	while (src[i])
-// 		i++;
-// 	return (i);
-// }
+	arr = malloc(2 * sizeof(char *));
+	if (!arr)
+		return (NULL);
+	location = ft_strchr(s, c);
+	if (location)
+	{
+		arr[0] = ft_strndup(s, location - s);
+		arr[1] = ft_strdup(location + 1);
+	}
+	else
+	{
+		arr[0] = ft_strdup(s);
+		arr[1] = NULL;
+	}
+	return (arr);
+}
 
-// static int	count_words(char const *s, char c)
-// {
-// 	int	count;
-// 	int	in_word;
+static t_env_var	*find_node(t_env_var **head, char *key)
+{
+	t_env_var	*current;
 
-// 	count = 0;
-// 	in_word = 0;
-// 	while (*s)
-// 	{
-// 		if (*s == c)
-// 			in_word = 0;
-// 		else if (!in_word)
-// 		{
-// 			in_word = 1;
-// 			count++;
-// 		}
-// 		s++;
-// 	}
-// 	return (count);
-// }
+	current = *head;
+	while (current)
+	{
+		if (ft_strncmp(current->key, key, ft_strlen(key) + 1) == 0)
+		{
+			return (current);
+		}
+		current = current->next;
+	}
+	return (NULL);
+}
 
-// static char	*get_word(char const **s, char c)
-// {
-// 	char const	*start;
-// 	char		*word;
-// 	int			len;
-
-// 	start = *s;
-// 	len = 0;
-// 	while (**s && **s != c)
-// 	{
-// 		(*s)++;
-// 		len++;
-// 	}
-// 	word = (char *)malloc(sizeof(char) * (len + 1));
-// 	if (!word)
-// 		return (NULL);
-// 	ft_strlcpy(word, start, len + 1);
-// 	return (word);
-// }
-
-// static void	check_malloc(char **ptr, int word_count)
-// {
-// 	int	i;
-
-// 	if (!ptr)
-// 	{
-// 		i = 0;
-// 		while (i < word_count)
-// 		{
-// 			free(ptr[i]);
-// 			i++;
-// 		}
-// 		free(ptr);
-// 	}
-// }
-
-// static void	split_string(char const *s, char c, char **result)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (*s)
-// 	{
-// 		if (*s != c)
-// 		{
-// 			result[i] = get_word(&s, c);
-// 			if (!result[i])
-// 				check_malloc(result, i);
-// 			i++;
-// 		}
-// 		else
-// 			s++;
-// 	}
-// 	result[i] = NULL;
-// }
-
-// static char	**ft_split(char const *s, char c)
-// {
-// 	char	**result;
-// 	int		word_count;
-
-// 	if (!s)
-// 		return (NULL);
-// 	word_count = count_words(s, c);
-// 	result = (char **)malloc(sizeof(char *) * (word_count + 1));
-// 	if (!result)
-// 		return (NULL);
-// 	split_string(s, c, result);
-// 	return (result);
-// }
+static int	type_existing_val(t_env_var *existing_node,
+	char *value, char **split_result, char *key)
+{
+	free(existing_node->value);
+	existing_node->value = value;
+	free(split_result);
+	free(key);
+	return (SUCCESS);
+}
 
 int	ft_export(t_env_var **head, char *env_str)
 {
@@ -129,17 +66,21 @@ int	ft_export(t_env_var **head, char *env_str)
 	char		*value;
 	char		**split_result;
 	t_env_var	*new_var;
+	t_env_var	*existing_node;
 
-	split_result = ft_split(env_str, '=');
+	split_result = ft_split_first(env_str, '=');
 	if (!split_result)
-		return (error_failure("Splitting string failed"));
+		return (error_failure("Splitting string failed", split_result));
 	key = split_result[0];
 	value = split_result[1];
+	existing_node = find_node(head, key);
+	if (existing_node)
+		return (type_existing_val(existing_node, value, split_result, key));
 	new_var = malloc(sizeof(t_env_var));
 	if (!new_var)
-		return (error_failure("Memory allocation failed"));
-	new_var->key = split_result[0];
-	new_var->value = split_result[1];
+		return (error_failure("Memory allocation failed", split_result));
+	new_var->key = key;
+	new_var->value = value;
 	new_var->is_shell_var = false;
 	new_var->next = NULL;
 	new_var->next = *head;
@@ -147,42 +88,3 @@ int	ft_export(t_env_var **head, char *env_str)
 	free(split_result);
 	return (SUCCESS);
 }
-
-// int	main(void)
-// {
-// 	t_env_var	*env_vars = NULL;
-// 	char *env_str1 = "KEY1=Value1";
-// 	char *env_str2 = "KEY2=Value2";
-
-// 	ft_export(&env_vars, env_str1);
-// 	ft_export(&env_vars, env_str2);
-// 	t_env_var *current = env_vars;
-// 	while (current != NULL)
-// 	{
-// 		printf("Key: %s, Value: %s\n", current->key, current->value);
-// 		current = current->next;
-// 	}
-// 	ft_unset(&env_vars, "KEY1");
-// 	ft_unset(&env_vars, "KEY2");
-// 	while (current != NULL)
-// 	{
-// 		printf("Key: %s, Value: %s\n", current->key, current->value);
-// 		current = current->next;
-// 	}
-// 	current = env_vars;
-// 	// t_env_var *next;
-// 	// while (current != NULL)
-// 	// {
-// 	// 	next = current->next;
-// 	// 	free(current->key);
-// 	// 	free(current->value);
-// 	// 	free(current);
-// 	// 	current = next;
-// 	// }
-// 	return (0);
-// }
-
-// __attribute__((destructor)) static void destructor()
-// {
-// 	system("leaks -q a.out");
-// }

@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:48:01 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/20 12:54:09 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/21 12:29:21 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	helper_ft_echo(char **str, int max_words)
 	int	i;
 
 	i = 1;
-	while (i < max_words - 1)
+	while (i < max_words)
 	{
 		printf("%s ", str[i]);
 		i++;
