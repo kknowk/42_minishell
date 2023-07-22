@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   select.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:26:36 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/21 19:21:24 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/22 13:27:37 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	ft_select(char **cmds, t_directory *dir, t_env_var **env_vars)
 	while (cmds[i])
 		i++;
 	if (!ft_strcmp(cmds[0], "echo"))
-		ft_echo(cmds, i - 1);
+		ft_echo(cmds, i - 1); // i == 0のときの挙動気になります by minabe
 	else if (ft_strcmp(cmds[0], "cd") && ft_strcmp(cmds[0], "pwd")
 		&& ft_strcmp(cmds[0], "unset"))
 		return (expansion(cmds, dir));
