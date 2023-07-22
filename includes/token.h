@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 16:13:54 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/20 16:31:20 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/22 12:36:52 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ typedef enum e_tokentype
 	CHAR_DQUOTE = '\"',
 	CHAR_PIPE = '|',
 	CHAR_WHITESPACE = ' ',
-	CHAR_GREATER = '<',
-	CHAR_LESSER = '>',
+	CHAR_GREATER = '>',
+	CHAR_LESSER = '<',
 	CHAR_D_GREATER = -4,
 	CHAR_D_LESSER,
 	CHAR_IO_NUMBER,
