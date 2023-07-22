@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 20:26:51 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/11 14:19:14 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/22 15:40:28 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,9 @@ int	main(int argc, char *argv[], char *envp[])
 	if (argc == 1)
 		minishell(envp);
 	return (0);
+}
+
+__attribute__((destructor)) static void destructor()
+{
+	system("leaks -q minishell");
 }
