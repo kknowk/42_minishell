@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/22 16:40:26 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/22 17:34:45 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,24 +60,21 @@ void	minishell(char *envp[])
 	{
 		line = readline("minishell$ ");
 		if (line == NULL)
-		{
-			// tokenlist_clear(token);
 			ft_exit();
-		}
 		else
 			add_history(line); // lineが'\0'のときは履歴に登録しない
 		token = lexer(line);
 		node = parser(token);
 		if (g_syntax_error)
 			perror("syntax error");
-		handle_commands(node, &dir, &env_vars);
+		// handle_commands(node, &dir, &env_vars);
 		if (g_interrupted == 1)
 		{
 			free(line);
 			g_interrupted = 0;
 			continue ;
 		}
-		// tokenlist_clear(token);
-		free(line);
+		destoroy_parser(node);
+		ft_free(line);
 	}
 }
