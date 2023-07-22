@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:26:36 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/22 14:18:43 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/22 17:14:24 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static void	expansion(char **cmds, t_directory *dir)
 	return ;
 }
 
-void	ft_select(char **cmds, t_directory *dir, t_env_var **env_vars)
+int	exec_builtin(char **cmds, t_directory *dir, t_env_var **env_vars)
 {
 	int			i;
 
@@ -104,7 +104,7 @@ void	ft_select(char **cmds, t_directory *dir, t_env_var **env_vars)
 	while (cmds[i])
 		i++;
 	if (!ft_strcmp(cmds[0], "echo"))
-		ft_echo(cmds, i - 1); // i == 0のときの挙動気になります by minabe
+		dir->error = ft_echo(cmds, i - 1);
 	else if (ft_strcmp(cmds[0], "cd") && ft_strcmp(cmds[0], "pwd")
 		&& ft_strcmp(cmds[0], "unset"))
 		return (expansion(cmds, dir));

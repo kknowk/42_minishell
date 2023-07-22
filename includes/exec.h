@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution.c                                        :+:      :+:    :+:   */
+/*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/22 14:07:37 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/22 16:42:57 by minabe           ###   ########.fr       */
+/*   Created: 2023/07/22 16:18:14 by minabe            #+#    #+#             */
+/*   Updated: 2023/07/22 17:14:38 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef EXEC_H
+# define EXEC_H
 
-void	handle_nodes(t_node *node, t_directory *dir, t_env_var **env_vars)
-{
-	if (node == NULL)
-		return ;
-	if (node->type == NODE_PIPE)
-		exec_pipe(node, dir, env_vars);
-	else
-	{
-		if (is_builtins(node->data[0]))
-			dir->error = exec_builtin(node, dir, env_vars);
-		else
-			exec_executable(node, dir, env_vars);
-	}
-}
+# include "minishell.h"
+
+bool	is_builtins(char *command);
+int		exec_builtin(char **cmds, t_directory *dir, t_env_var **env_vars);
+
+#endif

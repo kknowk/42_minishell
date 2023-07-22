@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:54:35 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/22 14:24:44 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/22 16:23:29 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define PATH_MAX 1024
 # define FAILURE 1
 # define SUCCESS 0
-# define MAX_BUFFER_SIZE 4048
+# define MAX_BUFFER_SIZE 4096
 
 typedef struct s_env_var
 {
@@ -95,7 +95,7 @@ char		*search(t_env_var **head, char *key);
 bool		is_quoted(char *cmd);
 char		*expand_and_replace(char *input, t_env_var **head);
 
-void		handle_commands(t_node *node, t_directory *dir,
+void		handle_nodes(t_node *node, t_directory *dir,
 				t_env_var **env_vars);
 
 char		*search_quote(char **cmds);

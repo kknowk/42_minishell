@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/22 13:07:40 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/22 15:58:53 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,14 @@ void	minishell(char *envp[])
 		node = parser(token);
 		if (g_syntax_error)
 			puts("syntax error");
-		handle_commands(node, &dir, &env_vars);
+		handle_nodes(node, &dir, &env_vars);
 		if (g_interrupted == 1)
 		{
 			free(line);
 			g_interrupted = 0;
 			continue ;
 		}
-		tokenlist_clear(token);
+		// tokenlist_clear(token);
 		free(line);
 	}
 }
