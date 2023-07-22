@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/22 15:58:53 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/22 20:09:55 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	minishell(char *envp[])
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT, &sa, NULL);
 	env_vars = create_env_vars(envp);
-	if (getcwd(dir.path, sizeof(dir.path)) == NULL)
+	if (getcwd(dir.path, sizeof(dir.path)) == NULL || !env_vars)
 		exit(1);
 	rl_outstream = stderr; // defaultがstdoutのため
 	dir.error = 0;
@@ -66,7 +66,7 @@ void	minishell(char *envp[])
 		token = lexer(line);
 		node = parser(token);
 		if (g_syntax_error)
-			puts("syntax error");
+			perror("syntax error");
 		handle_nodes(node, &dir, &env_vars);
 		if (g_interrupted == 1)
 		{
@@ -74,7 +74,7 @@ void	minishell(char *envp[])
 			g_interrupted = 0;
 			continue ;
 		}
-		// tokenlist_clear(token);
-		free(line);
+		destoroy_parser(node);
+		ft_free(line);
 	}
 }

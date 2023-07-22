@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:04:13 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/20 20:03:57 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/22 20:03:13 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ typedef struct s_node
 t_node	*parser(t_token *token);
 void		debug_parser(t_node *node);
 
+void	destoroy_parser(t_node *node);
+
 void	redirect(t_node *node, t_token **token);
+void	destoroy_redirects(t_redirects *redirects);
 
 #endif
 

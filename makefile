@@ -2,7 +2,7 @@ NAME = minishell
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -MMD -MP
-CFLAGS += -g -fsanitize=address
+# CFLAGS += -g -fsanitize=address
 
 # sanitizeが有る無しで挙動が変わります。。謎
 

@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:41:09 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/22 15:58:51 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/22 20:10:37 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	store_data(t_node *node, t_token **token)
 	i = 0;
 	while (i < size + 1 && (*token)->type != CHAR_PIPE)
 	{
-		node->data[i] = (*token)->data;
+		node->data[i] = ft_strdup((*token)->data);
 		if (is_redirect((*token)->type))
 			redirect(node, token);
 		if((*token)->next != NULL)
@@ -88,5 +88,32 @@ t_node	*parser(t_token *token)
 	tokenlist_clear(token);
 	if(DEBUG)
 		debug_parser(node);
+	tokenlist_clear(token);
 	return (node);
+}
+
+void	free_strarray(char **array)
+{
+	size_t	i;
+
+	i = 0;
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
+}
+
+void	destoroy_parser(t_node *node)
+{
+	if (node->left)
+		destoroy_parser(node->left);
+	if (node->right)
+		destoroy_parser(node->right);
+	if (node->data)
+		free_strarray(node->data);
+	if (node->redirects)
+		destoroy_redirects(node->redirects);
+	ft_free(node);
 }
