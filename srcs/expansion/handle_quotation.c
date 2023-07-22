@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handl_quotation.c                                  :+:      :+:    :+:   */
+/*   handle_quotation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 15:09:39 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/21 17:51:50 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/22 14:24:48 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ void	process_dquote_state(t_parse_context *ctx, t_parse_state *state)
 	int		expanded_length;
 
 	if (ctx->str[ctx->i] == '\"')
-		change_nomal_pluss(ctx, state);
+		change_normal_pluss(ctx, state);
 	else if (ctx->str[ctx->i] == '$')
 	{
 		var_length = get_var_length(ctx->str + ctx->i);
 		substring = ft_strndup(ctx->str + ctx->i, var_length);
-		expanded = doru_handl(substring, ctx->dir, ctx->env_vars);
+		expanded = dollar_handle(substring, ctx->dir, ctx->env_vars);
 		expanded_length = ft_strlen(expanded);
 		if (expanded_length < MAX_BUFFER_SIZE - ctx->j)
 		{
@@ -73,7 +73,7 @@ static void	parse_and_append_char(t_parse_state *state, t_parse_context *ctx)
 		ctx->result[ctx->j++] = ctx->str[ctx->i++];
 }
 
-char	*quot_handl(char *str, t_directory *dir, t_env_var **env_vars)
+char	*quote_handle(char *str, t_directory *dir, t_env_var **env_vars)
 {
 	t_parse_context	ctx;
 	t_parse_state	state;

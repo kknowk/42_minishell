@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:54:35 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/21 17:58:17 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/22 14:24:44 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ int			is_valid_varname(char *varname);
 
 t_env_var	*create_env_vars(char *envp[]);
 
-// 場所は任せた！！ by minabe
 void		ft_select(char **cmds, t_directory *dir, t_env_var **env_vars);
 
 int			execute_command(char *command, char **cmds);
@@ -91,7 +90,7 @@ char		*handle_question_mark(char *str, char *tmp, t_directory *dir);
 char		*handle_dollar_sign(char *str, char *tmp);
 char		*handle_default(char *str, char *tmp, t_env_var **head);
 
-char		*doru_handl(char *str, t_directory *dir, t_env_var **head);
+char		*dollar_handle(char *str, t_directory *dir, t_env_var **head);
 char		*search(t_env_var **head, char *key);
 bool		is_quoted(char *cmd);
 char		*expand_and_replace(char *input, t_env_var **head);
@@ -99,9 +98,11 @@ char		*expand_and_replace(char *input, t_env_var **head);
 void		handle_commands(t_node *node, t_directory *dir,
 				t_env_var **env_vars);
 
-char		*search_quot(char **cmds);
+char		*search_quote(char **cmds);
 int			get_var_length(const char *str);
-void		change_nomal_pluss(t_parse_context *ctx, t_parse_state *state);
-char		*quot_handl(char *str, t_directory *dir, t_env_var **env_vars);
+void		change_normal_pluss(t_parse_context *ctx, t_parse_state *state);
+char		*quote_handle(char *str, t_directory *dir, t_env_var **env_vars);
+
+void	exec_pipe(t_node *node, t_directory *dir, t_env_var **env_vars);
 
 #endif
