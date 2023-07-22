@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/22 13:07:40 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/22 16:40:26 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	minishell(char *envp[])
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT, &sa, NULL);
 	env_vars = create_env_vars(envp);
-	if (getcwd(dir.path, sizeof(dir.path)) == NULL)
+	if (getcwd(dir.path, sizeof(dir.path)) == NULL || !env_vars)
 		exit(1);
 	rl_outstream = stderr; // defaultがstdoutのため
 	dir.error = 0;
@@ -60,13 +60,16 @@ void	minishell(char *envp[])
 	{
 		line = readline("minishell$ ");
 		if (line == NULL)
+		{
+			// tokenlist_clear(token);
 			ft_exit();
+		}
 		else
 			add_history(line); // lineが'\0'のときは履歴に登録しない
 		token = lexer(line);
 		node = parser(token);
 		if (g_syntax_error)
-			puts("syntax error");
+			perror("syntax error");
 		handle_commands(node, &dir, &env_vars);
 		if (g_interrupted == 1)
 		{
@@ -74,7 +77,7 @@ void	minishell(char *envp[])
 			g_interrupted = 0;
 			continue ;
 		}
-		tokenlist_clear(token);
+		// tokenlist_clear(token);
 		free(line);
 	}
 }
