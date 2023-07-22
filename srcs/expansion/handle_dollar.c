@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handl_doru.c                                       :+:      :+:    :+:   */
+/*   handle_dollar.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 16:51:32 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/21 16:24:05 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/22 14:24:25 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*search(t_env_var **head, char *key)
 	return (NULL);
 }
 
-char	*doru_handl(char *str, t_directory *dir, t_env_var **head)
+char	*dollar_handle(char *str, t_directory *dir, t_env_var **head)
 {
 	char	*tmp;
 

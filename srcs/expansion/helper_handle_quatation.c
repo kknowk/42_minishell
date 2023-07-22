@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper_handle_quatation.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 17:02:15 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/21 17:57:55 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/22 14:24:51 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ bool	is_quoted(char *cmd)
 	return (false);
 }
 
-char	*search_quot(char **cmds)
+char	*search_quote(char **cmds)
 {
 	int	i;
 	int	j;
@@ -57,7 +57,7 @@ int	get_var_length(const char *str)
 	return (len);
 }
 
-void	change_nomal_pluss(t_parse_context *ctx, t_parse_state *state)
+void	change_normal_pluss(t_parse_context *ctx, t_parse_state *state)
 {
 	*state = STATE_NORMAL;
 	(ctx->i)++;

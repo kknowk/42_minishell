@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:26:36 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/22 13:27:37 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/22 14:18:43 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "lexer.h"
 #include "token.h"
 
-static int	judgment_desuno(char **cmds, t_directory *dir, t_env_var **env_vars)
+static int	judgement_desuno(char **cmds, t_directory *dir, t_env_var **env_vars)
 {
 	int	j;
 
@@ -24,9 +24,9 @@ static int	judgment_desuno(char **cmds, t_directory *dir, t_env_var **env_vars)
 	while (cmds[j])
 	{
 		if (is_quoted(cmds[j]))
-			cmds[j] = quot_handl(cmds[j], dir, env_vars);
+			cmds[j] = quote_handle(cmds[j], dir, env_vars);
 		else
-			cmds[j] = doru_handl(cmds[j], dir, env_vars);
+			cmds[j] = dollar_handle(cmds[j], dir, env_vars);
 		j++;
 	}
 	if (!cmds)
@@ -87,7 +87,7 @@ void	ft_select(char **cmds, t_directory *dir, t_env_var **env_vars)
 	int			i;
 
 	i = 0;
-	if (judgment_desuno(cmds, dir, env_vars) == 1)
+	if (judgement_desuno(cmds, dir, env_vars) == 1)
 		return ;
 	if (!ft_strcmp(cmds[0], "pwd"))
 		dir->error = ft_pwd(dir);
