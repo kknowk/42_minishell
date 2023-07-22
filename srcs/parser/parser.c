@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:41:09 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/22 20:10:37 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/22 21:20:48 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ void	store_data(t_node *node, t_token **token)
 	size = data_size((*token));
 	node->data = ft_calloc(size + 1, sizeof(char *));
 	if (!node->data) // エラー処理必要
+	{
+		tokenlist_clear(*token);
 		exit(EXIT_FAILURE);
+	}
 	i = 0;
 	while (i < size + 1 && (*token)->type != CHAR_PIPE)
 	{
@@ -85,7 +88,6 @@ t_node	*parser(t_token *token)
 		node->left = left;
 		node->right = right;
 	}
-	tokenlist_clear(token);
 	if(DEBUG)
 		debug_parser(node);
 	tokenlist_clear(token);

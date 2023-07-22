@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/21 16:14:56 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/22 20:44:52 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,12 @@
 # include <stdbool.h>
 # include <errno.h>
 
+# include "libft.h"
+# include "token.h"
 # include "lexer.h"
 # include "parser.h"
-# include "token.h"
-# include "libft.h"
 # include "builtins.h"
+# include "exec.h"
 # include "expansion.h"
 
 # ifndef DEBUG

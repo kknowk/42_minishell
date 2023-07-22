@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 15:23:15 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/22 17:34:27 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/22 20:12:30 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static t_tokentype	judge_tokentype(char *data)
 {
 	if (data == NULL)
 		return (-1);
-	/* IO_NUMBER追加 */
 	if (data[0] == '|')
 		return (CHAR_PIPE);
 	if (data[0] == '\'' && data[ft_strlen(data) - 1] == '\'')
