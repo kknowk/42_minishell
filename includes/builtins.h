@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:54:35 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/23 15:49:51 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/23 17:21:39 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void		ms_free(char *str);
 void		ms_cpca(char *s1, char *s2, char *s3, char *s4);
 int			has_error(char *input);
 int			is_valid_varname(char *varname);
+int			declare(t_env_var *head);
 
 t_env_var	*create_env_vars(char *envp[]);
 
@@ -101,6 +102,6 @@ int			get_var_length(const char *str);
 void		change_normal_plus(t_parse_context *ctx, t_parse_state *state);
 char		*quote_handle(char *str, t_directory *dir, t_env_var **env_vars);
 
-void	exec_pipe(t_node *node, t_directory *dir, t_env_var **env_vars);
+void		exec_pipe(t_node *node, t_directory *dir, t_env_var **env_vars);
 
 #endif
