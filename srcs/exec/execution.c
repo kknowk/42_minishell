@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:07:37 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/23 17:41:16 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/23 18:11:53 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,19 @@ static bool	is_builtins(char *command)
 	i = 0;
 	while (commands[i])
 	{
+		if (ft_strlen(command) == ft_strlen(commands[i]))
+		{
+			i++;
+			continue ;
+		}
 		if (ft_strcmp(command, commands[i]) == 0)
+		{
+			/* freeする */
 			return (true);
+		}
 		i++;
 	}
+	/* freeする */
 	return (false);
 }
 
