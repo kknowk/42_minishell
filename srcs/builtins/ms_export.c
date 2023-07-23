@@ -6,11 +6,25 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:47:53 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/21 19:07:35 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/23 17:12:50 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
+
+int	declare(t_env_var *head)
+{
+	t_env_var	*current;
+
+	current = head;
+	while (current)
+	{
+		printf("%s", "declare -x ");
+		printf("%s=%s\n", current->key, current->value);
+		current = current->next;
+	}
+	return (SUCCESS);
+}
 
 static char	**ft_split_first(const char *s, char c)
 {
@@ -82,7 +96,6 @@ int	ft_export(t_env_var **head, char *env_str)
 	new_var->key = key;
 	new_var->value = value;
 	new_var->is_shell_var = false;
-	new_var->next = NULL;
 	new_var->next = *head;
 	*head = new_var;
 	free(split_result);
