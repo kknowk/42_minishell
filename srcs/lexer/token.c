@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 15:23:15 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/22 16:38:59 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/22 20:12:30 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static t_tokentype	judge_tokentype(char *data)
 {
 	if (data == NULL)
 		return (-1);
-	/* IO_NUMBER追加 */
 	if (data[0] == '|')
 		return (CHAR_PIPE);
 	if (data[0] == '\'' && data[ft_strlen(data) - 1] == '\'')
@@ -81,12 +80,9 @@ void	tokenlist_clear(t_token *token)
 	{
 		tmp = token->next;
 		if (token->data)
-		{
-			free(token->data);
-			token->data = NULL;
-		}
+			ft_free(token->data);
 		if (token)
-			free(token);
+			ft_free(token);
 		token = tmp;
 	}
 }

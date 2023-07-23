@@ -1,35 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/10 15:19:36 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/22 17:29:54 by minabe           ###   ########.fr       */
+/*   Created: 2023/07/22 16:18:14 by minabe            #+#    #+#             */
+/*   Updated: 2023/07/22 21:05:31 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#ifndef EXEC_H
+# define EXEC_H
 
-char	*ft_strdup(const char *s1)
-{
-	size_t	i;
-	size_t	len;
-	char	*cpy;
+# include "builtins.h"
+# include "minishell.h"
 
-	if (!s1)
-		return (NULL);
-	len = ft_strlen(s1);
-	cpy = malloc(sizeof(char) * (len + 1));
-	if (cpy == NULL)
-		ft_error("malloc failed");
-	i = 0;
-	while (s1[i])
-	{
-		cpy[i] = s1[i];
-		i++;
-	}
-	cpy[i] = '\0';
-	return (cpy);
-}
+typedef struct s_directory t_directory;
+typedef struct s_env_var t_env_var;
+
+bool	is_builtins(char *command);
+int		exec_builtin(char **cmds, t_directory *dir, t_env_var **env_vars);
+int	judgement_desuno(char **cmds, t_directory *dir, t_env_var **env_vars);
+
+#endif

@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 16:06:37 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/20 21:08:22 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/22 20:02:54 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,16 @@ void	redirect(t_node *node, t_token **token)
 	else
 		node->redirects->type = REDIRECT_APPEND_OUTPUT;
 	
+}
+
+void	destoroy_redirects(t_redirects *redirects)
+{
+	t_redirects	*tmp;
+
+	while (redirects != NULL)
+	{
+		tmp = redirects->next;
+		ft_free(redirects);
+		redirects = tmp;
+	}
 }

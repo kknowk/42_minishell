@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:04:13 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/22 14:39:37 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/22 20:37:30 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ typedef struct s_node
 t_node	*parser(t_token *token);
 void		debug_parser(t_node *node);
 
+void	destoroy_parser(t_node *node);
+
 void	redirect(t_node *node, t_token **token);
+void	destoroy_redirects(t_redirects *redirects);
 
 #endif
 
