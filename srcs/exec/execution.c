@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:07:37 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/23 18:11:53 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/23 19:35:00 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,29 +21,31 @@ static bool	is_builtins(char *command)
 	i = 0;
 	while (commands[i])
 	{
-		if (ft_strlen(command) == ft_strlen(commands[i]))
+		if (ft_strlen(command) != ft_strlen(commands[i]))
 		{
+			ft_free(commands[i]);
 			i++;
 			continue ;
 		}
 		if (ft_strcmp(command, commands[i]) == 0)
 		{
-			/* freeする */
+			while (commands[i])
+				ft_free(commands[i++]);
+			ft_free(commands);
 			return (true);
 		}
+		ft_free(commands[i]);
 		i++;
 	}
-	/* freeする */
+	ft_free(commands);
 	return (false);
 }
 
 void	exec_command(t_node *node, t_directory *dir, t_env_var **env_vars)
 {
-	if (node->redirects)
-		open_redir_file(node->redirects);
 	while (node->redirects)
 	{
-		do_redirect(node->data);
+		do_redirect(node->redirects);
 		node->redirects = node->redirects->next;
 	}
 	if (is_builtins(node->data[0]))

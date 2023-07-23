@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 16:18:14 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/23 17:20:06 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/23 19:29:02 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ typedef struct s_env_var	t_env_var;
 void	select_builtin(char **cmds, t_directory *dir, t_env_var **env_vars);
 int		judgement_desuno(char **cmds, t_directory *dir, t_env_var **env_vars);
 void	exec_from_bin(char **cmds, t_directory *dir);
+void	do_redirect(t_redirects *redirect);
 
 #endif
