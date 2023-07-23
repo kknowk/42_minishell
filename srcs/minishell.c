@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/22 21:16:50 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/23 14:24:51 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	minishell(char *envp[])
 		node = parser(token);
 		if (g_syntax_error)
 			perror("syntax error");
-		handle_nodes(node, &dir, &env_vars);
+		execution(node, &dir, &env_vars);
 		if (g_interrupted == 1)
 		{
 			free(line);
