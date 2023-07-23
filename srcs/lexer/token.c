@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 15:23:15 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/22 16:38:59 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/22 17:12:49 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,13 @@ void	tokenlist_clear(t_token *token)
 	while (token != NULL)
 	{
 		tmp = token->next;
-		if (token->data)
-		{
-			free(token->data);
-			token->data = NULL;
-		}
+		// if (token->data)
+		// {
+		// 	free(token->data);
+		// 	token->data = NULL;
+		// }
 		if (token)
-			free(token);
+			ft_free(token);
 		token = tmp;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/22 16:40:26 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/22 17:11:41 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	minishell(char *envp[])
 		line = readline("minishell$ ");
 		if (line == NULL)
 		{
-			// tokenlist_clear(token);
 			ft_exit();
 		}
 		else
@@ -77,7 +76,6 @@ void	minishell(char *envp[])
 			g_interrupted = 0;
 			continue ;
 		}
-		// tokenlist_clear(token);
 		free(line);
 	}
 }

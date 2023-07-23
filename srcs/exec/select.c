@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:26:36 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/22 15:10:08 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/22 17:01:43 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 #include "lexer.h"
 #include "token.h"
 
-static int	judgement_desuno(char **cmds, t_directory *dir, t_env_var **env_vars)
+static int	judgement_desuno(char **cmds,
+	t_directory *dir, t_env_var **env_vars)
 {
 	int	j;
 
