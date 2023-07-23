@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 15:09:39 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/22 14:24:48 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/22 20:21:24 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	process_dquote_state(t_parse_context *ctx, t_parse_state *state)
 	int		expanded_length;
 
 	if (ctx->str[ctx->i] == '\"')
-		change_normal_pluss(ctx, state);
+		change_normal_plus(ctx, state);
 	else if (ctx->str[ctx->i] == '$')
 	{
 		var_length = get_var_length(ctx->str + ctx->i);

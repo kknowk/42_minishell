@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/22 17:11:41 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/23 15:30:45 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,22 +60,21 @@ void	minishell(char *envp[])
 	{
 		line = readline("minishell$ ");
 		if (line == NULL)
-		{
 			ft_exit();
-		}
 		else
 			add_history(line); // lineが'\0'のときは履歴に登録しない
 		token = lexer(line);
 		node = parser(token);
 		if (g_syntax_error)
 			perror("syntax error");
-		handle_commands(node, &dir, &env_vars);
+		handle_nodes(node, &dir, &env_vars);
 		if (g_interrupted == 1)
 		{
 			free(line);
 			g_interrupted = 0;
 			continue ;
 		}
-		free(line);
+		destoroy_parser(node);
+		ft_free(line);
 	}
 }

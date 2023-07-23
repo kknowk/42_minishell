@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 15:23:15 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/22 17:12:49 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/23 15:30:30 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static t_tokentype	judge_tokentype(char *data)
 {
 	if (data == NULL)
 		return (-1);
-	/* IO_NUMBER追加 */
 	if (data[0] == '|')
 		return (CHAR_PIPE);
 	if (data[0] == '\'' && data[ft_strlen(data) - 1] == '\'')
@@ -80,11 +79,8 @@ void	tokenlist_clear(t_token *token)
 	while (token != NULL)
 	{
 		tmp = token->next;
-		// if (token->data)
-		// {
-		// 	free(token->data);
-		// 	token->data = NULL;
-		// }
+		if (token->data)
+			ft_free(token->data);
 		if (token)
 			ft_free(token);
 		token = tmp;
