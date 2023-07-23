@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:26:36 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/23 15:16:11 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/23 17:12:54 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	judgement_desuno(char **cmds, t_directory *dir, t_env_var **env_vars)
 
 static int	sub(char **cmds, t_env_var **env_vars) // 処理変わっちゃったかも
 {
+	if (!cmds[1])
+		return (declare(*env_vars));
 	if (ft_export(env_vars, cmds[1]))
 		exit(1);
 	else
@@ -103,7 +105,7 @@ void	select_builtin(char **cmds, t_directory *dir, t_env_var **env_vars)
 	if (!ft_strcmp(cmds[0], "echo"))
 		dir->error = ft_echo(cmds, i - 1);
 	else if (ft_strcmp(cmds[0], "cd") && ft_strcmp(cmds[0], "pwd")
-		&& ft_strcmp(cmds[0], "unset"))
+		&& ft_strcmp(cmds[0], "unset") && ft_strcmp(cmds[0], "export"))
 		expansion(cmds, dir);
 }
 

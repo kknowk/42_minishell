@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:54:35 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/23 15:49:51 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/23 17:13:15 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void		ms_free(char *str);
 void		ms_cpca(char *s1, char *s2, char *s3, char *s4);
 int			has_error(char *input);
 int			is_valid_varname(char *varname);
+int			declare(t_env_var *head);
 
 t_env_var	*create_env_vars(char *envp[]);
 
