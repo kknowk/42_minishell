@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 16:06:37 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/23 19:22:01 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/23 20:54:44 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ static t_redirects	*create_redirect(void)
 	if (!redirect)
 		exit(EXIT_FAILURE); // エラー処理する
 	redirect->type = 0;
+	redirect->fd = -1;
+	redirect->fd_file = -1;
+	redirect->fd_backup = -1;
 	redirect->filename = NULL;
 	redirect->prev = NULL;
 	redirect->next = NULL;

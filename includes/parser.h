@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:04:13 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/23 19:20:43 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/23 20:54:02 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_redirects
 {
 	t_redirect_type		type;
 	int					fd;
+	int					fd_file;
 	int					fd_backup;
 	t_token				*filename;
 	struct s_redirects	*prev;
