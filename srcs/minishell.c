@@ -6,11 +6,10 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/23 16:01:13 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/23 15:37:31 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "lexer.h"
 #include "token.h"
 #include <stdio.h>

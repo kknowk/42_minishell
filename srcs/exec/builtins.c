@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:26:36 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/23 17:12:54 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/23 17:21:21 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	judgement_desuno(char **cmds, t_directory *dir, t_env_var **env_vars)
 	return (0);
 }
 
-static int	sub(char **cmds, t_env_var **env_vars) // 処理変わっちゃったかも
+static int	sub(char **cmds, t_env_var **env_vars)
 {
 	if (!cmds[1])
 		return (declare(*env_vars));
@@ -59,7 +59,7 @@ static void	support_fork(char **cmds)
 	}
 }
 
-static void	expansion(char **cmds, t_directory *dir) // 関数の名前に対して処理の量が違う気がします。(変数展開？システムコール？)
+void	exec_from_bin(char **cmds, t_directory *dir)
 {
 	struct stat	s;
 
@@ -104,11 +104,7 @@ void	select_builtin(char **cmds, t_directory *dir, t_env_var **env_vars)
 		i++;
 	if (!ft_strcmp(cmds[0], "echo"))
 		dir->error = ft_echo(cmds, i - 1);
-	else if (ft_strcmp(cmds[0], "cd") && ft_strcmp(cmds[0], "pwd")
-		&& ft_strcmp(cmds[0], "unset") && ft_strcmp(cmds[0], "export"))
-		expansion(cmds, dir);
 }
-
 
 	// while (current)
 	// {
