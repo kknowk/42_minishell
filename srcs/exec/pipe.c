@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 17:58:34 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/22 15:19:48 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/23 14:25:00 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	p1(t_node *node, t_directory *dir,
 	dup2(pipefd[1], STDOUT_FILENO);
 	close(pipefd[1]);
 	if (node->left != NULL)
-		handle_nodes(node->left, dir, env_vars);
+		execution(node->left, dir, env_vars);
 	exit(0);
 }
 
@@ -38,7 +38,7 @@ static void	p2(t_node *node, t_directory *dir,
 	dup2(pipefd[0], STDIN_FILENO);
 	close(pipefd[0]);
 	if (node->right != NULL)
-		handle_nodes(node->right, dir, env_vars);
+		execution(node->right, dir, env_vars);
 	exit(0);
 }
 
