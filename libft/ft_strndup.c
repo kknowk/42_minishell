@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/10 20:26:51 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/22 15:40:28 by khorike          ###   ########.fr       */
+/*   Created: 2023/07/21 13:57:01 by khorike           #+#    #+#             */
+/*   Updated: 2023/07/21 14:00:17 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/libft.h"
 
-int	main(int argc, char *argv[], char *envp[])
+char	*ft_strndup(const char *s, size_t n)
 {
-	(void)argv;
-	if (argc == 1)
-		minishell(envp);
-	return (0);
-}
+	char			*res;
+	unsigned int	i;
 
-__attribute__((destructor)) static void destructor()
-{
-	system("leaks -q minishell");
+	i = 0;
+	res = malloc(sizeof(char) * (n + 1));
+	if (res == NULL)
+		return (NULL);
+	while (i < n)
+	{
+		res[i] = s[i];
+		i++;
+	}
+	res[i] = '\0';
+	return (res);
 }

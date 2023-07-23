@@ -6,70 +6,83 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 15:23:15 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/11 16:23:30 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/22 20:12:30 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_tokentype(char *data)
+static t_tokentype	judge_tokentype(char *data)
 {
+	if (data == NULL)
+		return (-1);
 	if (data[0] == '|')
 		return (CHAR_PIPE);
 	if (data[0] == '\'' && data[ft_strlen(data) - 1] == '\'')
 		return (CHAR_QUOTE);
 	if (data[0] == '\"' && data[ft_strlen(data) - 1] == '\"')
 		return (CHAR_DQUOTE);
-	/* << の場合どうしよう */
-	if (data[0] == '<')
-		return (CHAR_GREATER);
-	if (data[0] == '>')
-		return (CHAR_LESSER);
+	if (data[0] == '<' && data[1] == '<')
+		return (CHAR_D_LESSER);
+	if (data[0] == '>' && data[1] == '>')
+		return (CHAR_D_GREATER);
+	if (is_redirect(data[0]))
+		return (data[0]);
 	else
 		return (CHAR_GENERAL);
 }
 
-static t_token	token_new(char *data)
+t_token	*token_new(char *data)
 {
 	t_token	*new;
 
-	/* strがNULLの場合ある?? */
 	new = malloc(sizeof(t_token));
 	if (!new)
 		exit(EXIT_FAILURE);
 	new->data = data;
 	new->next = NULL;
-	new->type = check_tokentype(data);
-	new->prex = NULL;
+	new->type = judge_tokentype(data);
+	new->prev = NULL;
 	return (new);
 }
 
-void	tokenlistadd_back(t_token *token, char *data)
+t_token *tokenlistadd_back(t_token *token, char *data)
 {
 	t_token	*new;
+	t_token	*head;
 
-	new = token_new(data);
-	if (token != NULL)
+	if (token == NULL)
 	{
-		while (token->next != NULL)
-			token = token->next;
-		token->next = new;
-		new->prev = token;
+		token = token_new(data);
+		return (token);
 	}
-	else
-		token = new;
+	if (*data == '\0')
+		return (token);
+	if (token->data == NULL)
+	{
+		token->data = data;
+		return (token);
+	}
+	head = token;
+	new = token_new(data);
+	while (token->next != NULL)
+		token = token->next;
+	token->next = new;
+	new->prev = token;
+	return (head);
 }
 
 void	tokenlist_clear(t_token *token)
 {
 	t_token	*tmp;
 
-	if (token == NULL)
-		return ;
-	while (token->next != NULL)
+	while (token != NULL)
 	{
 		tmp = token->next;
-		free(token);
+		if (token->data)
+			ft_free(token->data);
+		if (token)
+			ft_free(token);
 		token = tmp;
 	}
 }

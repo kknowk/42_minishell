@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/10 17:19:45 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/18 19:10:17 by minabe           ###   ########.fr       */
+/*   Created: 2023/07/22 16:18:14 by minabe            #+#    #+#             */
+/*   Updated: 2023/07/23 15:33:40 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#ifndef EXEC_H
+# define EXEC_H
 
-char	*ft_substr(char const *s, size_t start, size_t len)
-{
-	size_t	slen;
-	char	*str;
+# include "builtins.h"
+# include "minishell.h"
 
-	slen = ft_strlen(s);
-	if (slen <= start)
-		str = ft_strdup("");
-	else
-	{
-		str = malloc(sizeof(char) * (slen - start + 1));
-		if (!str)
-			ft_error("malloc failed");
-		ft_strlcpy(str, s + start, len + 1);
-	}
-	return (str);
-}
+typedef struct s_directory t_directory;
+typedef struct s_env_var t_env_var;
+
+void	select_builtin(char **cmds, t_directory *dir, t_env_var **env_vars);
+int	judgement_desuno(char **cmds, t_directory *dir, t_env_var **env_vars);
+
+#endif

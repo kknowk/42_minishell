@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:14:49 by minabe            #+#    #+#             */
-/*   Updated: 2023/05/03 12:25:29 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/21 13:58:49 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,12 @@ ssize_t	ft_putstr(char *s);
 void	*ft_realloc(void *p, size_t size);
 
 char	*ft_strchr(const char *s, int c);
+char	*ft_strcat(char *dest, char *src);
+char	*ft_strcpy(char *dest, char *src);
+char	*ft_strstr(char *str, char *to_find);
 int		ft_strcmp(char *str1, char *str2);
 char	*ft_strdup(const char *s1);
+char	*ft_strndup(const char *s, size_t n);
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 char	*ft_strjoin(char *s1, char *s2);
 
@@ -66,7 +70,8 @@ char	*ft_strnstr(const char *haystack, char *needle, size_t len);
 
 char	*ft_strrchr(const char *s, int c);
 char	*ft_strtrim(char const *s1, char const *set);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_substr(char const *s, size_t start, size_t len);
+char	**ft_split(char const *s, char c);
 
 int		ft_tolower(int c);
 int		ft_toupper(int c);

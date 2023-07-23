@@ -1,43 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.h                                            :+:      :+:    :+:   */
+/*   expansion.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/18 20:36:38 by minabe           ###   ########.fr       */
+/*   Created: 2023/07/15 15:15:23 by khorike           #+#    #+#             */
+/*   Updated: 2023/07/21 16:20:52 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEXER_H
-# define LEXER_H
+#ifndef EXPANSION_H
+# define EXPANSION_H
 
 # include "minishell.h"
-# include "token.h"
-
-# define D_REDIR_SIZE 2
-
-typedef enum e_token_state
-{
-	STATE_IN_QUOTED,
-	STATE_IN_DQUOTED,
-	STATE_GENERAL,
-}	t_token_state;
-
-typedef struct s_lexer
-{
-	size_t			word_len;
-	size_t			word_start;
-	bool			is_quoted;
-	char			quote_type;
-	t_token			*token;
-	t_token			*list_head;
-	t_token_state	status;
-}	t_lexer;
-
-t_token	*lexer(char *str);
-
-void		debug_lexer(t_lexer *lex);
+# include "builtins.h"
 
 #endif

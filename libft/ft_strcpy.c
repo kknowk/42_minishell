@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/10 20:26:51 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/22 15:40:28 by khorike          ###   ########.fr       */
+/*   Created: 2023/07/14 17:36:17 by khorike           #+#    #+#             */
+/*   Updated: 2023/07/14 17:36:55 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/libft.h"
 
-int	main(int argc, char *argv[], char *envp[])
+char	*ft_strcpy(char *dest, char *src)
 {
-	(void)argv;
-	if (argc == 1)
-		minishell(envp);
-	return (0);
-}
+	size_t	i;
 
-__attribute__((destructor)) static void destructor()
-{
-	system("leaks -q minishell");
+	i = 0;
+	while (src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
 }

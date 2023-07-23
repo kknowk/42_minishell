@@ -6,23 +6,15 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:05:49 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/11 17:20:15 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/23 15:48:36 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-int	ft_pwd(void)
+int	ft_pwd(t_directory *dir)
 {
-	char	cwd[PATH_MAX];
-
-	if (getcwd(cwd, sizeof(cwd)) == NULL)
-	{
-		perror("pwd failed");
-		return (FAILURE);
-	}
-	else
-		printf("%s\n", cwd);
+	printf("%s\n", dir->path);
 	return (SUCCESS);
 }
 

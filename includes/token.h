@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 16:13:54 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/11 17:17:12 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/23 15:48:09 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,35 +15,34 @@
 
 # include "minishell.h"
 
-typedef struct s_token	t_token;
-
 typedef enum e_tokentype
 {
-	CHAR_GENERAL,
-	CHAR_QUOTE,
-	CHAR_DQUOTE,
-	CHAR_PIPE,
-	CHAR_WHITESPACE,
-	CHAR_GRATER,
-	CHAR_LESSER,
+	CHAR_GENERAL = -1,
+	CHAR_QUOTE = '\'',
+	CHAR_DQUOTE = '\"',
+	CHAR_PIPE = '|',
+	CHAR_WHITESPACE = ' ',
+	CHAR_GREATER = '>',
+	CHAR_LESSER = '<',
+	CHAR_D_GREATER = -4,
+	CHAR_D_LESSER,
+	CHAR_IO_NUMBER,
 }	t_tokentype;
 
-typedef enum e_token_status
-{
-	IN_QUOTED,
-	IN_DQUOTE,
-	GENERAL,
-}	t_token_status;
-
-struct	s_token
+typedef struct s_token
 {
 	t_tokentype		type;
 	char			*data;
-	t_token			*prev;
-	t_token			*next;
-};
+	struct s_token	*prev;
+	struct s_token	*next;
+}	t_token;
 
-void	tokenlistadd_back(t_token *token, char *data);
+t_token	*tokenlistadd_back(t_token *token, char *data);
 void	tokenlist_clear(t_token *token);
+t_token	*token_new(char *data);
+
+bool	is_quote(char c);
+bool	is_redirect(char c);
+bool	is_whitespace(char c);
 
 #endif
