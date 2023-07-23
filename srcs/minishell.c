@@ -6,11 +6,10 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/23 15:30:45 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/23 15:37:31 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "lexer.h"
 #include "token.h"
 #include <stdio.h>
@@ -67,7 +66,7 @@ void	minishell(char *envp[])
 		node = parser(token);
 		if (g_syntax_error)
 			perror("syntax error");
-		handle_nodes(node, &dir, &env_vars);
+		execution(node, &dir, &env_vars);
 		if (g_interrupted == 1)
 		{
 			free(line);

@@ -6,64 +6,48 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:07:37 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/23 15:30:04 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/23 15:38:05 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	support_fork(char **cmds)
+static bool	is_builtins(char *command)
 {
-	if (fork() == 0)
+	char	**commands;
+	int		i;
+
+	commands = ft_split("echo cd pwd export unset env exit", ' ');
+	i = 0;
+	while (commands[i])
 	{
-		execve(cmds[0], cmds, NULL);
-		perror("execve failed");
-		exit(1);
+		if (ft_strcmp(command, commands[i]) == 0)
+			return (true);
+		i++;
 	}
-	else
-	{
-		wait(NULL);
-		return ;
-	}
+	return (false);
 }
 
-static void	expansion(char **cmds, t_directory *dir)
+void	exec_command(t_node *node, t_directory *dir, t_env_var **env_vars)
 {
-	struct stat	s;
-
-	if (stat(cmds[0], &s) == 0)
-	{
-		if (S_ISDIR(s.st_mode))
-		{
-			printf("%s: is a directory\n", cmds[0]);
-			dir->error = 126;
-			return ;
-		}
-		else if (access(cmds[0], X_OK) == 0)
-		{
-			support_fork(cmds);
-		}
-	}
-	else
-		dir->error = execute_command(cmds[0], cmds) * 127;
-	return ;
+	// if (node->redirects)
+	// 	open_redir_file(node->redirects);
+	// while (node->redirects)
+	// {
+	// 	do_redirect(node->data);
+	// 	node->redirects = node->redirects->next;
+	// }
+	if (is_builtins(node->data[0]))
+		return (select_builtin(node->data, dir, env_vars));
+	return ; // ここでexecveしたいんですが変更できませんか?
 }
 
-void	handle_nodes(t_node *node, t_directory *dir, t_env_var **env_vars)
+void	execution(t_node *node, t_directory *dir, t_env_var **env_vars)
 {
 	if (node == NULL)
 		return ;
 	if (node->type == NODE_PIPE)
 		exec_pipe(node, dir, env_vars);
 	else
-	{
-		if (is_builtins(node->data[0]))
-		{
-			if (judgement_desuno(node->data, dir, env_vars) == 1)
-				return ;
-			dir->error = exec_builtin(node->data, dir, env_vars);
-		}
-		else
-			expansion(node->data, dir);
-	}
+		exec_command(node, dir, env_vars);
 }

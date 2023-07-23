@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:54:35 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/22 20:41:56 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/23 14:25:36 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,6 @@ int			is_valid_varname(char *varname);
 
 t_env_var	*create_env_vars(char *envp[]);
 
-void		ft_select(char **cmds, t_directory *dir, t_env_var **env_vars);
-
 int			execute_command(char *command, char **cmds);
 void		ft_exit(void);
 
@@ -95,7 +93,7 @@ char		*search(t_env_var **head, char *key);
 bool		is_quoted(char *cmd);
 char		*expand_and_replace(char *input, t_env_var **head);
 
-void		handle_nodes(t_node *node, t_directory *dir,
+void		execution(t_node *node, t_directory *dir,
 				t_env_var **env_vars);
 
 char		*search_quote(char **cmds);
