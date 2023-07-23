@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/23 15:54:48 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/23 15:56:21 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ void	minishell(char *envp[])
 	while (true)
 	{
 		line = readline("minishell$ ");
-		if (!strcmp(line, "pwd"))
-			ft_pwd();
 		if (line == NULL)
 			ft_exit();
 		else
