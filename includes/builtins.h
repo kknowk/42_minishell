@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:54:35 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/23 17:21:39 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/24 17:18:25 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # define PATH_MAX 1024
 # define FAILURE 1
 # define SUCCESS 0
+# define EXIT_ERROR 2
 # define MAX_BUFFER_SIZE 4096
 
 typedef struct s_env_var
@@ -63,8 +64,8 @@ typedef struct s_parse_context
 
 int			ft_echo(char **str, int max_words);
 int			ft_env(t_env_var *head);
-int			ft_export(t_env_var **head, char *env_str);
-int			ft_unset(t_env_var **head, char *key);
+int			ft_export(t_env_var **head, char **cmds);
+int			ft_unset(t_env_var **head, char **keys);
 int			ft_pwd(t_directory *dir);
 int			ft_cd(t_directory *dir, char *path, t_env_var **head);
 
@@ -74,11 +75,16 @@ int			error_str(char *str);
 size_t		ft_strcspn(const char *s1r, const char *s2r);
 size_t		ft_strspn(const char *s1, const char *s2);
 
-void		ms_free(char *str);
+char		**return_null_free(char *str);
 void		ms_cpca(char *s1, char *s2, char *s3, char *s4);
-int			has_error(char *input);
 int			is_valid_varname(char *varname);
+int			has_error(char *input);
+
+char		*search_equal(char **cmds);
+char		*error_in_export(char *str);
+char		*is_valid_name(char *name);
 int			declare(t_env_var *head);
+char		*get_next_var(char **cmds, char *s1);
 
 t_env_var	*create_env_vars(char *envp[]);
 
