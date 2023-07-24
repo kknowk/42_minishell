@@ -6,31 +6,13 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 15:13:18 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/21 16:27:11 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/24 13:46:52 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ctype.h>
 #include <string.h>
 #include "builtins.h"
-
-int	is_valid_varname(char *varname)
-{
-	char	*p;
-
-	if (varname[0] == '\0')
-		return (SUCCESS);
-	if (ft_isdigit((unsigned char)varname[0]))
-		return (SUCCESS);
-	p = varname;
-	while (*p != '\0')
-	{
-		if (!ft_isalnum((unsigned char)*p) && *p != '_')
-			return (SUCCESS);
-		p++;
-	}	
-	return (FAILURE);
-}
 
 static void	temp_result(t_expand *exp, char **result)
 {

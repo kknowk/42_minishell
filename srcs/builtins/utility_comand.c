@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_utility_comand.c                                :+:      :+:    :+:   */
+/*   utility_comand.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 17:10:32 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/20 13:52:25 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/24 13:19:03 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static int	helper_execute(char	*args[PATH_MAX], char **cmds)
 
 	path = add_current_directory_to_path();
 	path_copy = ft_strdup(path);
-	ms_free(path);
+	ft_free(path);
 	if (path_copy == NULL)
 		error_put("Memory allocation failed");
 	path_token = ft_strtok(path_copy, ":");
