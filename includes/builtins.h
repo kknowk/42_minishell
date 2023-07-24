@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:54:35 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/24 17:18:25 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/24 19:30:36 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_directory
 {
 	char	path[PATH_MAX];
 	int		error;
+	int		malloc_error;
 }	t_directory;
 
 typedef struct s_expand
@@ -54,7 +55,7 @@ typedef enum e_parse_state
 
 typedef struct s_parse_context
 {
-	const char	*str;
+	char		*str;
 	size_t		i;
 	char		*result;
 	int			j;
@@ -109,5 +110,9 @@ void		change_normal_plus(t_parse_context *ctx, t_parse_state *state);
 char		*quote_handle(char *str, t_directory *dir, t_env_var **env_vars);
 
 void		exec_pipe(t_node *node, t_directory *dir, t_env_var **env_vars);
+
+void		malloc_error(t_directory *dir);
+void		process_dollar(t_parse_context *ctx, t_directory *dir);
+void		process_normal_character(t_parse_context *ctx);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:14:49 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/21 13:58:49 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/24 18:25:34 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ bool	ft_isalpha(int c);
 bool	ft_isascii(int c);
 bool	ft_isdigit(int c);
 bool	ft_isprint(int c);
+int		ft_isspace(int c);
 char	*ft_itoa(int n);
 
 void	*ft_memchr(const void *s, int c, size_t n);
