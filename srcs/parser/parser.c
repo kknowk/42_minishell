@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:41:09 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/24 12:38:10 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/25 16:38:27 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,9 @@ t_node	*parser(t_token *token)
 	t_node	*node;
 	t_node	*left;
 	t_node	*right;
+	t_token	*tmp;
 
+	tmp = token;
 	node = node_new();
 	store_data(node, &token);
 	while (token != NULL && token->type == CHAR_PIPE)
@@ -90,7 +92,7 @@ t_node	*parser(t_token *token)
 	}
 	if(DEBUG)
 		debug_parser(node);
-	tokenlist_clear(token);
+	tokenlist_clear(tmp);
 	return (node);
 }
 
@@ -101,10 +103,10 @@ void	free_strarray(char **array)
 	i = 0;
 	while (array[i])
 	{
-		free(array[i]);
+		ft_free(array[i]);
 		i++;
 	}
-	free(array);
+	ft_free(array);
 }
 
 void	destoroy_parser(t_node *node)
