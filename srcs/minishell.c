@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/24 15:33:06 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/24 18:32:42 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	minishell(char *envp[])
 		exit(1);
 	rl_outstream = stderr; // defaultがstdoutのため
 	dir.error = 0;
+	dir.malloc_error = 0;
 	while (true)
 	{
 		line = readline("minishell$ ");

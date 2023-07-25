@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper_handle_quotation.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 17:02:15 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/22 20:21:40 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/24 18:24:07 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	get_var_length(const char *str)
 
 	len = 1;
 	while (str[len] != '\0' && str[len] != '\"'
-		&& str[len] != '\'' && !isspace(str[len]))
+		&& str[len] != '\'' && !ft_isspace(str[len]))
 		len++;
 	return (len);
 }
