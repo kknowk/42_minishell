@@ -3,40 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   handle_quotation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 15:09:39 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/22 20:21:24 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/24 19:28:35 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-void	process_dquote_state(t_parse_context *ctx, t_parse_state *state)
+static void	process_dquote_state(t_parse_context *ctx, t_parse_state *state,
+	t_directory *dir)
 {
-	int		var_length;
-	char	*substring;
-	char	*expanded;
-	int		expanded_length;
-
 	if (ctx->str[ctx->i] == '\"')
 		change_normal_plus(ctx, state);
 	else if (ctx->str[ctx->i] == '$')
 	{
-		var_length = get_var_length(ctx->str + ctx->i);
-		substring = ft_strndup(ctx->str + ctx->i, var_length);
-		expanded = dollar_handle(substring, ctx->dir, ctx->env_vars);
-		expanded_length = ft_strlen(expanded);
-		if (expanded_length < MAX_BUFFER_SIZE - ctx->j)
-		{
-			ft_strlcpy(ctx->result + ctx->j, expanded, expanded_length + 1);
-			ctx->j += expanded_length;
-			ctx->i += var_length;
-		}
-		free(expanded);
+		process_dollar(ctx, dir);
 	}
 	else
-		ctx->result[(ctx->j)++] = ctx->str[(ctx->i)++];
+	{
+		process_normal_character(ctx);
+	}
 	*state = STATE_NORMAL;
 }
 
@@ -80,15 +68,23 @@ char	*quote_handle(char *str, t_directory *dir, t_env_var **env_vars)
 
 	ctx = init_parse_context(str, dir, env_vars);
 	if (!ctx.result)
+	{
+		dir->malloc_error = 1;
 		return (NULL);
+	}
 	state = STATE_NORMAL;
 	while (ctx.str[ctx.i] != '\0')
 	{
 		if (state == STATE_NORMAL)
 			parse_and_append_char(&state, &ctx);
 		else if (state == STATE_IN_DQUOTE)
-			process_dquote_state(&ctx, &state);
+			process_dquote_state(&ctx, &state, dir);
+		if (dir->malloc_error == 1)
+			break ;
 	}
 	ctx.result[ctx.j] = '\0';
+	if (dir->malloc_error == 1)
+		ft_free(ctx.result);
+	ft_free(ctx.str);
 	return (ctx.result);
 }

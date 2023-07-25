@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:26:36 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/24 17:18:04 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/24 18:37:51 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	judgement_desuno(char **cmds, t_directory *dir, t_env_var **env_vars)
 			cmds[j] = quote_handle(cmds[j], dir, env_vars);
 		else
 			cmds[j] = dollar_handle(cmds[j], dir, env_vars);
+		if (dir->malloc_error == 1 || !cmds[j])
+			exit(1);
 		j++;
 	}
 	if (!cmds)
@@ -33,13 +35,6 @@ int	judgement_desuno(char **cmds, t_directory *dir, t_env_var **env_vars)
 		return (1);
 	return (0);
 }
-
-// int	ft_export_return(char *s1)
-// {
-// 	ft_free(s1);
-// 	printf("exit\n");
-// 	retunr (SUCCESS);
-// }
 
 static int	handle_export(char **cmds, t_env_var **env_vars)
 {

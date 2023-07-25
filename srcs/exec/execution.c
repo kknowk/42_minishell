@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:07:37 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/25 14:15:50 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/25 14:37:25 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void	exec_command(t_node *node, t_directory *dir, t_env_var **env_vars)
 	}
 	if (judgement_desuno(node->data, dir, env_vars) == 1)
 		return ;
+	if (dir->malloc_error == 1)
+		exit(1);
 	if (is_builtins(node->data[0]))
 		return (select_builtin(node->data, dir, env_vars));
 	return (exec_from_bin(node->data, dir));
