@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 15:09:39 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/24 19:28:35 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/25 15:31:23 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static void	process_dquote_state(t_parse_context *ctx, t_parse_state *state,
 	{
 		process_normal_character(ctx);
 	}
-	*state = STATE_NORMAL;
 }
 
 static t_parse_context	init_parse_context(char *str, t_directory *dir,
