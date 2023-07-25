@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:36:17 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/25 15:00:58 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/25 15:32:52 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	open_redir_file(t_redirects *redir)
 {
 	char	*filename;
-	
+
 	filename = redir->filename->data;
 	if (redir->type == REDIRECT_INPUT)
 	{
@@ -40,7 +40,8 @@ void	do_redirect(t_redirects *redirect)
 {
 	if (redirect->type == REDIRECT_INPUT || redirect->type == REDIRECT_OUTPUT)
 	{
-		redirect->fd = dup2(redirect->fd_backup, redirect->fd); // 
+		redirect->fd_backup = redirect->fd;
+		redirect->fd = dup(redirect->fd); // 
 		return ;
 	}
 	// if (redirect->type == REDIRECT_APPEND_OUTPUT)
