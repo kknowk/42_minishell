@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:41:09 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/25 16:55:50 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/25 17:54:57 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,15 +124,15 @@ void	free_strarray(char **array)
 	ft_free(array);
 }
 
-void	destoroy_parser(t_node *node)
+void	destroy_parser(t_node *node)
 {
 	if (node->left)
-		destoroy_parser(node->left);
+		destroy_parser(node->left);
 	if (node->right)
-		destoroy_parser(node->right);
+		destroy_parser(node->right);
 	if (node->data)
 		free_strarray(node->data);
 	if (node->redirects)
-		destoroy_redirects(node->redirects);
+		destroy_redirects(node->redirects);
 	ft_free(node);
 }

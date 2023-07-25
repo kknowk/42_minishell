@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 16:06:37 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/23 20:54:44 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/25 17:55:04 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	redirect(t_node *node, t_token **token)
 		node->redirects->fd = STDOUT_FILENO;
 }
 
-void	destoroy_redirects(t_redirects *redirects)
+void	destroy_redirects(t_redirects *redirects)
 {
 	t_redirects	*tmp;
 
