@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:41:09 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/24 12:38:10 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/25 14:46:29 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static t_node	*node_new(void)
 
 	node = malloc(sizeof(t_node));
 	if (!node)
-		exit(EXIT_FAILURE);
+		return (NULL);
 	node->type = NODE_COMMAND;
 	node->data = NULL;
 	node->redirects = NULL;
@@ -49,7 +49,7 @@ void	store_data(t_node *node, t_token **token)
 
 	size = data_size((*token));
 	node->data = ft_calloc(size + 1, sizeof(char *));
-	if (!node->data) // エラー処理必要
+	if (!node->data)
 	{
 		tokenlist_clear(*token);
 		exit(EXIT_FAILURE);
@@ -76,14 +76,29 @@ t_node	*parser(t_token *token)
 	t_node	*right;
 
 	node = node_new();
+	if (node == NULL)
+	{
+		tokenlist_clear(token);
+		exit(EXIT_FAILURE);
+	}
 	store_data(node, &token);
 	while (token != NULL && token->type == CHAR_PIPE)
 	{
 		token = token->next;
 		left = node;
 		right = node_new();
+		if (right == NULL)
+		{
+			tokenlist_clear(token);
+			exit(EXIT_FAILURE);
+		}
 		store_data(right, &token);
 		node = node_new();
+		if (node == NULL)
+		{
+			tokenlist_clear(token);
+			exit(EXIT_FAILURE);
+		}
 		node->type = NODE_PIPE;
 		node->left = left;
 		node->right = right;
