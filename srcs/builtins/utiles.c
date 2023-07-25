@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_utiles.c                                        :+:      :+:    :+:   */
+/*   utiles.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 13:33:45 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/21 13:33:36 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/24 17:35:48 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	error_put(char *str)
 
 int	error_str(char *str)
 {
-	write(STDERR_FILENO, "bash", 4);
+	write(STDERR_FILENO, "minishell", 9);
 	write(STDERR_FILENO, ": ", 2);
 	write(STDERR_FILENO, str, ft_strlen(str));
 	write(STDERR_FILENO, ": command not found", 19);

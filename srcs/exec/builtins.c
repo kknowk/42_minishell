@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:26:36 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/23 17:21:21 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/24 17:18:04 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,24 @@ int	judgement_desuno(char **cmds, t_directory *dir, t_env_var **env_vars)
 	return (0);
 }
 
-static int	sub(char **cmds, t_env_var **env_vars)
+// int	ft_export_return(char *s1)
+// {
+// 	ft_free(s1);
+// 	printf("exit\n");
+// 	retunr (SUCCESS);
+// }
+
+static int	handle_export(char **cmds, t_env_var **env_vars)
 {
+	int		status;
+
+	status = SUCCESS;
 	if (!cmds[1])
 		return (declare(*env_vars));
-	if (ft_export(env_vars, cmds[1]))
+	status = ft_export(env_vars, cmds);
+	if (status == EXIT_ERROR)
 		exit(1);
-	else
-		return (0);
+	return (status);
 }
 
 static void	support_fork(char **cmds)
@@ -86,8 +96,6 @@ void	select_builtin(char **cmds, t_directory *dir, t_env_var **env_vars)
 	int			i;
 
 	i = 0;
-	if (judgement_desuno(cmds, dir, env_vars) == 1)
-		return ;
 	if (!ft_strcmp(cmds[0], "pwd"))
 		dir->error = ft_pwd(dir);
 	if (!ft_strcmp(cmds[0], "cd"))
@@ -97,9 +105,9 @@ void	select_builtin(char **cmds, t_directory *dir, t_env_var **env_vars)
 	if (!ft_strcmp(cmds[0], "env"))
 		dir->error = ft_env(*env_vars);
 	if (!ft_strcmp(cmds[0], "export"))
-		dir->error = sub(cmds, env_vars);
+		dir->error = handle_export(cmds, env_vars);
 	if (!ft_strcmp(cmds[0], "unset"))
-		dir->error = ft_unset(env_vars, cmds[1]);
+		dir->error = ft_unset(env_vars, cmds);
 	while (cmds[i])
 		i++;
 	if (!ft_strcmp(cmds[0], "echo"))

@@ -1,30 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_export.c                                        :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:47:53 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/23 17:12:50 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/24 17:07:45 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
-
-int	declare(t_env_var *head)
-{
-	t_env_var	*current;
-
-	current = head;
-	while (current)
-	{
-		printf("%s", "declare -x ");
-		printf("%s=%s\n", current->key, current->value);
-		current = current->next;
-	}
-	return (SUCCESS);
-}
 
 static char	**ft_split_first(const char *s, char c)
 {
@@ -38,11 +24,17 @@ static char	**ft_split_first(const char *s, char c)
 	if (location)
 	{
 		arr[0] = ft_strndup(s, location - s);
+		if (!arr[0])
+			return (NULL);
 		arr[1] = ft_strdup(location + 1);
+		if (!arr[1])
+			return (return_null_free(arr[0]));
 	}
 	else
 	{
 		arr[0] = ft_strdup(s);
+		if (!arr[0])
+			return (NULL);
 		arr[1] = NULL;
 	}
 	return (arr);
@@ -74,7 +66,7 @@ static int	type_existing_val(t_env_var *existing_node,
 	return (SUCCESS);
 }
 
-int	ft_export(t_env_var **head, char *env_str)
+static int	add_env_vars(t_env_var **head, char *env_str)
 {
 	char		*key;
 	char		*value;
@@ -100,4 +92,28 @@ int	ft_export(t_env_var **head, char *env_str)
 	*head = new_var;
 	free(split_result);
 	return (SUCCESS);
+}
+
+int	ft_export(t_env_var **head, char **cmds)
+{
+	int		status;
+	int		i;
+	char	*s1;
+
+	status = SUCCESS;
+	i = 1;
+	while (cmds[i])
+	{
+		s1 = search_equal(&cmds[i]);
+		if (!s1)
+			return (SUCCESS);
+		else if (s1[0] == '=')
+			status = FAILURE;
+		else if (is_valid_name(s1))
+			status = FAILURE;
+		else if (add_env_vars(head, s1))
+			return (EXIT_ERROR);
+		i++;
+	}
+	return (status);
 }

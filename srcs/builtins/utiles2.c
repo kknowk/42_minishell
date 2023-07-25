@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_utiles2.c                                       :+:      :+:    :+:   */
+/*   utiles2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 17:25:01 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/21 15:15:18 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/24 14:31:06 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-void	ms_free(char *str)
+char	**return_null_free(char *str)
 {
-	if (str)
-	{
-		free(str);
-	}
+	ft_free(str);
+	return (NULL);
 }
 
 void	ms_cpca(char *s1, char *s2, char *s3, char *s4)
@@ -53,4 +51,22 @@ int	has_error(char *input)
 			start++;
 	}
 	return (0);
+}
+
+int	is_valid_varname(char *varname)
+{
+	char	*p;
+
+	if (varname[0] == '\0')
+		return (SUCCESS);
+	if (ft_isdigit((unsigned char)varname[0]))
+		return (SUCCESS);
+	p = varname;
+	while (*p != '\0')
+	{
+		if (!ft_isalnum((unsigned char)*p) && *p != '_')
+			return (SUCCESS);
+		p++;
+	}	
+	return (FAILURE);
 }

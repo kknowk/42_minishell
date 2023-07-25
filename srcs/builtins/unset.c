@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_unset.c                                         :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 13:40:41 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/15 13:48:02 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/24 17:35:21 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-int	ft_unset(t_env_var **head, char *key)
+static int	helper_unset(t_env_var **head, char *key)
 {
 	t_env_var	*current;
 	t_env_var	*prev;
@@ -38,41 +38,43 @@ int	ft_unset(t_env_var **head, char *key)
 	return (FAILURE);
 }
 
-// int	main(void)
-// {
-// 	t_env_var	*env_vars = NULL;
-// 	char *env_str1 = "KEY1=Value1";
-// 	char *env_str2 = "KEY2=Value2";
+static char	*error_in_unset(char *str)
+{
+	write(STDERR_FILENO, "minishell: unset: `", 20);
+	write(STDERR_FILENO, str, ft_strlen(str));
+	write(STDERR_FILENO, "': not a valid identifier\n", 27);
+	return (ft_strchr(str, '='));
+}
 
-// 	ft_export(&env_vars, env_str1);
-// 	ft_export(&env_vars, env_str2);
-// 	t_env_var *current = env_vars;
-// 	while (current != NULL)
-// 	{
-// 		printf("Key: %s, Value: %s\n", current->key, current->value);
-// 		current = current->next;
-// 	}
-// 	ft_unset(&env_vars, "KEY1");
-// 	ft_unset(&env_vars, "KEY2");
-// 	while (current != NULL)
-// 	{
-// 		printf("Key: %s, Value: %s\n", current->key, current->value);
-// 		current = current->next;
-// 	}
-// 	current = env_vars;
-// 	// t_env_var *next;
-// 	// while (current != NULL)
-// 	// {
-// 	// 	next = current->next;
-// 	// 	free(current->key);
-// 	// 	free(current->value);
-// 	// 	free(current);
-// 	// 	current = next;
-// 	// }
-// 	return (0);
-// }
+static char	*is_valid_name_unset(char *key)
+{
+	int	i;
 
-// __attribute__((destructor)) static void destructor()
-// {
-// 	system("leaks -q a.out");
-// }
+	i = 0;
+	if (!ft_isalpha(key[0]) && key[0] != '_')
+		return (error_in_unset(key));
+	while (key[i])
+	{
+		if (!ft_isalnum(key[i]) && key[i] != '_')
+			return (error_in_unset(key));
+		i++;
+	}
+	return (NULL);
+}
+
+int	ft_unset(t_env_var **head, char **keys)
+{
+	int		status;
+	int		i;
+
+	status = SUCCESS;
+	i = 1;
+	while (keys[i])
+	{
+		if (is_valid_name_unset(keys[i]))
+			status = FAILURE;
+		helper_unset(head, keys[i]);
+		i++;
+	}
+	return (status);
+}
