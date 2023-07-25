@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 19:29:29 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/24 19:29:45 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/25 12:34:44 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	process_dollar(t_parse_context *ctx, t_directory *dir)
 	if (!substring)
 		return (malloc_error(dir));
 	expanded = dollar_handle(substring, ctx->dir, ctx->env_vars);
+	if (!expanded)
+		return (malloc_error(dir));
 	expanded_length = ft_strlen(expanded);
 	if (expanded_length < MAX_BUFFER_SIZE - ctx->j)
 	{
