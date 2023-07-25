@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 16:18:14 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/23 20:55:28 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/25 14:56:49 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "builtins.h"
 # include "minishell.h"
+
+# define FILE_MODE	0644
 
 typedef struct s_directory	t_directory;
 typedef struct s_env_var	t_env_var;

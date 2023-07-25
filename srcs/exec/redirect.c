@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:36:17 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/23 20:55:59 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/25 15:00:58 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,26 @@
 
 int	open_redir_file(t_redirects *redir)
 {
+	char	*filename;
+	
+	filename = redir->filename->data;
 	if (redir->type == REDIRECT_INPUT)
-		redir->fd_file = open(redir->filename->data, O_RDONLY, 0);
+	{
+		puts("INPUT");
+		return (open(filename, O_RDONLY));
+	}
 	else if (redir->type == REDIRECT_OUTPUT)
-		redir->fd_file = open(redir->filename->data, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	else
-		puts("ToDo");
-	/* fdをdupする必要ある？ */
-	return (redir->fd);
+	{
+		puts("OUTPUT");
+		return (open(filename, O_WRONLY | O_CREAT | O_TRUNC, FILE_MODE));
+	}
+	else if (redir->type == REDIRECT_APPEND_OUTPUT)
+	{
+		puts("APPEND");
+		return (open(filename, O_WRONLY | O_CREAT | O_APPEND, FILE_MODE));
+	}
+	puts("HEREDOC: ToDo");
+	return (-1);
 }
 
 void	do_redirect(t_redirects *redirect)
