@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:36:17 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/25 19:41:20 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/25 20:09:13 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,9 @@ void	restore_fd(t_redirects *redirect)
 	if (redirect == NULL)
 		return ;
 	dup2(redirect->fd_backup, redirect->fd);
+	printf("fd: %d\n", redirect->fd);
+	printf("fd_file: %d\n", redirect->fd_file);
+	printf("fd_backup: %d\n", redirect->fd_backup);
 	close(redirect->fd_backup);
 	redirect->fd_backup = -1;
 }
