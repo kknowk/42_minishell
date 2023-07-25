@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:36:17 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/25 17:16:44 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/25 19:41:20 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,13 @@ int	open_redir_file(t_redirects *redir)
 	if (redir->type == REDIRECT_INPUT)
 	{
 		puts("INPUT");
+		printf("filename: %s\n", filename);
 		return (open(filename, O_RDONLY));
 	}
 	else if (redir->type == REDIRECT_OUTPUT)
 	{
 		puts("OUTPUT");
+		printf("filename: %s\n", filename);
 		return (open(filename, O_WRONLY | O_CREAT | O_TRUNC, FILE_MODE));
 	}
 	else if (redir->type == REDIRECT_APPEND_OUTPUT)
@@ -40,9 +42,11 @@ void	do_redirect(t_redirects *redirect)
 {
 	if (redirect->type == REDIRECT_INPUT || redirect->type == REDIRECT_OUTPUT)
 	{
-		redirect->fd_backup = redirect->fd;
-		redirect->fd = dup(redirect->fd);
+		redirect->fd_backup = dup(redirect->fd);
 		dup2(redirect->fd_file, redirect->fd);
+		printf("fd: %d\n", redirect->fd);
+		printf("fd_file: %d\n", redirect->fd_file);
+		printf("fd_backup: %d\n", redirect->fd_backup);
 		close(redirect->fd_file);
 		return ;
 	}
