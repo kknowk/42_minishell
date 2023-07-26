@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/25 21:17:12 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/26 12:48:39 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-	volatile sig_atomic_t	g_interrupted;
-	int						g_syntax_error;
+t_shell	g_shell;
 
 void	handle_signal(int signal)
 {
@@ -32,8 +31,7 @@ void	handle_signal(int signal)
 	}
 	else if (signal == SIGQUIT)
 		;
-	// g_shell.interrupted = 1;
-	g_interrupted = 1;
+	g_shell.interrupted = 1;
 }
 
 void	minishell(char *envp[])
@@ -66,16 +64,13 @@ void	minishell(char *envp[])
 			add_history(line); // lineが'\0'のときは履歴に登録しない
 		token = lexer(line);
 		node = parser(token);
-		// if (g_shell.syntax_error)
-		if (g_syntax_error)
+		if (g_shell.syntax_error)
 			perror("syntax error");
 		execution(node, &dir, &env_vars);
-		// if (g_shell.interrupted == 1)
-		if (g_interrupted == 1)
+		if (g_shell.interrupted == 1)
 		{
 			free(line);
-			// g_shell.interrupted = 0;
-			g_interrupted = 0;
+			g_shell.interrupted = 0;
 			continue ;
 		}
 		restore_fd(node->redirects);

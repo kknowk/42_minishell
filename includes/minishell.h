@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/25 21:15:31 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/26 12:41:19 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,21 @@
 # include "builtins.h"
 # include "exec.h"
 # include "expansion.h"
+# include "directory.h"
 
 # ifndef DEBUG
 #  define DEBUG 1
 # endif
 
-// typedef struct	s_shell
-// {
-// 	volatile sig_atomic_t	interrupted;
-// 	int						syntax_error;
-// 	// t_directory				dir;
-// 	int						exit_error;
-// }	 t_shell;
+typedef struct s_shell
+{
+	volatile sig_atomic_t	interrupted;
+	int						syntax_error;
+	t_directory				dir;
+	int						exit_error;
+}	t_shell;
 
-// extern t_shell	g_shell;
+extern t_shell	g_shell;
 
 void	minishell(char *envp[]);
 
