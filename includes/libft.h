@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:14:49 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/24 18:25:34 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/25 18:35:40 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	*ft_memset(void *buf, int ch, size_t n);
 ssize_t	ft_putchar(char c);
 ssize_t	ft_putendl(char *s);
 ssize_t	ft_putnbr(long long n);
-ssize_t	ft_putstr(char *s);
+ssize_t	ft_putstr_fd(int fd, char *s);
 
 void	*ft_realloc(void *p, size_t size);
 

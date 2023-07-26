@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/22 20:44:52 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/25 21:15:31 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,16 @@
 # ifndef DEBUG
 #  define DEBUG 1
 # endif
+
+// typedef struct	s_shell
+// {
+// 	volatile sig_atomic_t	interrupted;
+// 	int						syntax_error;
+// 	// t_directory				dir;
+// 	int						exit_error;
+// }	 t_shell;
+
+// extern t_shell	g_shell;
 
 void	minishell(char *envp[]);
 

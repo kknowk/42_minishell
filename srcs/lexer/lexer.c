@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:17:39 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/22 14:34:24 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/25 21:17:27 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ static void	lexer_error(t_lexer *lex, char *str)
 		token = tmp;
 	}
 	free(lex);
-	exit(EXIT_FAILURE);
 }
 
 static void	tokenize(t_lexer *lex, char *str)
@@ -83,7 +82,11 @@ static void	tokenize(t_lexer *lex, char *str)
 		lex->word_len++;
 	}
 	if (lex->is_quoted == true)
-		lexer_error(lex, "error: Quoted string not closed");
+	{
+		// g_shell.exit_error = 2;
+		lexer_error(lex, "minishell: syntax error: unexpected EOF");
+		return ;
+	}
 	tokenlistadd_back(lex->token, ft_substr(str, start, lex->word_len));
 }
 

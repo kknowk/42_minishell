@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 16:06:37 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/23 19:22:01 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/25 19:51:37 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ static t_redirects	*create_redirect(void)
 	if (!redirect)
 		exit(EXIT_FAILURE); // エラー処理する
 	redirect->type = 0;
+	redirect->fd = -1;
+	redirect->fd_file = -1;
+	redirect->fd_backup = -1;
 	redirect->filename = NULL;
 	redirect->prev = NULL;
 	redirect->next = NULL;
@@ -53,15 +56,15 @@ void	redirect(t_node *node, t_token **token)
 	}
 	node->redirects->type = judge_redir_type(token);
 	node->redirects->filename = (*token)->next;
-	if ((*token)->next->type == CHAR_LESSER)
+	if ((*token)->type == CHAR_LESSER)
 		node->redirects->fd = STDIN_FILENO;
-	else if ((*token)->next->type == CHAR_GREATER)
+	else if ((*token)->type == CHAR_GREATER)
 		node->redirects->fd = STDOUT_FILENO;
-	else if ((*token)->next->type == CHAR_D_LESSER)
+	else if ((*token)->type == CHAR_D_LESSER)
 		node->redirects->fd = STDOUT_FILENO;
 }
 
-void	destoroy_redirects(t_redirects *redirects)
+void	destroy_redirects(t_redirects *redirects)
 {
 	t_redirects	*tmp;
 
