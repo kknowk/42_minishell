@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 15:23:15 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/25 16:38:49 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/26 12:49:23 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_token	*token_new(char *data)
 	return (new);
 }
 
-t_token *tokenlistadd_back(t_token *token, char *data)
+t_token	*tokenlistadd_back(t_token *token, char *data)
 {
 	t_token	*new;
 	t_token	*head;

@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:17:39 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/25 21:17:27 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/26 12:51:23 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_shell	g_shell;
 
 t_lexer	*init_lexer(t_lexer *lex)
 {
@@ -83,7 +85,7 @@ static void	tokenize(t_lexer *lex, char *str)
 	}
 	if (lex->is_quoted == true)
 	{
-		// g_shell.exit_error = 2;
+		g_shell.dir.error = 2;
 		lexer_error(lex, "minishell: syntax error: unexpected EOF");
 		return ;
 	}

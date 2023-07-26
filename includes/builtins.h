@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:54:35 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/25 13:09:13 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/26 12:40:33 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@
 # include <ctype.h>
 
 # include "minishell.h"
+# include "directory.h"
 
-# define PATH_MAX 1024
+// # define PATH_MAX 1024
 # define FAILURE 1
 # define SUCCESS 0
 # define EXIT_ERROR 2
@@ -32,12 +33,12 @@ typedef struct s_env_var
 	struct s_env_var	*next;
 }	t_env_var;
 
-typedef struct s_directory
-{
-	char	path[PATH_MAX];
-	int		error;
-	int		malloc_error;
-}	t_directory;
+// typedef struct s_directory
+// {
+// 	char	path[PATH_MAX];
+// 	int		error;
+// 	int		malloc_error;
+// }	t_directory;
 
 typedef struct s_expand
 {
