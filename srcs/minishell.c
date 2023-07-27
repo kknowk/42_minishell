@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/26 12:48:39 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/27 16:47:13 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	minishell(char *envp[])
 			g_shell.interrupted = 0;
 			continue ;
 		}
+		puts("restore_fd");
 		restore_fd(node->redirects);
 		destroy_parser(node);
 		ft_free(line);
