@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:04:13 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/25 17:54:50 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/27 20:21:45 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void		debug_parser(t_node *node);
 
 void	destroy_parser(t_node *node);
 
-void	redirect(t_node *node, t_token **token);
+void	set_redirect(t_node *node, t_token **token);
 void	destroy_redirects(t_redirects *redirects);
 
 #endif
