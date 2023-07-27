@@ -6,20 +6,19 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 15:09:39 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/25 15:31:23 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/27 17:34:08 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-static void	process_dquote_state(t_parse_context *ctx, t_parse_state *state,
-	t_directory *dir)
+static void	process_dquote_state(t_parse_context *ctx, t_parse_state *state)
 {
 	if (ctx->str[ctx->i] == '\"')
 		change_normal_plus(ctx, state);
 	else if (ctx->str[ctx->i] == '$')
 	{
-		process_dollar(ctx, dir);
+		process_dollar(ctx);
 	}
 	else
 	{
@@ -67,23 +66,16 @@ char	*quote_handle(char *str, t_directory *dir, t_env_var **env_vars)
 
 	ctx = init_parse_context(str, dir, env_vars);
 	if (!ctx.result)
-	{
-		dir->malloc_error = 1;
-		return (NULL);
-	}
+		exit(1);
 	state = STATE_NORMAL;
 	while (ctx.str[ctx.i] != '\0')
 	{
 		if (state == STATE_NORMAL)
 			parse_and_append_char(&state, &ctx);
 		else if (state == STATE_IN_DQUOTE)
-			process_dquote_state(&ctx, &state, dir);
-		if (dir->malloc_error == 1)
-			break ;
+			process_dquote_state(&ctx, &state);
 	}
 	ctx.result[ctx.j] = '\0';
-	if (dir->malloc_error == 1)
-		ft_free(ctx.result);
 	ft_free(ctx.str);
 	return (ctx.result);
 }

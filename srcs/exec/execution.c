@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:07:37 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/25 20:07:34 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/27 17:02:29 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ void	exec_command(t_node *node, t_directory *dir, t_env_var **env_vars)
 	}
 	if (judgement_desuno(node->data, dir, env_vars) == 1)
 		return ;
-	if (dir->malloc_error == 1)
-		exit(1);
 	if (is_builtins(node->data[0]))
 		return (select_builtin(node->data, dir, env_vars));
 	return (exec_from_bin(node->data, dir));

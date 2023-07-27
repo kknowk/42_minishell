@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 16:51:32 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/25 12:54:56 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/27 17:08:49 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,9 @@ char	*dollar_handle(char *str, t_directory *dir, t_env_var **head)
 		else if ((tmp + 1)[0] == '$')
 			str = handle_dollar_sign(str, tmp);
 		else
-			str = handle_default(str, tmp, head, dir);
-		if (!str || dir->malloc_error == 1)
-		{
-			dir->malloc_error = 1;
+			str = handle_default(str, tmp, head);
+		if (!str)
 			break ;
-		}
 		tmp = ft_strchr(str, '$');
 	}
 	return (str);

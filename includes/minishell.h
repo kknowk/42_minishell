@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/26 12:41:19 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/27 18:11:04 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,8 @@
 # include "directory.h"
 
 # ifndef DEBUG
-#  define DEBUG 1
+#  define DEBUG 0
 # endif
-
-typedef struct s_shell
-{
-	volatile sig_atomic_t	interrupted;
-	int						syntax_error;
-	t_directory				dir;
-	int						exit_error;
-}	t_shell;
-
-extern t_shell	g_shell;
 
 void	minishell(char *envp[]);
 

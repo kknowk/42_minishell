@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/18 20:36:38 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/27 18:13:06 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define LEXER_H
 
 # include "minishell.h"
+
+# include "directory.h"
+
 # include "token.h"
 
 # define D_REDIR_SIZE 2

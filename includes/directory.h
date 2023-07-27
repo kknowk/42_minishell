@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:39:22 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/26 12:39:45 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/27 17:03:51 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,15 @@
 
 # define PATH_MAX 1024
 
+typedef struct s_error
+{
+	int	error_num;
+}	t_error;
+
 typedef struct s_directory
 {
 	char	path[PATH_MAX];
-	int		error;
-	int		malloc_error;
+	t_error	error;
 }	t_directory;
 
 #endif

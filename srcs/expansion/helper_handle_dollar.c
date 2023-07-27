@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 16:07:28 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/25 12:55:49 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/27 17:08:01 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char	*cpy_itoa(char *tmp, char *str, t_directory *dir)
 	char	*num;
 	char	*result;
 
-	num = ft_itoa(dir->error);
+	num = ft_itoa(dir->error.error_num);
 	if (!num)
 		return (NULL);
 	result = malloc(ft_strlen(str) + ft_strlen(num) - 1);
@@ -88,12 +88,11 @@ char	*handle_dollar_sign(char *str, char *tmp)
 	return (str);
 }
 
-char	*handle_default(char *str, char *tmp,
-		t_env_var **head, t_directory *dir)
+char	*handle_default(char *str, char *tmp, t_env_var **head)
 {
 	char	*processed;
 
-	processed = expand_and_replace(str, head, dir);
+	processed = expand_and_replace(str, head);
 	if (processed)
 	{
 		ft_free(str);
