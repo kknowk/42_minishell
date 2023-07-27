@@ -6,13 +6,11 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:17:39 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/26 12:51:23 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/27 18:14:44 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_shell	g_shell;
 
 t_lexer	*init_lexer(t_lexer *lex)
 {
@@ -56,7 +54,6 @@ static void	lexer_error(t_lexer *lex, char *str)
 		free(token);
 		token = tmp;
 	}
-	free(lex);
 }
 
 static void	tokenize(t_lexer *lex, char *str)
@@ -85,7 +82,6 @@ static void	tokenize(t_lexer *lex, char *str)
 	}
 	if (lex->is_quoted == true)
 	{
-		g_shell.dir.error = 2;
 		lexer_error(lex, "minishell: syntax error: unexpected EOF");
 		return ;
 	}

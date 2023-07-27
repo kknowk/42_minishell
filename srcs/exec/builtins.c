@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:26:36 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/24 18:37:51 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/27 17:02:12 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	judgement_desuno(char **cmds, t_directory *dir, t_env_var **env_vars)
 			cmds[j] = quote_handle(cmds[j], dir, env_vars);
 		else
 			cmds[j] = dollar_handle(cmds[j], dir, env_vars);
-		if (dir->malloc_error == 1 || !cmds[j])
+		if (!cmds[j])
 			exit(1);
 		j++;
 	}
@@ -73,7 +73,7 @@ void	exec_from_bin(char **cmds, t_directory *dir)
 		if (S_ISDIR(s.st_mode))
 		{
 			printf("%s: is a directory\n", cmds[0]);
-			dir->error = 126;
+			dir->error.error_num = 126;
 			return ;
 		}
 		else if (access(cmds[0], X_OK) == 0)
@@ -82,7 +82,7 @@ void	exec_from_bin(char **cmds, t_directory *dir)
 		}
 	}
 	else
-		dir->error = execute_command(cmds[0], cmds) * 127;
+		dir->error.error_num = execute_command(cmds[0], cmds) * 127;
 	return ;
 }
 
@@ -92,21 +92,21 @@ void	select_builtin(char **cmds, t_directory *dir, t_env_var **env_vars)
 
 	i = 0;
 	if (!ft_strcmp(cmds[0], "pwd"))
-		dir->error = ft_pwd(dir);
+		dir->error.error_num = ft_pwd(dir);
 	if (!ft_strcmp(cmds[0], "cd"))
-		dir->error = ft_cd(dir, cmds[1], env_vars);
+		dir->error.error_num = ft_cd(dir, cmds[1], env_vars);
 	if (!ft_strcmp(cmds[0], "exit"))
 		ft_exit();
 	if (!ft_strcmp(cmds[0], "env"))
-		dir->error = ft_env(*env_vars);
+		dir->error.error_num = ft_env(*env_vars);
 	if (!ft_strcmp(cmds[0], "export"))
-		dir->error = handle_export(cmds, env_vars);
+		dir->error.error_num = handle_export(cmds, env_vars);
 	if (!ft_strcmp(cmds[0], "unset"))
-		dir->error = ft_unset(env_vars, cmds);
+		dir->error.error_num = ft_unset(env_vars, cmds);
 	while (cmds[i])
 		i++;
 	if (!ft_strcmp(cmds[0], "echo"))
-		dir->error = ft_echo(cmds, i - 1);
+		dir->error.error_num = ft_echo(cmds, i - 1);
 }
 
 	// while (current)

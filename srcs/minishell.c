@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/26 12:48:39 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/27 18:10:07 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-t_shell	g_shell;
+volatile sig_atomic_t	g_interrupted = 0;
 
 void	handle_signal(int signal)
 {
@@ -31,7 +31,7 @@ void	handle_signal(int signal)
 	}
 	else if (signal == SIGQUIT)
 		;
-	g_shell.interrupted = 1;
+	g_interrupted = 1;
 }
 
 void	minishell(char *envp[])
@@ -52,9 +52,8 @@ void	minishell(char *envp[])
 	env_vars = create_env_vars(envp);
 	if (getcwd(dir.path, sizeof(dir.path)) == NULL || !env_vars)
 		exit(1);
-	rl_outstream = stderr; // defaultがstdoutのため
-	dir.error = 0;
-	dir.malloc_error = 0;
+	// rl_outstream = stderr; // defaultがstdoutのため
+	dir.error.error_num = 0;
 	while (true)
 	{
 		line = readline("minishell$ ");
@@ -63,14 +62,19 @@ void	minishell(char *envp[])
 		else
 			add_history(line); // lineが'\0'のときは履歴に登録しない
 		token = lexer(line);
+		// printf("a %d\n",dir.error.error_num);
+		// if (dir.error.error_num == 0)
+		// {
+		// 	continue ;
+		// }
 		node = parser(token);
-		if (g_shell.syntax_error)
-			perror("syntax error");
+		// if (dir.error == 2)
+		// 	perror("syntax error");
 		execution(node, &dir, &env_vars);
-		if (g_shell.interrupted == 1)
+		if (g_interrupted == 1)
 		{
 			free(line);
-			g_shell.interrupted = 0;
+			g_interrupted = 0;
 			continue ;
 		}
 		restore_fd(node->redirects);
