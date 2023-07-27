@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:54:35 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/26 12:40:33 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/27 17:10:00 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,12 @@ typedef struct s_env_var
 	struct s_env_var	*next;
 }	t_env_var;
 
-// typedef struct s_directory
-// {
-// 	char	path[PATH_MAX];
-// 	int		error;
-// 	int		malloc_error;
-// }	t_directory;
-
 typedef struct s_expand
 {
 	char	*start;
 	char	*end;
 	char	*value;
 	char	*temp;
-	int		malloc_error_2;
 }	t_expand;
 
 typedef enum e_parse_state
@@ -96,13 +88,12 @@ void		ft_exit(void);
 
 char		*handle_question_mark(char *str, char *tmp, t_directory *dir);
 char		*handle_dollar_sign(char *str, char *tmp);
-char		*handle_default(char *str, char *tmp,
-				t_env_var **head, t_directory *dir);
+char		*handle_default(char *str, char *tmp, t_env_var **head);
 
 char		*dollar_handle(char *str, t_directory *dir, t_env_var **head);
 char		*search(t_env_var **head, char *key);
 bool		is_quoted(char *cmd);
-char		*expand_and_replace(char *input, t_env_var **head, t_directory *dir);
+char		*expand_and_replace(char *input, t_env_var **head);
 
 void		execution(t_node *node, t_directory *dir,
 				t_env_var **env_vars);
@@ -114,8 +105,7 @@ char		*quote_handle(char *str, t_directory *dir, t_env_var **env_vars);
 
 void		exec_pipe(t_node *node, t_directory *dir, t_env_var **env_vars);
 
-void		malloc_error(t_directory *dir);
-void		process_dollar(t_parse_context *ctx, t_directory *dir);
+void		process_dollar(t_parse_context *ctx);
 void		process_normal_character(t_parse_context *ctx);
 
 #endif

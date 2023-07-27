@@ -6,19 +6,13 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 19:29:29 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/25 12:34:44 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/27 17:09:26 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-void	malloc_error(t_directory *dir)
-{
-	dir->malloc_error = 1;
-	return ;
-}
-
-void	process_dollar(t_parse_context *ctx, t_directory *dir)
+void	process_dollar(t_parse_context *ctx)
 {
 	int		var_length;
 	char	*substring;
@@ -28,10 +22,10 @@ void	process_dollar(t_parse_context *ctx, t_directory *dir)
 	var_length = get_var_length(ctx->str + ctx->i);
 	substring = ft_strndup(ctx->str + ctx->i, var_length);
 	if (!substring)
-		return (malloc_error(dir));
+		exit(1);
 	expanded = dollar_handle(substring, ctx->dir, ctx->env_vars);
 	if (!expanded)
-		return (malloc_error(dir));
+		exit(1);
 	expanded_length = ft_strlen(expanded);
 	if (expanded_length < MAX_BUFFER_SIZE - ctx->j)
 	{

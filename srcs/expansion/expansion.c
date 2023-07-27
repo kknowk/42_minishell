@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 15:13:18 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/25 14:51:32 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/27 17:06:35 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ static void	temp_result(t_expand *exp, char **result)
 	ft_free(exp->temp);
 	if (!result)
 	{
-		exp->malloc_error_2 = 1;
-		return ;
+		exit(1);
 	}
 }
 
@@ -49,30 +48,18 @@ static void	handle_dollar_sign_1(t_expand *exp, char *varname,
 	exp->value = search(head, varname);
 	if (exp->value)
 		temp_result(exp, result);
-	else if (exp->malloc_error_2 == 1)
-		return ;
 	else
 		*result[ft_strlen(*result)] = '\0';
 }
 
-static char	*error_free_return(char *str, t_directory *dir)
-{
-	dir->malloc_error = 1;
-	ft_free(str);
-	return (NULL);
-}
-
-static void	handle_no_dollar_sign(t_expand *exp,
-		char **result, t_directory *dir)
+static void	handle_no_dollar_sign(t_expand *exp, char **result)
 {
 	char	*buffer;
 
-	exp->malloc_error_2 = 0;
 	buffer = (char *)malloc(2 * sizeof(char));
 	if (!buffer)
 	{
-		dir->malloc_error = 1;
-		return ;
+		exit(1);
 	}
 	buffer[0] = *exp->start;
 	buffer[1] = '\0';
@@ -82,13 +69,12 @@ static void	handle_no_dollar_sign(t_expand *exp,
 	ft_free(buffer);
 	if (!result)
 	{
-		dir->malloc_error = 1;
-		return ;
+		exit(1);
 	}
 	exp->start++;
 }
 
-char	*expand_and_replace(char *input, t_env_var **head, t_directory *dir)
+char	*expand_and_replace(char *input, t_env_var **head)
 {
 	char		varname[MAX_BUFFER_SIZE];
 	char		*result;
@@ -104,14 +90,10 @@ char	*expand_and_replace(char *input, t_env_var **head, t_directory *dir)
 		if (*exp.start == '$')
 		{
 			handle_dollar_sign_1(&exp, varname, &result, head);
-			if (exp.malloc_error_2 == 1)
-				return (error_free_return(result, dir));
 		}
 		else
 		{
-			handle_no_dollar_sign(&exp, &result, dir);
-			if (dir->malloc_error == 1)
-				return (error_free_return(result, dir));
+			handle_no_dollar_sign(&exp, &result);
 		}
 	}
 	return (result);
