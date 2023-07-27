@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:07:37 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/27 18:51:46 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/27 19:34:25 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,9 @@ static bool	is_builtins(char *command)
 
 void	exec_command(t_node *node, t_directory *dir, t_env_var **env_vars)
 {
+	t_redirects	*head;
+
+	head = node->redirects;
 	while (node->redirects)
 	{
 		node->redirects->fd_file = open_redir_file(node->redirects);
@@ -57,8 +60,10 @@ void	exec_command(t_node *node, t_directory *dir, t_env_var **env_vars)
 	if (judgement_desuno(node->data, dir, env_vars) == 1)
 		return ;
 	if (is_builtins(node->data[0]))
-		return (select_builtin(node->data, dir, env_vars));
-	return (exec_from_bin(node->data, dir));
+		select_builtin(node->data, dir, env_vars);
+	else
+		exec_from_bin(node->data, dir);
+	return (restore_fd(head));
 }
 
 void	execution(t_node *node, t_directory *dir, t_env_var **env_vars, int *error)
@@ -72,8 +77,5 @@ void	execution(t_node *node, t_directory *dir, t_env_var **env_vars, int *error)
 	if (node->type == NODE_PIPE)
 		exec_pipe(node, dir, env_vars, error);
 	else
-	{
 		exec_command(node, dir, env_vars);
-		// restore_fd(node->redirects);
-	}
 }
