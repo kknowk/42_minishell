@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/27 18:10:07 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/27 18:46:40 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	handle_signal(int signal)
 	g_interrupted = 1;
 }
 
-void	minishell(char *envp[])
+void	minishell(char *envp[], int *error)
 {
 	struct sigaction	sa;
 	char				*line;
@@ -52,7 +52,6 @@ void	minishell(char *envp[])
 	env_vars = create_env_vars(envp);
 	if (getcwd(dir.path, sizeof(dir.path)) == NULL || !env_vars)
 		exit(1);
-	// rl_outstream = stderr; // defaultがstdoutのため
 	dir.error.error_num = 0;
 	while (true)
 	{
@@ -61,23 +60,16 @@ void	minishell(char *envp[])
 			ft_exit();
 		else
 			add_history(line); // lineが'\0'のときは履歴に登録しない
-		token = lexer(line);
-		// printf("a %d\n",dir.error.error_num);
-		// if (dir.error.error_num == 0)
-		// {
-		// 	continue ;
-		// }
+		token = lexer(line, error);
 		node = parser(token);
-		// if (dir.error == 2)
-		// 	perror("syntax error");
-		execution(node, &dir, &env_vars);
+		execution(node, &dir, &env_vars, error);
+		*error = 0;
 		if (g_interrupted == 1)
 		{
 			free(line);
 			g_interrupted = 0;
 			continue ;
 		}
-		restore_fd(node->redirects);
 		destroy_parser(node);
 		ft_free(line);
 	}

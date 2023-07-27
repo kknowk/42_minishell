@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:36:17 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/25 20:09:13 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/27 17:03:30 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,14 @@ void	do_redirect(t_redirects *redirect)
 {
 	if (redirect->type == REDIRECT_INPUT || redirect->type == REDIRECT_OUTPUT)
 	{
-		redirect->fd_backup = dup(redirect->fd);
-		dup2(redirect->fd_file, redirect->fd);
+		puts("do_redirect");
+		// redirect->fd_backup = dup(redirect->fd);
+		dup2(redirect->fd, redirect->fd_file);
+		// dup2(redirect->fd_file, redirect->fd);
 		printf("fd: %d\n", redirect->fd);
 		printf("fd_file: %d\n", redirect->fd_file);
 		printf("fd_backup: %d\n", redirect->fd_backup);
-		close(redirect->fd_file);
+		// close(redirect->fd_file);
 		return ;
 	}
 	// if (redirect->type == REDIRECT_APPEND_OUTPUT)
@@ -65,7 +67,8 @@ void	restore_fd(t_redirects *redirect)
 {
 	if (redirect == NULL)
 		return ;
-	dup2(redirect->fd_backup, redirect->fd);
+	dup2(redirect->fd_file, redirect->fd);
+	// dup2(redirect->fd_backup, redirect->fd);
 	printf("fd: %d\n", redirect->fd);
 	printf("fd_file: %d\n", redirect->fd_file);
 	printf("fd_backup: %d\n", redirect->fd_backup);

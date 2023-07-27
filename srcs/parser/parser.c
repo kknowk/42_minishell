@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:41:09 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/25 17:54:57 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/27 18:36:03 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	store_data(t_node *node, t_token **token)
 	}
 }
 
-// tokenがNULLの場合ある？？
 t_node	*parser(t_token *token)
 {
 	t_node	*node;
@@ -76,6 +75,8 @@ t_node	*parser(t_token *token)
 	t_node	*right;
 	t_token	*tmp;
 
+	if (token == NULL)
+		return (NULL);
 	tmp = token;
 	node = node_new();
 	if (node == NULL)
@@ -126,6 +127,8 @@ void	free_strarray(char **array)
 
 void	destroy_parser(t_node *node)
 {
+	if (node == NULL)
+		return ;
 	if (node->left)
 		destroy_parser(node->left);
 	if (node->right)
