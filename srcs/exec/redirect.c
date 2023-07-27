@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:36:17 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/27 19:33:47 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/27 19:59:12 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,11 @@ int	open_redir_file(t_redirects *redir)
 	filename = redir->filename->data;
 	if (redir->type == REDIRECT_INPUT)
 	{
-		puts("INPUT");
 		printf("filename: %s\n", filename);
 		return (open(filename, O_RDONLY));
 	}
 	else if (redir->type == REDIRECT_OUTPUT)
 	{
-		puts("OUTPUT");
 		printf("filename: %s\n", filename);
 		return (open(filename, O_WRONLY | O_CREAT | O_TRUNC, FILE_MODE));
 	}
@@ -40,15 +38,15 @@ int	open_redir_file(t_redirects *redir)
 
 void	do_redirect(t_redirects *redirect)
 {
-	if (redirect->type == REDIRECT_INPUT || redirect->type == REDIRECT_OUTPUT)
+	if (redirect->type == REDIRECT_INPUT || redirect->type == REDIRECT_OUTPUT ||
+		redirect->type == REDIRECT_APPEND_OUTPUT)
 	{
 		redirect->fd_backup = dup(redirect->fd);
 		dup2(redirect->fd_file, redirect->fd);
 		return ;
 	}
-	// if (redirect->type == REDIRECT_APPEND_OUTPUT)
-	// 	return (do_redirect_append_output(redirect));
-	// if (redirect->type == REDIRECT_HEREDOC)
+	if (redirect->type == REDIRECT_HEREDOC)
+		puts("ToDo");
 	// 	return (do_redirect_heredoc(redirect));
 	else
 	{
