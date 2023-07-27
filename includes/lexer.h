@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/27 18:13:06 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/27 18:25:42 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 # define LEXER_H
 
 # include "minishell.h"
-
 # include "directory.h"
-
 # include "token.h"
 
 # define D_REDIR_SIZE 2
@@ -39,7 +37,7 @@ typedef struct s_lexer
 	t_token_state	status;
 }	t_lexer;
 
-t_token	*lexer(char *str);
+t_token	*lexer(char *str, int *error);
 
 void		debug_lexer(t_lexer *lex);
 
