@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 14:24:08 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/29 15:46:11 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/29 16:20:32 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,14 @@ static void	print_args(t_node *node)
 
 static void	print_redir(t_node *node)
 {
+	t_redirects	*current = node->redirects;
 	printf("REDIR: {\n");
-	if (node->redirects == NULL)
+	if (current == NULL)
 		printf("redir == NULL\n");
 	else
 	{
-		for (size_t i = 0; node->redirects != NULL; i++, node->redirects = node->redirects->next)
-			printf("#%zu filename: %s\n", i, node->redirects->filename->data);
+		for (size_t i = 0; current != NULL; i++, current = current->next)
+			printf("#%zu filename: %s\n", i, current->filename->data);
 	}
 	printf("}\n");
 }

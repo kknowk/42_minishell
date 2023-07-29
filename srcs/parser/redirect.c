@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 16:06:37 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/29 15:46:58 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/29 16:22:24 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,18 @@ static t_redirect_type	judge_redir_type(t_token **token)
 		return (REDIRECT_HEREDOC);
 }
 
-void	set_redirect(t_node **node, t_token **token)
+// static t_redirects	*search_tail(t_redirects *lst)
+// {
+// 	while (lst->next != NULL)
+// 		lst = lst->next;
+// 	return (lst);
+// }
+
+void	set_redirect(t_node *node, t_token **token)
 {
 	t_redirects	*new;
-	t_redirects	*current;
 
+	puts("set_redir");
 	new = create_redirect(); // malloc errorする？
 	if ((*token)->next == NULL || (*token)->next->type != CHAR_GENERAL)
 	{
@@ -62,14 +69,17 @@ void	set_redirect(t_node **node, t_token **token)
 		new->fd = STDOUT_FILENO;
 	else if ((*token)->type == CHAR_D_LESSER)
 		new->fd = STDOUT_FILENO;
-	if ((*node)->redirects == NULL)
-		(*node)->redirects = new;
+	if (node->redirects == NULL)
+		node->redirects = new;
 	else
 	{
-		current = (*node)->redirects;
-		while (current->next != NULL)
+		t_redirects *current = node->redirects;
+        while (current->next != NULL)
+        {
+            puts("koko");
 			current = current->next;
-		current->next = new;
+        }
+        current->next = new;
 	}
 	(*token) = (*token)->next;
 }
