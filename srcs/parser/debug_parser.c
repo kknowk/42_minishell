@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 14:24:08 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/27 21:24:23 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/29 15:46:11 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,19 @@ static void	print_args(t_node *node)
 			printf("#%zu %s,\n", i, node->data[i]);
 	}
 	printf("}\n");
-	// if (node->redirects != NULL)
-	// {
-	// 	printf("redirects: {\n");
-	// 	for (size_t i = 0; node->redirects != NULL; node->redirects = node->redirects->next, i++)
-	// 	{
-	// 		printf("#%zu type: %d ", i, node->redirects[i].type);
-	// 		printf("filename: %s\n", node->redirects[i].filename->data);
-	// 	}
-	// 	printf("}\n");
-	// }
-	// else
-	// 	printf("redirects == NULL\n");
+}
+
+static void	print_redir(t_node *node)
+{
+	printf("REDIR: {\n");
+	if (node->redirects == NULL)
+		printf("redir == NULL\n");
+	else
+	{
+		for (size_t i = 0; node->redirects != NULL; i++, node->redirects = node->redirects->next)
+			printf("#%zu filename: %s\n", i, node->redirects->filename->data);
+	}
+	printf("}\n");
 }
 
 static void	print_recursive(t_node *node)
@@ -49,10 +50,11 @@ static void	print_recursive(t_node *node)
 	else if (node->type == NODE_COMMAND)
 	{
 		print_args(node);
+		print_redir(node);
 	}
-	printf("{LEFT}\n");
+	printf("===LEFT===\n");
 	print_recursive(node->left);
-	printf("{RIGHT}\n");
+	printf("===RIGHT===\n");
 	print_recursive(node->right);
 
 }

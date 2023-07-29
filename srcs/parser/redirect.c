@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 16:06:37 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/27 21:27:41 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/29 15:46:58 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,26 +43,35 @@ static t_redirect_type	judge_redir_type(t_token **token)
 		return (REDIRECT_HEREDOC);
 }
 
-void	set_redirect(t_node *node, t_token **token)
+void	set_redirect(t_node **node, t_token **token)
 {
-	if (node->redirects == NULL)
-		node->redirects = create_redirect();
-	else // while (node->redirects->next != NULL) node->redirects = node->redirects->next;
-		puts("ToDo");
-	if ((*token)->next->type != CHAR_GENERAL)
+	t_redirects	*new;
+	t_redirects	*current;
+
+	new = create_redirect(); // malloc errorする？
+	if ((*token)->next == NULL || (*token)->next->type != CHAR_GENERAL)
 	{
 		puts("syntax error: ToDo");
 		exit(EXIT_FAILURE); // エラー処理する
 	}
-	node->redirects->type = judge_redir_type(token);
-	node->redirects->filename = (*token)->next;
-	printf("filename: %s\n", node->redirects->filename->data);
+	new->type = judge_redir_type(token);
+	new->filename = (*token)->next;
 	if ((*token)->type == CHAR_LESSER)
-		node->redirects->fd = STDIN_FILENO;
+		new->fd = STDIN_FILENO;
 	else if ((*token)->type == CHAR_GREATER)
-		node->redirects->fd = STDOUT_FILENO;
+		new->fd = STDOUT_FILENO;
 	else if ((*token)->type == CHAR_D_LESSER)
-		node->redirects->fd = STDOUT_FILENO;
+		new->fd = STDOUT_FILENO;
+	if ((*node)->redirects == NULL)
+		(*node)->redirects = new;
+	else
+	{
+		current = (*node)->redirects;
+		while (current->next != NULL)
+			current = current->next;
+		current->next = new;
+	}
+	(*token) = (*token)->next;
 }
 
 void	destroy_redirects(t_redirects *redirects)
