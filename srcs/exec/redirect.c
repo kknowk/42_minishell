@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:36:17 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/29 19:24:54 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/29 19:26:04 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	open_redir_file(t_redirects *redir)
 		return (open(redir->filename, O_RDONLY));
 	if (redir->type == REDIRECT_OUTPUT)
 		return (open(redir->filename, O_WRONLY | O_CREAT | O_TRUNC, FILE_MODE));
-	// if (redir->type == REDIRECT_APPEND_OUTPUT)
 	return (open(redir->filename, O_WRONLY | O_CREAT | O_APPEND, FILE_MODE));
 }
 
@@ -62,7 +61,6 @@ void	do_redirect(t_redirects *redirect)
 		dup2(redirect->fd_file, redirect->fd);
 		return ;
 	}
-	// if (redirect->type == REDIRECT_HEREDOC)
 	return (heredoc(redirect));
 }
 
