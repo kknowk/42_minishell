@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:47:53 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/24 17:07:45 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/28 14:22:09 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,19 +101,24 @@ int	ft_export(t_env_var **head, char **cmds)
 	char	*s1;
 
 	status = SUCCESS;
-	i = 1;
-	while (cmds[i])
+	i = 0;
+	while (cmds[++i])
 	{
-		s1 = search_equal(&cmds[i]);
+		s1 = search_equal(cmds[i]);
 		if (!s1)
-			return (SUCCESS);
-		else if (s1[0] == '=')
-			status = FAILURE;
-		else if (is_valid_name(s1))
-			status = FAILURE;
-		else if (add_env_vars(head, s1))
-			return (EXIT_ERROR);
-		i++;
+		{
+			if (is_valid_name(cmds[i]))
+				status = FAILURE;
+		}
+		else
+		{
+			if (s1[0] == '=')
+				status = FAILURE;
+			else if (is_valid_name(s1))
+				status = FAILURE;
+			else if (add_env_vars(head, s1))
+				return (EXIT_ERROR);
+		}
 	}
 	return (status);
 }

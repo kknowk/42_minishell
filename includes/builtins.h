@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:54:35 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/27 18:51:33 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/28 14:32:51 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ void		ms_cpca(char *s1, char *s2, char *s3, char *s4);
 int			is_valid_varname(char *varname);
 int			has_error(char *input);
 
-char		*search_equal(char **cmds);
+// char		*search_equal(char **cmds);
+char		*search_equal(char *cmds);
 char		*error_in_export(char *str);
 char		*is_valid_name(char *name);
 int			declare(t_env_var *head);
@@ -95,14 +96,16 @@ char		*search(t_env_var **head, char *key);
 bool		is_quoted(char *cmd);
 char		*expand_and_replace(char *input, t_env_var **head);
 
-void		execution(t_node *node, t_directory *dir, t_env_var **env_vars, int *error);
+void		execution(t_node *node, t_directory *dir,
+				t_env_var **env_vars, int *error);
 
 char		*search_quote(char **cmds);
 int			get_var_length(const char *str);
 void		change_normal_plus(t_parse_context *ctx, t_parse_state *state);
 char		*quote_handle(char *str, t_directory *dir, t_env_var **env_vars);
 
-void		exec_pipe(t_node *node, t_directory *dir, t_env_var **env_vars, int *error);
+void		exec_pipe(t_node *node, t_directory *dir,
+				t_env_var **env_vars, int *error);
 
 void		process_dollar(t_parse_context *ctx);
 void		process_normal_character(t_parse_context *ctx);

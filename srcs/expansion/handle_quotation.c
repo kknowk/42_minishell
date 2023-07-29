@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 15:09:39 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/27 17:34:08 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/28 12:54:04 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	process_dquote_state(t_parse_context *ctx, t_parse_state *state)
 {
 	if (ctx->str[ctx->i] == '\"')
 		change_normal_plus(ctx, state);
-	else if (ctx->str[ctx->i] == '$')
+	else if (ctx->str[ctx->i] == '$' && ctx->str[ctx->i + 1] != '\"')
 	{
 		process_dollar(ctx);
 	}
