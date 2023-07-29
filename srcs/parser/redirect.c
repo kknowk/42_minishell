@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 16:06:37 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/29 16:31:53 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/29 16:56:40 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,12 @@ void	set_redirect(t_node *node, t_token **token)
 		node->redirects = new;
 	else
 	{
-		t_redirects *current = node->redirects;
-        while (current->next != NULL)
+		puts("koko");
+        while (node->redirects->next != NULL)
         {
-            puts("koko");
-			current = current->next;
+			node->redirects = node->redirects->next;
         }
-        current->next = new;
+        node->redirects->next = new;
 	}
 	(*token) = (*token)->next;
 }
