@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:36:17 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/29 19:21:17 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/29 19:24:54 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	heredoc(t_redirects *redir)
 		ft_free(tmp);
 		ft_free(line);
 	}
+	ft_putstr_fd(pipefd[PIPE_WRITE], res);
+	dup2(pipefd[PIPE_READ], STDIN_FILENO);
 	close(pipefd[PIPE_READ]);
 	close(pipefd[PIPE_WRITE]);
 	ft_free(res);
