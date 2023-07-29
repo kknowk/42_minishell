@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:36:17 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/27 19:59:12 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/29 16:31:21 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,20 @@
 
 int	open_redir_file(t_redirects *redir)
 {
-	char	*filename;
-
-	filename = redir->filename->data;
 	if (redir->type == REDIRECT_INPUT)
 	{
-		printf("filename: %s\n", filename);
-		return (open(filename, O_RDONLY));
+		printf("filename: %s\n", redir->filename);
+		return (open(redir->filename, O_RDONLY));
 	}
 	else if (redir->type == REDIRECT_OUTPUT)
 	{
-		printf("filename: %s\n", filename);
-		return (open(filename, O_WRONLY | O_CREAT | O_TRUNC, FILE_MODE));
+		printf("filename: %s\n", redir->filename);
+		return (open(redir->filename, O_WRONLY | O_CREAT | O_TRUNC, FILE_MODE));
 	}
 	else if (redir->type == REDIRECT_APPEND_OUTPUT)
 	{
 		puts("APPEND");
-		return (open(filename, O_WRONLY | O_CREAT | O_APPEND, FILE_MODE));
+		return (open(redir->filename, O_WRONLY | O_CREAT | O_APPEND, FILE_MODE));
 	}
 	puts("HEREDOC: ToDo");
 	return (-1);

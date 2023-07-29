@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 14:24:08 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/29 16:20:32 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/29 16:31:43 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	print_redir(t_node *node)
 	else
 	{
 		for (size_t i = 0; current != NULL; i++, current = current->next)
-			printf("#%zu filename: %s\n", i, current->filename->data);
+			printf("#%zu filename: %s\n", i, current->filename);
 	}
 	printf("}\n");
 }

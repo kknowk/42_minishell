@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 16:06:37 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/29 16:22:24 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/29 16:31:53 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	set_redirect(t_node *node, t_token **token)
 		exit(EXIT_FAILURE); // エラー処理する
 	}
 	new->type = judge_redir_type(token);
-	new->filename = (*token)->next;
+	new->filename = ft_strdup((*token)->next->data);
 	if ((*token)->type == CHAR_LESSER)
 		new->fd = STDIN_FILENO;
 	else if ((*token)->type == CHAR_GREATER)
