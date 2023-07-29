@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:36:17 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/29 17:00:47 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/29 19:21:17 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,39 @@ int	open_redir_file(t_redirects *redir)
 {
 	if (redir->type == REDIRECT_INPUT)
 		return (open(redir->filename, O_RDONLY));
-	else if (redir->type == REDIRECT_OUTPUT)
+	if (redir->type == REDIRECT_OUTPUT)
 		return (open(redir->filename, O_WRONLY | O_CREAT | O_TRUNC, FILE_MODE));
-	else if (redir->type == REDIRECT_APPEND_OUTPUT)
-		return (open(redir->filename, O_WRONLY | O_CREAT | O_APPEND, FILE_MODE));
-	puts("HEREDOC: ToDo");
-	return (-1);
+	// if (redir->type == REDIRECT_APPEND_OUTPUT)
+	return (open(redir->filename, O_WRONLY | O_CREAT | O_APPEND, FILE_MODE));
+}
+
+void	heredoc(t_redirects *redir)
+{
+	int		pipefd[2];
+	char	*line;
+	char	*tmp;
+	char	*res = NULL;
+
+	if (pipe(pipefd) == -1)
+		puts("ToDo");
+	while (true)
+	{
+		line = readline("> ");
+		if (line == NULL)
+			break ;
+		if (!ft_strncmp(line, redir->filename, ft_strlen(redir->filename)))
+		{
+			ft_free(line);
+			break ;
+		}
+		tmp = ft_strjoin(line, "\n");
+		res = ft_strjoin(res, tmp);
+		ft_free(tmp);
+		ft_free(line);
+	}
+	close(pipefd[PIPE_READ]);
+	close(pipefd[PIPE_WRITE]);
+	ft_free(res);
 }
 
 void	do_redirect(t_redirects *redirect)
@@ -33,14 +60,8 @@ void	do_redirect(t_redirects *redirect)
 		dup2(redirect->fd_file, redirect->fd);
 		return ;
 	}
-	if (redirect->type == REDIRECT_HEREDOC)
-		puts("ToDo");
-	// 	return (do_redirect_heredoc(redirect));
-	else
-	{
-		puts("ToDo");
-		return ;
-	}
+	// if (redirect->type == REDIRECT_HEREDOC)
+	return (heredoc(redirect));
 }
 
 void	restore_fd(t_redirects *redirect)

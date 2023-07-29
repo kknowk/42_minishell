@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 16:18:14 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/29 13:07:11 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/29 18:48:32 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include "minishell.h"
 
 # define FILE_MODE	0644
+# define PIPE_READ	0
+# define PIPE_WRITE	1
 
 typedef struct s_directory	t_directory;
 typedef struct s_env_var	t_env_var;
