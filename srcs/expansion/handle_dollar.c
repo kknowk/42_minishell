@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 16:51:32 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/27 17:08:49 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/28 12:59:37 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*dollar_handle(char *str, t_directory *dir, t_env_var **head)
 	char	*tmp;
 
 	tmp = ft_strchr(str, '$');
-	if (!tmp)
+	if (!tmp || !tmp[1])
 		return (str);
 	while (tmp)
 	{
