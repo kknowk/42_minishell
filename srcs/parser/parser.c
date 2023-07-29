@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:41:09 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/27 18:36:03 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/29 13:46:04 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ void	store_data(t_node *node, t_token **token)
 	if (!node->data)
 	{
 		tokenlist_clear(*token);
-		exit(EXIT_FAILURE);
+		exit(EXIT_FAILURE); // 要検討
 	}
 	i = 0;
 	while (i < size + 1 && (*token)->type != CHAR_PIPE)
 	{
 		node->data[i] = ft_strdup((*token)->data);
 		if (is_redirect((*token)->type))
-			redirect(node, token);
+			set_redirect(node, token);
 		if ((*token)->next != NULL)
 			(*token) = (*token)->next;
 		else

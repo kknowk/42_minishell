@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 16:06:37 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/25 19:51:37 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/29 14:10:40 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,25 +43,30 @@ static t_redirect_type	judge_redir_type(t_token **token)
 		return (REDIRECT_HEREDOC);
 }
 
-void	redirect(t_node *node, t_token **token)
+void	set_redirect(t_node *node, t_token **token)
 {
-	if (node->redirects == NULL)
-		node->redirects = create_redirect();
-	else
-		puts("ToDo");
-	if ((*token)->next->type != CHAR_GENERAL)
+	t_redirects	*redir;
+
+	redir = node->redirects;
+	while (redir != NULL)
+	{
+		puts("redir next");
+		redir = redir->next;
+	}
+	redir = create_redirect(); // malloc errorする？
+	if ((*token)->next == NULL || (*token)->next->type != CHAR_GENERAL)
 	{
 		puts("syntax error: ToDo");
 		exit(EXIT_FAILURE); // エラー処理する
 	}
-	node->redirects->type = judge_redir_type(token);
-	node->redirects->filename = (*token)->next;
+	redir->type = judge_redir_type(token);
+	redir->filename = (*token)->next;
 	if ((*token)->type == CHAR_LESSER)
-		node->redirects->fd = STDIN_FILENO;
+		redir->fd = STDIN_FILENO;
 	else if ((*token)->type == CHAR_GREATER)
-		node->redirects->fd = STDOUT_FILENO;
+		redir->fd = STDOUT_FILENO;
 	else if ((*token)->type == CHAR_D_LESSER)
-		node->redirects->fd = STDOUT_FILENO;
+		redir->fd = STDOUT_FILENO;
 }
 
 void	destroy_redirects(t_redirects *redirects)
