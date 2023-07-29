@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 16:06:37 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/29 16:56:40 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/29 17:02:07 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,10 @@ static t_redirect_type	judge_redir_type(t_token **token)
 		return (REDIRECT_HEREDOC);
 }
 
-// static t_redirects	*search_tail(t_redirects *lst)
-// {
-// 	while (lst->next != NULL)
-// 		lst = lst->next;
-// 	return (lst);
-// }
-
 void	set_redirect(t_node *node, t_token **token)
 {
 	t_redirects	*new;
 
-	puts("set_redir");
 	new = create_redirect(); // malloc errorする？
 	if ((*token)->next == NULL || (*token)->next->type != CHAR_GENERAL)
 	{
@@ -73,12 +65,9 @@ void	set_redirect(t_node *node, t_token **token)
 		node->redirects = new;
 	else
 	{
-		puts("koko");
-        while (node->redirects->next != NULL)
-        {
+		while (node->redirects->next != NULL)
 			node->redirects = node->redirects->next;
-        }
-        node->redirects->next = new;
+		node->redirects->next = new;
 	}
 	(*token) = (*token)->next;
 }
