@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:41:09 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/30 11:16:02 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/30 14:01:31 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ static size_t	data_size(t_token *token)
 	size_t	size;
 
 	size = 0;
+	if (token == NULL)
+		return (size);
 	while (token->type == CHAR_PIPE)
 		token = token->next;
 	while (token != NULL && token->type != CHAR_PIPE && \
@@ -76,11 +78,11 @@ t_node	*parser(t_token *token)
 	t_node	*node;
 	t_node	*left;
 	t_node	*right;
-	t_token	*tmp;
+	t_token	*head;
 
 	if (token == NULL)
 		return (NULL);
-	tmp = token;
+	head = token;
 	node = node_new();
 	store_data(node, &token);
 	while (token != NULL && token->type == CHAR_PIPE)
@@ -94,7 +96,9 @@ t_node	*parser(t_token *token)
 		node->left = left;
 		node->right = right;
 	}
-	tokenlist_clear(tmp);
+	tokenlist_clear(head);
+	if (DEBUG)
+		debug_parser(node);
 	return (node);
 }
 

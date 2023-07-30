@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:07:37 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/30 10:32:36 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/30 13:59:11 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,7 @@ void	exec_command(t_node *node, t_directory *dir, t_env_var **env_vars)
 		{
 			node->redirects->fd_file = open_redir_file(node->redirects);
 			if (node->redirects->fd_file < 0)
-			{
-				printf("error: %s\n", strerror(errno));
-				return ;
-			}
+				exit(EXIT_FAILURE);
 		}
 		do_redirect(node->redirects);
 		node->redirects = node->redirects->next;
