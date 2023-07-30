@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:36:17 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/30 11:46:55 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/30 11:57:28 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	heredoc(t_redirects *redir, int pipefd[2])
 	char	*tmp;
 	char	*line;
 	char	*res;
-	
+
 	ft_pipe(pipefd);
 	while (true)
 	{
@@ -59,8 +59,8 @@ static void	do_heredoc(t_redirects *redir)
 
 void	do_redirect(t_redirects *redirect)
 {
-	if (redirect->type == REDIRECT_INPUT || redirect->type == REDIRECT_OUTPUT ||
-		redirect->type == REDIRECT_APPEND_OUTPUT)
+	if (redirect->type == REDIRECT_INPUT || redirect->type == REDIRECT_OUTPUT
+		|| redirect->type == REDIRECT_APPEND_OUTPUT)
 	{
 		redirect->fd_backup = ft_dup(redirect->fd);
 		ft_dup2(redirect->fd_file, redirect->fd);
