@@ -6,13 +6,11 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 16:06:37 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/29 17:02:07 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/30 11:17:10 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-# include <fcntl.h>
 
 static t_redirects	*create_redirect(void)
 {
@@ -20,7 +18,7 @@ static t_redirects	*create_redirect(void)
 
 	redirect = malloc(sizeof(t_redirects));
 	if (!redirect)
-		exit(EXIT_FAILURE); // エラー処理する
+		exit(EXIT_FAILURE);
 	redirect->type = 0;
 	redirect->fd = -1;
 	redirect->fd_file = -1;
@@ -47,11 +45,11 @@ void	set_redirect(t_node *node, t_token **token)
 {
 	t_redirects	*new;
 
-	new = create_redirect(); // malloc errorする？
+	new = create_redirect();
 	if ((*token)->next == NULL || (*token)->next->type != CHAR_GENERAL)
 	{
-		puts("syntax error: ToDo");
-		exit(EXIT_FAILURE); // エラー処理する
+		puts("syntax error: near unexpected token `newline'");
+		exit(EXIT_FAILURE);
 	}
 	new->type = judge_redir_type(token);
 	new->filename = ft_strdup((*token)->next->data);

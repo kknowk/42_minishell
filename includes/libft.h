@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:14:49 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/25 18:35:40 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/30 11:44:51 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,11 @@ char	**ft_split(char const *s, char c);
 
 int		ft_tolower(int c);
 int		ft_toupper(int c);
+
+int		ft_dup(int fd);
+void	ft_dup2(int old_fd, int new_fd);
+void	ft_pipe(int fd[2]);
+void	ft_waitpid(pid_t pid, int *status, int options);
 
 char	*get_next_line(int fd);
 

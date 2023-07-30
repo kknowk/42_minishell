@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:36:17 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/29 19:26:04 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/30 11:46:55 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,13 @@ int	open_redir_file(t_redirects *redir)
 	return (open(redir->filename, O_WRONLY | O_CREAT | O_APPEND, FILE_MODE));
 }
 
-void	heredoc(t_redirects *redir)
+static void	heredoc(t_redirects *redir, int pipefd[2])
 {
-	int		pipefd[2];
-	char	*line;
 	char	*tmp;
-	char	*res = NULL;
-
-	if (pipe(pipefd) == -1)
-		puts("ToDo");
+	char	*line;
+	char	*res;
+	
+	ft_pipe(pipefd);
 	while (true)
 	{
 		line = readline("> ");
@@ -46,10 +44,17 @@ void	heredoc(t_redirects *redir)
 		ft_free(line);
 	}
 	ft_putstr_fd(pipefd[PIPE_WRITE], res);
-	dup2(pipefd[PIPE_READ], STDIN_FILENO);
-	close(pipefd[PIPE_READ]);
-	close(pipefd[PIPE_WRITE]);
 	ft_free(res);
+}
+
+static void	do_heredoc(t_redirects *redir)
+{
+	int		pipefd[2];
+
+	heredoc(redir, pipefd);
+	ft_dup2(pipefd[PIPE_READ], STDIN_FILENO);
+	ft_close(pipefd[PIPE_READ]);
+	ft_close(pipefd[PIPE_WRITE]);
 }
 
 void	do_redirect(t_redirects *redirect)
@@ -57,18 +62,18 @@ void	do_redirect(t_redirects *redirect)
 	if (redirect->type == REDIRECT_INPUT || redirect->type == REDIRECT_OUTPUT ||
 		redirect->type == REDIRECT_APPEND_OUTPUT)
 	{
-		redirect->fd_backup = dup(redirect->fd);
-		dup2(redirect->fd_file, redirect->fd);
+		redirect->fd_backup = ft_dup(redirect->fd);
+		ft_dup2(redirect->fd_file, redirect->fd);
 		return ;
 	}
-	return (heredoc(redirect));
+	return (do_heredoc(redirect));
 }
 
 void	restore_fd(t_redirects *redirect)
 {
 	if (redirect == NULL)
 		return ;
-	dup2(redirect->fd_backup, redirect->fd);
-	close(redirect->fd_backup);
+	ft_dup2(redirect->fd_backup, redirect->fd);
+	ft_close(redirect->fd_backup);
 	redirect->fd_backup = -1;
 }
