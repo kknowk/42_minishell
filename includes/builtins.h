@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:54:35 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/28 14:32:51 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/29 13:06:21 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,16 +96,10 @@ char		*search(t_env_var **head, char *key);
 bool		is_quoted(char *cmd);
 char		*expand_and_replace(char *input, t_env_var **head);
 
-void		execution(t_node *node, t_directory *dir,
-				t_env_var **env_vars, int *error);
-
 char		*search_quote(char **cmds);
 int			get_var_length(const char *str);
 void		change_normal_plus(t_parse_context *ctx, t_parse_state *state);
 char		*quote_handle(char *str, t_directory *dir, t_env_var **env_vars);
-
-void		exec_pipe(t_node *node, t_directory *dir,
-				t_env_var **env_vars, int *error);
 
 void		process_dollar(t_parse_context *ctx);
 void		process_normal_character(t_parse_context *ctx);

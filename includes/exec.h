@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 16:18:14 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/25 17:09:17 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/29 18:48:32 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,17 @@
 # include "minishell.h"
 
 # define FILE_MODE	0644
+# define PIPE_READ	0
+# define PIPE_WRITE	1
 
 typedef struct s_directory	t_directory;
 typedef struct s_env_var	t_env_var;
+
+void		execution(t_node *node, t_directory *dir,
+				t_env_var **env_vars, int *error);
+
+void		exec_pipe(t_node *node, t_directory *dir,
+				t_env_var **env_vars, int *error);
 
 void	select_builtin(char **cmds, t_directory *dir, t_env_var **env_vars);
 int		judgement_desuno(char **cmds, t_directory *dir, t_env_var **env_vars);

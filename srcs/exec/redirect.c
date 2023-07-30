@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:36:17 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/27 19:33:47 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/29 19:26:04 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,47 +14,54 @@
 
 int	open_redir_file(t_redirects *redir)
 {
-	char	*filename;
-
-	filename = redir->filename->data;
 	if (redir->type == REDIRECT_INPUT)
+		return (open(redir->filename, O_RDONLY));
+	if (redir->type == REDIRECT_OUTPUT)
+		return (open(redir->filename, O_WRONLY | O_CREAT | O_TRUNC, FILE_MODE));
+	return (open(redir->filename, O_WRONLY | O_CREAT | O_APPEND, FILE_MODE));
+}
+
+void	heredoc(t_redirects *redir)
+{
+	int		pipefd[2];
+	char	*line;
+	char	*tmp;
+	char	*res = NULL;
+
+	if (pipe(pipefd) == -1)
+		puts("ToDo");
+	while (true)
 	{
-		puts("INPUT");
-		printf("filename: %s\n", filename);
-		return (open(filename, O_RDONLY));
+		line = readline("> ");
+		if (line == NULL)
+			break ;
+		if (!ft_strncmp(line, redir->filename, ft_strlen(redir->filename)))
+		{
+			ft_free(line);
+			break ;
+		}
+		tmp = ft_strjoin(line, "\n");
+		res = ft_strjoin(res, tmp);
+		ft_free(tmp);
+		ft_free(line);
 	}
-	else if (redir->type == REDIRECT_OUTPUT)
-	{
-		puts("OUTPUT");
-		printf("filename: %s\n", filename);
-		return (open(filename, O_WRONLY | O_CREAT | O_TRUNC, FILE_MODE));
-	}
-	else if (redir->type == REDIRECT_APPEND_OUTPUT)
-	{
-		puts("APPEND");
-		return (open(filename, O_WRONLY | O_CREAT | O_APPEND, FILE_MODE));
-	}
-	puts("HEREDOC: ToDo");
-	return (-1);
+	ft_putstr_fd(pipefd[PIPE_WRITE], res);
+	dup2(pipefd[PIPE_READ], STDIN_FILENO);
+	close(pipefd[PIPE_READ]);
+	close(pipefd[PIPE_WRITE]);
+	ft_free(res);
 }
 
 void	do_redirect(t_redirects *redirect)
 {
-	if (redirect->type == REDIRECT_INPUT || redirect->type == REDIRECT_OUTPUT)
+	if (redirect->type == REDIRECT_INPUT || redirect->type == REDIRECT_OUTPUT ||
+		redirect->type == REDIRECT_APPEND_OUTPUT)
 	{
 		redirect->fd_backup = dup(redirect->fd);
 		dup2(redirect->fd_file, redirect->fd);
 		return ;
 	}
-	// if (redirect->type == REDIRECT_APPEND_OUTPUT)
-	// 	return (do_redirect_append_output(redirect));
-	// if (redirect->type == REDIRECT_HEREDOC)
-	// 	return (do_redirect_heredoc(redirect));
-	else
-	{
-		puts("ToDo");
-		return ;
-	}
+	return (heredoc(redirect));
 }
 
 void	restore_fd(t_redirects *redirect)

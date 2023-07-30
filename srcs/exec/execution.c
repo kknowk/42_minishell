@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:07:37 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/27 19:34:25 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/29 19:16:35 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,15 @@ void	exec_command(t_node *node, t_directory *dir, t_env_var **env_vars)
 	head = node->redirects;
 	while (node->redirects)
 	{
-		node->redirects->fd_file = open_redir_file(node->redirects);
-		if (node->redirects->fd_file < 0)
-			return ;
-		printf("fd: %d\n", node->redirects->fd);
-		printf("fd_file: %d\n", node->redirects->fd_file);
-		printf("fd_backup: %d\n", node->redirects->fd_backup);
+		if (node->redirects->type != REDIRECT_HEREDOC)
+		{
+			node->redirects->fd_file = open_redir_file(node->redirects);
+			if (node->redirects->fd_file < 0)
+			{
+				printf("error: %s\n", strerror(errno));
+				return ;
+			}
+		}
 		do_redirect(node->redirects);
 		node->redirects = node->redirects->next;
 	}
