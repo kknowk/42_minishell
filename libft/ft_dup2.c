@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 11:37:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/30 12:06:22 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/30 12:25:55 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,4 @@ void	ft_dup2(int old_fd, int new_fd)
 		return ;
 	if (dup2(old_fd, new_fd) == -1)
 		exit(EXIT_FAILURE);
-	ft_close(old_fd);
 }
