@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:26:36 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/27 17:02:12 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/30 11:51:08 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	handle_export(char **cmds, t_env_var **env_vars)
 
 static void	support_fork(char **cmds)
 {
-	if (fork() == 0)
+	if (ft_fork() == 0)
 	{
 		execve(cmds[0], cmds, NULL);
 		perror("execve failed");

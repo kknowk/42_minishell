@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:14:49 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/25 18:35:40 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/30 11:50:43 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,9 @@ char	**ft_split(char const *s, char c);
 
 int		ft_tolower(int c);
 int		ft_toupper(int c);
+
+void	ft_close(int fd);
+pid_t	ft_fork(void);
 
 char	*get_next_line(int fd);
 

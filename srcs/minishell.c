@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/27 18:46:40 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/30 11:22:03 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,58 +18,51 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-volatile sig_atomic_t	g_interrupted = 0;
-
-void	handle_signal(int signal)
+static t_env_var	*init_minishell(char *envp[], t_directory *dir)
 {
-	if (signal == SIGINT)
+	t_env_var			*env_vars;
+
+	setup_signals();
+	env_vars = create_env_vars(envp);
+	if (getcwd(dir->path, sizeof(dir->path)) == NULL || !env_vars)
+		exit(1);
+	dir->error.error_num = 0;
+	return (env_vars);
+}
+
+static void	execute_and_reset_error(t_node *node, t_directory *dir,
+		t_env_var **env_vars, int *error)
+{
+	if (node == NULL)
 	{
-		rl_on_new_line();
-		write(STDOUT_FILENO, "\n", 1);
-		rl_replace_line("", 0);
-		rl_redisplay();
+		if (*error == 2)
+			dir->error.error_num = 2;
 	}
-	else if (signal == SIGQUIT)
-		;
-	g_interrupted = 1;
+	execution(node, dir, env_vars);
+	*error = 0;
 }
 
 void	minishell(char *envp[], int *error)
 {
-	struct sigaction	sa;
 	char				*line;
 	t_token				*token;
 	t_node				*node;
 	t_directory			dir;
 	t_env_var			*env_vars;
 
-	(void)envp;
-	sa.sa_handler = handle_signal;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	sigaction(SIGINT, &sa, NULL);
-	sigaction(SIGQUIT, &sa, NULL);
-	env_vars = create_env_vars(envp);
-	if (getcwd(dir.path, sizeof(dir.path)) == NULL || !env_vars)
-		exit(1);
-	dir.error.error_num = 0;
+	env_vars = init_minishell(envp, &dir);
 	while (true)
 	{
 		line = readline("minishell$ ");
 		if (line == NULL)
 			ft_exit();
 		else
-			add_history(line); // lineが'\0'のときは履歴に登録しない
+			add_history(line);
 		token = lexer(line, error);
 		node = parser(token);
-		execution(node, &dir, &env_vars, error);
-		*error = 0;
-		if (g_interrupted == 1)
-		{
-			free(line);
-			g_interrupted = 0;
-			continue ;
-		}
+		execute_and_reset_error(node, &dir, &env_vars, error);
+		if (handle_interruption(line))
+			return ;
 		destroy_parser(node);
 		ft_free(line);
 	}
