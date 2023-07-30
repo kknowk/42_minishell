@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/27 18:25:42 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/30 10:59:58 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@
 # include "directory.h"
 # include "token.h"
 
+# define S_REDIR_SIZE 1
 # define D_REDIR_SIZE 2
+# define QUOTED_ERROR 2
 
 typedef enum e_token_state
 {
@@ -38,7 +40,8 @@ typedef struct s_lexer
 }	t_lexer;
 
 t_token	*lexer(char *str, int *error);
+size_t	redirect_size(char *str);
 
-void		debug_lexer(t_lexer *lex);
+// void		debug_lexer(t_lexer *lex);
 
 #endif

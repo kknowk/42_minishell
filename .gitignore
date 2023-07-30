@@ -10,5 +10,5 @@ a.out*
 # */*/debug*
 README.md
 *.dSYM
-*tester
+# *tester
 file*

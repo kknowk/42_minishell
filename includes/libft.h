@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 15:14:49 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/30 11:50:43 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/30 11:54:23 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,11 @@ int		ft_toupper(int c);
 
 void	ft_close(int fd);
 pid_t	ft_fork(void);
+
+int		ft_dup(int fd);
+void	ft_dup2(int old_fd, int new_fd);
+void	ft_pipe(int fd[2]);
+void	ft_waitpid(pid_t pid, int *status, int options);
 
 char	*get_next_line(int fd);
 

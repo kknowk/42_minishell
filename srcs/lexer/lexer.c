@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:17:39 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/27 18:29:56 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/30 11:00:05 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,13 @@ static void	switch_quote_state(t_lexer *lex, char c)
 	}
 }
 
-static void	lexer_error(t_lexer *lex, char *str)
+static void	lexer_error(t_lexer *lex, char *str, int *error)
 {
 	t_token	*token;
 	t_token	*tmp;
 
 	printf("%s\n", str);
+	*error = QUOTED_ERROR;
 	token = lex->list_head;
 	while (token != NULL)
 	{
@@ -67,23 +68,19 @@ static void	tokenize(t_lexer *lex, char *str, int *error)
 		c = str[start + lex->word_len];
 		if (lex->word_len == 0 && (c == '|' || c == '<' || c == '>'))
 		{
-			if (is_redirect(c) && str[start + lex->word_len + 1] == c)
-				lex->word_len += D_REDIR_SIZE;
-			else
-				lex->word_len++;
+			lex->word_len += redirect_size(&str[start + lex->word_len]);
 			break ;
 		}
-		else if (c == '|' || c == '<' || c == '>')
+		else if (lex->is_quoted == false && (c == '|' || c == '<' || c == '>'))
 			break ;
 		switch_quote_state(lex, c);
-		if (is_whitespace(c) && lex->is_quoted == false)
+		if (lex->is_quoted == false && is_whitespace(c))
 			break ;
 		lex->word_len++;
 	}
 	if (lex->is_quoted == true)
 	{
-		*error = 2;
-		lexer_error(lex, "minishell: syntax error: unexpected EOF");
+		lexer_error(lex, "minishell: syntax error: unexpected EOF", error);
 		return ;
 	}
 	tokenlistadd_back(lex->token, ft_substr(str, start, lex->word_len));
@@ -104,14 +101,9 @@ t_token	*lexer(char *str, int *error)
 		}
 		lex.word_len = 0;
 		tokenize(&lex, str, error);
-		if (*error != 0)
-		{
-			/*free*/
+		if (*error == QUOTED_ERROR)
 			return (NULL);
-		}
 		lex.word_start += lex.word_len;
 	}
-	if (DEBUG)
-		debug_lexer(&lex);
 	return (lex.list_head);
 }

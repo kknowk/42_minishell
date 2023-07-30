@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:41:09 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/29 16:58:46 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/30 11:16:02 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static t_node	*node_new(void)
 
 	node = malloc(sizeof(t_node));
 	if (!node)
-		return (NULL);
+		exit(EXIT_FAILURE);
 	node->type = NODE_COMMAND;
 	node->data = NULL;
 	node->redirects = NULL;
@@ -34,7 +34,8 @@ static size_t	data_size(t_token *token)
 	size = 0;
 	while (token->type == CHAR_PIPE)
 		token = token->next;
-	while (token != NULL && token->type != CHAR_PIPE && !is_redirect(token->type))
+	while (token != NULL && token->type != CHAR_PIPE && \
+			!is_redirect(token->type))
 	{
 		size++;
 		token = token->next;
@@ -42,23 +43,23 @@ static size_t	data_size(t_token *token)
 	return (size);
 }
 
-void	store_data(t_node *node, t_token **token)
+int	store_data(t_node *node, t_token **token)
 {
 	size_t	i;
 	size_t	size;
 
 	size = data_size((*token));
-	node->data = ft_calloc(size + 1, sizeof(char *)); // この辺でleakしてない？？
+	node->data = ft_calloc(size + 1, sizeof(char *));
 	if (!node->data)
-	{
-		tokenlist_clear(*token);
-		exit(EXIT_FAILURE); // 要検討
-	}
+		exit(EXIT_FAILURE);
 	i = 0;
 	while ((*token) != NULL && (*token)->type != CHAR_PIPE)
 	{
 		if (is_redirect((*token)->type))
+		{
 			set_redirect(node, token);
+			return (1);
+		}
 		else
 			node->data[i] = ft_strdup((*token)->data);
 		if ((*token)->next != NULL)
@@ -67,6 +68,7 @@ void	store_data(t_node *node, t_token **token)
 			break ;
 		i++;
 	}
+	return (0);
 }
 
 t_node	*parser(t_token *token)
@@ -80,54 +82,26 @@ t_node	*parser(t_token *token)
 		return (NULL);
 	tmp = token;
 	node = node_new();
-	if (node == NULL)
-	{
-		tokenlist_clear(token);
-		exit(EXIT_FAILURE);
-	}
 	store_data(node, &token);
 	while (token != NULL && token->type == CHAR_PIPE)
 	{
 		token = token->next;
 		left = node;
 		right = node_new();
-		if (right == NULL)
-		{
-			tokenlist_clear(token);
-			exit(EXIT_FAILURE);
-		}
 		store_data(right, &token);
 		node = node_new();
-		if (node == NULL)
-		{
-			tokenlist_clear(token);
-			exit(EXIT_FAILURE);
-		}
 		node->type = NODE_PIPE;
 		node->left = left;
 		node->right = right;
 	}
-	if(DEBUG)
-		debug_parser(node);
 	tokenlist_clear(tmp);
 	return (node);
 }
 
-void	free_strarray(char **array)
+void	destroy_parser(t_node *node)
 {
 	size_t	i;
 
-	i = 0;
-	while (array[i])
-	{
-		ft_free(array[i]);
-		i++;
-	}
-	ft_free(array);
-}
-
-void	destroy_parser(t_node *node)
-{
 	if (node == NULL)
 		return ;
 	if (node->left)
@@ -135,7 +109,15 @@ void	destroy_parser(t_node *node)
 	if (node->right)
 		destroy_parser(node->right);
 	if (node->data)
-		free_strarray(node->data);
+	{
+		i = 0;
+		while (node->data[i])
+		{
+			ft_free(node->data[i]);
+			i++;
+		}
+		ft_free(node->data);
+	}
 	if (node->redirects)
 		destroy_redirects(node->redirects);
 	ft_free(node);
