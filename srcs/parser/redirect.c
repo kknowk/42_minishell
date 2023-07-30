@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 16:06:37 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/30 11:17:10 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/30 12:12:49 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	set_redirect(t_node *node, t_token **token)
 	new = create_redirect();
 	if ((*token)->next == NULL || (*token)->next->type != CHAR_GENERAL)
 	{
-		puts("syntax error: near unexpected token `newline'");
+		printf("syntax error: near unexpected token `newline'\n");
 		exit(EXIT_FAILURE);
 	}
 	new->type = judge_redir_type(token);

@@ -16,7 +16,37 @@ INC	=	$(addprefix -I,$(INCDIR)) -I$(RL_INCDIR)
 
 SRCSDIR = ./srcs
 OBJSDIR = ./objs
-SRCS	=	$(wildcard $(SRCSDIR)/*.c $(SRCSDIR)/*/*.c)
+SRCS	=	$(SRCSDIR)/builtins/cd.c \
+			$(SRCSDIR)/builtins/create_env_vars.c \
+			$(SRCSDIR)/builtins/echo.c \
+			$(SRCSDIR)/builtins/env.c \
+			$(SRCSDIR)/builtins/exit.c \
+			$(SRCSDIR)/builtins/export.c \
+			$(SRCSDIR)/builtins/export_utiles.c \
+			$(SRCSDIR)/builtins/pwd.c \
+			$(SRCSDIR)/builtins/unset.c \
+			$(SRCSDIR)/builtins/utiles.c \
+			$(SRCSDIR)/builtins/utiles2.c \
+			$(SRCSDIR)/builtins/utility_comand.c \
+			$(SRCSDIR)/exec/builtins.c \
+			$(SRCSDIR)/exec/execution.c \
+			$(SRCSDIR)/exec/pipe.c \
+			$(SRCSDIR)/exec/redirect.c \
+			$(SRCSDIR)/expansion/expansion.c \
+			$(SRCSDIR)/expansion/handle_dollar.c \
+			$(SRCSDIR)/expansion/handle_quotation.c \
+			$(SRCSDIR)/expansion/helper_handle_dollar.c \
+			$(SRCSDIR)/expansion/helper_handle_dquote.c \
+			$(SRCSDIR)/expansion/helper_handle_quotation.c \
+			$(SRCSDIR)/lexer/lexer.c \
+			$(SRCSDIR)/lexer/token.c \
+			$(SRCSDIR)/lexer/utils.c \
+			$(SRCSDIR)/main.c \
+			$(SRCSDIR)/minishell.c \
+			$(SRCSDIR)/parser/parser.c \
+			$(SRCSDIR)/parser/redirect.c \
+			$(SRCSDIR)/signal.c
+
 OBJS	=	$(patsubst $(SRCSDIR)/%.c,$(OBJSDIR)/%.o,$(SRCS))
 DEPS	=	$(OBJS:.o=.d)
 

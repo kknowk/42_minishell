@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_cd.c                                            :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 14:08:10 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/23 18:04:46 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/30 12:07:22 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,18 @@ static int	check_fd_o_dir(char *path)
 	int	fd;
 
 	fd = open(path, O_RDONLY);
+	if (fd == -1)
+		exit(EXIT_FAILURE);
 	if (fd > 0)
 	{
 		write(STDERR_FILENO, "cd: Not a directory", 19);
 		write(STDERR_FILENO, ": ", 2);
 		write(STDERR_FILENO, path, ft_strlen(path));
 		write(STDERR_FILENO, "\n", 1);
-		close(fd);
+		ft_close(fd);
 		return (FAILURE);
 	}
-	close(fd);
+	ft_close(fd);
 	return (SUCCESS);
 }
 
