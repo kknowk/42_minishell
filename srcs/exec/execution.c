@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:07:37 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/29 19:16:35 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/30 10:32:36 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,16 +69,15 @@ void	exec_command(t_node *node, t_directory *dir, t_env_var **env_vars)
 	return (restore_fd(head));
 }
 
-void	execution(t_node *node, t_directory *dir, t_env_var **env_vars, int *error)
+void	execution(t_node *node, t_directory *dir,
+			t_env_var **env_vars)
 {
 	if (node == NULL)
 	{
-		if (*error == 2)
-			dir->error.error_num = 2;
 		return ;
 	}
 	if (node->type == NODE_PIPE)
-		exec_pipe(node, dir, env_vars, error);
+		exec_pipe(node, dir, env_vars);
 	else
 		exec_command(node, dir, env_vars);
 }
