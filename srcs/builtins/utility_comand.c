@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 17:10:32 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/24 13:19:03 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/30 11:51:26 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	execute_command_from_path(char *command_path,
 		}
 		else if (access(command_path, X_OK) == 0)
 		{
-			if (fork() == 0)
+			if (ft_fork() == 0)
 			{
 				execve(command_path, cmds, NULL);
 				perror("execve failed");
