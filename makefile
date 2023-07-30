@@ -43,7 +43,6 @@ SRCS	=	$(SRCSDIR)/builtins/cd.c \
 			$(SRCSDIR)/lexer/utils.c \
 			$(SRCSDIR)/main.c \
 			$(SRCSDIR)/minishell.c \
-			$(SRCSDIR)/signal.c \
 			$(SRCSDIR)/parser/parser.c \
 			$(SRCSDIR)/parser/redirect.c \
 			$(SRCSDIR)/signal.c
