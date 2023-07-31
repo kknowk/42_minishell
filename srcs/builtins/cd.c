@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 14:08:10 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/31 12:34:00 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/31 15:00:16 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	home(t_directory *dir, t_env_var **head)
 {
 	char	*home;
 
-	home = search(head, "HOME");
+	home = *search(head, "HOME");
 	if (!home)
 	{
 		write(STDERR_FILENO, "cd: HOME not set\n", 18);

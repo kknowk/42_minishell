@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:26:36 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/30 11:51:08 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/31 17:08:48 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	select_builtin(char **cmds, t_directory *dir, t_env_var **env_vars)
 	if (!ft_strcmp(cmds[0], "cd"))
 		dir->error.error_num = ft_cd(dir, cmds[1], env_vars);
 	if (!ft_strcmp(cmds[0], "exit"))
-		ft_exit();
+		dir->error.error_num = ft_ms_exit(cmds + 1);
 	if (!ft_strcmp(cmds[0], "env"))
 		dir->error.error_num = ft_env(*env_vars);
 	if (!ft_strcmp(cmds[0], "export"))
@@ -108,12 +108,3 @@ void	select_builtin(char **cmds, t_directory *dir, t_env_var **env_vars)
 	if (!ft_strcmp(cmds[0], "echo"))
 		dir->error.error_num = ft_echo(cmds, i - 1);
 }
-
-	// while (current)
-	// {
-	// 	t_env_var *next = current->next;
-	// 	free(current->key);
-	// 	free(current->value);
-	// 	free(current);
-	// 	current = next;
-	// }

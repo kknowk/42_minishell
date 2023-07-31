@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 15:13:18 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/27 17:06:35 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/31 14:55:16 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,33 @@ static void	temp_result(t_expand *exp, char **result)
 	}
 }
 
+static void	handle_values(t_expand *exp, char **values, char **result)
+{
+	int	i;
+
+	if (values)
+	{
+		i = 0;
+		while (values[i])
+		{
+			exp->value = values[i];
+			temp_result(exp, result);
+			if (values[i + 1])
+				*result = ft_strjoin(*result, " ");
+			i++;
+		}
+	}
+	else
+	{
+		*result[ft_strlen(*result)] = '\0';
+	}
+}
+
 static void	handle_dollar_sign_1(t_expand *exp, char *varname,
 	char **result, t_env_var **head)
 {
+	char	**values;
+
 	if (*(exp->start + 1) == '{')
 	{
 		exp->end = ft_strstr(exp->start, "}");
@@ -45,11 +69,8 @@ static void	handle_dollar_sign_1(t_expand *exp, char *varname,
 		ft_strlcpy(varname, exp->start + 1, exp->end - exp->start);
 		exp->start = exp->end;
 	}
-	exp->value = search(head, varname);
-	if (exp->value)
-		temp_result(exp, result);
-	else
-		*result[ft_strlen(*result)] = '\0';
+	values = search(head, varname);
+	handle_values(exp, values, result);
 }
 
 static void	handle_no_dollar_sign(t_expand *exp, char **result)
@@ -58,19 +79,15 @@ static void	handle_no_dollar_sign(t_expand *exp, char **result)
 
 	buffer = (char *)malloc(2 * sizeof(char));
 	if (!buffer)
-	{
 		exit(1);
-	}
 	buffer[0] = *exp->start;
 	buffer[1] = '\0';
 	exp->temp = *result;
 	*result = ft_strjoin(*result, buffer);
+	if (!result)
+		exit(1);
 	ft_free(exp->temp);
 	ft_free(buffer);
-	if (!result)
-	{
-		exit(1);
-	}
 	exp->start++;
 }
 
@@ -82,7 +99,7 @@ char	*expand_and_replace(char *input, t_env_var **head)
 
 	result = (char *)malloc(MAX_BUFFER_SIZE * sizeof(char));
 	if (!result)
-		return (NULL);
+		exit(1);
 	result[0] = '\0';
 	exp.start = input;
 	while (*exp.start != '\0')
