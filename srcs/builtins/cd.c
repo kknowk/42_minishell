@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 14:08:10 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/30 12:07:22 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/31 12:34:00 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	ft_cd(t_directory *dir, char *path, t_env_var **head)
 		return (home(dir, head));
 	if (ft_realpath(path, resolved_path) == NULL)
 	{
-		if (check_fd_o_dir(path) || check_permission(path))
+		if (check_permission(path) || check_fd_o_dir(path))
 			return (FAILURE);
 		write(STDERR_FILENO, "cd: No such file or directory", 29);
 		write(STDERR_FILENO, ": ", 2);

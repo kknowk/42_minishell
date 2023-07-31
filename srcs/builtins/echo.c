@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:48:01 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/25 18:34:58 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/31 12:28:22 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	ft_echo(char **str, int max_words)
 		}
 		if (str[i])
 		{
-			ft_putstr_fd(STDOUT_FILENO, str[i]);
+			printf("%s", str[i]);
 		}
 	}
 	else
