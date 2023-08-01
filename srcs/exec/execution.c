@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:07:37 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/01 16:43:42 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/01 17:48:24 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	exec_command(t_node *node, t_directory *dir, t_env_var **env_vars)
 	t_redirects	*head;
 
 	head = node->redirects;
+	expand_filename(node->redirects, dir, env_vars);
 	while (node->redirects)
 	{
 		if (node->redirects->type != REDIRECT_HEREDOC)

@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:47:53 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/01 16:53:18 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/01 17:01:11 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,14 +108,14 @@ int	ft_export(t_env_var **head, char **cmds, int *flags)
 		s1 = search_equal(cmds[i]);
 		if (!s1)
 		{
-			if (is_valid_name(cmds[i]))
+			if (flags[i] == 0 && is_valid_name(cmds[i]))
 				status = FAILURE;
 		}
 		else
 		{
 			if (s1[0] == '=')
 				status = FAILURE;
-			else if (is_valid_name(s1))
+			else if (flags[i] == 0 && is_valid_name(s1))
 				status = FAILURE;
 			else if (add_env_var_to_list(head, s1))
 				return (EXIT_ERROR);

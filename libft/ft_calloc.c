@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 14:37:15 by minabe            #+#    #+#             */
-/*   Updated: 2023/05/05 22:08:30 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/01 15:47:45 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ void	*ft_calloc(size_t count, size_t size)
 		size = 1;
 	}
 	if (count > SIZE_MAX / size)
-		ft_error("malloc failed");
+		exit(EXIT_FAILURE);
 	pmem = malloc(count * size);
 	if (pmem == NULL)
-		ft_error("malloc failed");
+		exit(EXIT_FAILURE);
 	ft_bzero(pmem, count * size);
 	return (pmem);
 }

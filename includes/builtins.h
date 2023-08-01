@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:54:35 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/01 16:53:50 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/01 18:57:43 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int			ft_echo(char **str, int max_words);
 int			ft_env(t_env_var *head);
 int			ft_export(t_env_var **head, char **cmds, int *flags);
 int			ft_ms_exit(char **args);
-int			ft_unset(t_env_var **head, char **keys);
+int			ft_unset(t_env_var **head, char **keys, int *flags);
 int			ft_pwd(t_directory *dir);
 int			ft_cd(t_directory *dir, char *path, t_env_var **head);
 
@@ -89,8 +89,9 @@ int			type_existing_val(t_env_var *existing_node,
 
 t_env_var	*create_env_vars(char *envp[]);
 
-int			execute_command(char *command, char **cmds);
+int			execute_command(char *command, char **cmds, t_env_var **env_vars);
 void		ft_exit(void);
+void		numeric_error_exit(void);
 
 char		*handle_question_mark(char *str, char *tmp, t_directory *dir);
 char		*handle_dollar_sign(char *str, char *tmp);
@@ -108,5 +109,7 @@ char		*quote_handle(char *str, t_directory *dir, t_env_var **env_vars);
 
 void		process_dollar(t_parse_context *ctx);
 void		process_normal_character(t_parse_context *ctx);
+
+void		error_printf(const char *msg, const char *path);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:41:58 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/01 16:42:18 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/01 18:58:17 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	exec_from_bin(char **cmds, t_directory *dir, t_env_var **env_vars)
 	{
 		if (S_ISDIR(s.st_mode))
 		{
-			printf("%s: is a directory\n", cmds[0]);
+			error_printf("minishell: is a directory\n", cmds[0]);
 			dir->error.error_num = 126;
 			return ;
 		}
@@ -47,6 +47,6 @@ void	exec_from_bin(char **cmds, t_directory *dir, t_env_var **env_vars)
 		}
 	}
 	else
-		dir->error.error_num = execute_command(cmds[0], cmds) * 127;
+		dir->error.error_num = execute_command(cmds[0], cmds, env_vars) * 127;
 	return ;
 }
