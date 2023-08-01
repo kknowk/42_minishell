@@ -1,144 +1,68 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_create_env_vars.c                               :+:      :+:    :+:   */
+/*   create_env_vars.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 17:30:19 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/12 18:08:42 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/31 13:19:12 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 #include "libft.h"
 
-// static size_t	ft_strlcpy(char *dest, const char *src, size_t size)
-// {
-// 	size_t	i;
-
-// 	i = 0;
-// 	if (size > 0)
-// 	{
-// 		while (src[i] && i < size - 1)
-// 		{
-// 			dest[i] = src[i];
-// 			i++;
-// 		}
-// 		dest[i] = '\0';
-// 	}
-// 	while (src[i])
-// 		i++;
-// 	return (i);
-// }
-
-// static int	count_words(char const *s, char c)
-// {
-// 	int	count;
-// 	int	in_word;
-
-// 	count = 0;
-// 	in_word = 0;
-// 	while (*s)
-// 	{
-// 		if (*s == c)
-// 			in_word = 0;
-// 		else if (!in_word)
-// 		{
-// 			in_word = 1;
-// 			count++;
-// 		}
-// 		s++;
-// 	}
-// 	return (count);
-// }
-
-// static char	*get_word(char const **s, char c)
-// {
-// 	char const	*start;
-// 	char		*word;
-// 	int			len;
-
-// 	start = *s;
-// 	len = 0;
-// 	while (**s && **s != c)
-// 	{
-// 		(*s)++;
-// 		len++;
-// 	}
-// 	word = (char *)malloc(sizeof(char) * (len + 1));
-// 	if (!word)
-// 		return (NULL);
-// 	ft_strlcpy(word, start, len + 1);
-// 	return (word);
-// }
-
-// static void	check_malloc(char **ptr, int word_count)
-// {
-// 	int	i;
-
-// 	if (!ptr)
-// 	{
-// 		i = 0;
-// 		while (i < word_count)
-// 		{
-// 			free(ptr[i]);
-// 			i++;
-// 		}
-// 		free(ptr);
-// 	}
-// }
-
-// static void	split_string(char const *s, char c, char **result)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (*s)
-// 	{
-// 		if (*s != c)
-// 		{
-// 			result[i] = get_word(&s, c);
-// 			if (!result[i])
-// 				check_malloc(result, i);
-// 			i++;
-// 		}
-// 		else
-// 			s++;
-// 	}
-// 	result[i] = NULL;
-// }
-
-// static char	**ft_split(char const *s, char c)
-// {
-// 	char	**result;
-// 	int		word_count;
-
-// 	if (!s)
-// 		return (NULL);
-// 	word_count = count_words(s, c);
-// 	result = (char **)malloc(sizeof(char *) * (word_count + 1));
-// 	if (!result)
-// 		return (NULL);
-// 	split_string(s, c, result);
-// 	return (result);
-// }
-
 static t_env_var	*check_split(t_env_var *head)
 {
 	t_env_var	*current;
 	t_env_var	*next;
+	int			i;
 
 	current = head;
 	while (current)
 	{
 		next = current->next;
-		free(current->key);
-		free(current->value);
-		free(current);
+		ft_free(current->key);
+		i = 0;
+		while (i < current->num_values)
+		{
+			ft_free(current->values[i]);
+			i++;
+		}
+		ft_free(current->values);
+		ft_free(current);
 		current = next;
 	}
 	return (NULL);
+}
+
+static t_env_var	*init_new_var(char *key, char *value, bool is_shell_var)
+{
+	t_env_var	*new_var;
+	char		**p;
+
+	new_var = malloc(sizeof(t_env_var));
+	if (!new_var)
+	{
+		perror("Memory allocation failed");
+		exit(1);
+	}
+	new_var->values = ft_split(value, ':');
+	if (!new_var->values)
+		exit(1);
+	new_var->num_values = 0;
+	p = new_var->values;
+	while (*p)
+	{
+		new_var->num_values++;
+		p++;
+	}
+	new_var->key = key;
+	ft_free(value);
+	new_var->is_shell_var = is_shell_var;
+	new_var->next = NULL;
+	return (new_var);
 }
 
 static void	helper_env(char **split_result, t_env_var **head, t_env_var **prev)
@@ -149,23 +73,13 @@ static void	helper_env(char **split_result, t_env_var **head, t_env_var **prev)
 
 	key = split_result[0];
 	value = split_result[1];
-	new_var = malloc(sizeof(t_env_var));
-	if (!new_var)
-	{
-		free(split_result);
-		perror("Memory allocation failed");
-		exit(1);
-	}
-	new_var->key = key;
-	new_var->value = value;
-	new_var->is_shell_var = false;
-	new_var->next = NULL;
+	new_var = init_new_var(key, value, false);
 	if (*prev == NULL)
 		*head = new_var;
 	else
 		(*prev)->next = new_var;
 	*prev = new_var;
-	free(split_result);
+	ft_free(split_result);
 }
 
 t_env_var	*create_env_vars(char *envp[])

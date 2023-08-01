@@ -6,13 +6,13 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 16:51:32 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/28 12:59:37 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/31 13:59:46 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-char	*search(t_env_var **head, char *key)
+char	**search(t_env_var **head, char *key)
 {
 	t_env_var	*current;
 
@@ -21,7 +21,7 @@ char	*search(t_env_var **head, char *key)
 	{
 		if (ft_strncmp(current->key, key, ft_strlen(key) + 1) == 0)
 		{
-			return (current->value);
+			return (current->values);
 		}
 		current = current->next;
 	}

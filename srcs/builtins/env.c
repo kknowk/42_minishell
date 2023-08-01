@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_env.c                                           :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:57:29 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/12 14:06:58 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/31 13:28:25 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,23 @@
 int	ft_env(t_env_var *head)
 {
 	t_env_var	*current;
+	int			i;
 
 	current = head;
 	while (current)
 	{
-		printf("%s=%s\n", current->key, current->value);
+		printf("%s=", current->key);
+		i = 0;
+		while (i < current->num_values)
+		{
+			printf("%s", current->values[i]);
+			if (i < current->num_values - 1)
+			{
+				printf(":");
+			}
+			i++;
+		}
+		printf("\n");
 		current = current->next;
 	}
 	return (SUCCESS);
