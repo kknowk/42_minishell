@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:54:35 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/31 17:06:50 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/01 16:53:50 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct s_parse_context
 
 int			ft_echo(char **str, int max_words);
 int			ft_env(t_env_var *head);
-int			ft_export(t_env_var **head, char **cmds);
+int			ft_export(t_env_var **head, char **cmds, int *flags);
 int			ft_ms_exit(char **args);
 int			ft_unset(t_env_var **head, char **keys);
 int			ft_pwd(t_directory *dir);

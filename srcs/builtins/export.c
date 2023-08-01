@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:47:53 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/31 15:18:20 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/01 16:53:18 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static int	add_env_var_to_list(t_env_var **head, char *env_str)
 	return (SUCCESS);
 }
 
-int	ft_export(t_env_var **head, char **cmds)
+int	ft_export(t_env_var **head, char **cmds, int *flags)
 {
 	int		status;
 	int		i;
