@@ -7,7 +7,7 @@ a.out*
 *.o
 *.d
 */debug*
-*/*/debug*.c
+# */*/debug*.c
 README.md
 *.dSYM
 *tester

@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:41:09 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/01 15:46:29 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/01 18:40:46 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,13 @@ static size_t	data_size(t_token *token)
 	return (size);
 }
 
-int	store_data(t_node *node, t_token **token)
+void	store_data(t_node *node, t_token **token)
 {
 	size_t	i;
 	size_t	size;
 
 	size = data_size((*token));
+	printf("size: %zu\n", size);
 	node->data = ft_calloc(size + 1, sizeof(char *));
 	i = 0;
 	while ((*token) != NULL && (*token)->type != CHAR_PIPE)
@@ -58,7 +59,7 @@ int	store_data(t_node *node, t_token **token)
 		if (is_redirect((*token)->type))
 		{
 			set_redirect(node, token);
-			return (1);
+			continue ;
 		}
 		else
 			node->data[i] = ft_strdup((*token)->data);
@@ -68,7 +69,7 @@ int	store_data(t_node *node, t_token **token)
 			break ;
 		i++;
 	}
-	return (0);
+	return ;
 }
 
 t_node	*parser(t_token *token)
@@ -95,6 +96,8 @@ t_node	*parser(t_token *token)
 		node->right = right;
 	}
 	tokenlist_clear(head);
+	if (DEBUG)
+		debug_parser(node);
 	return (node);
 }
 
@@ -120,7 +123,5 @@ void	destroy_parser(t_node *node)
 	}
 	if (node->redirects)
 		destroy_redirects(node->redirects);
-	// if (DEBUG)
-	// 	debug_parser(node);
 	ft_free(node);
 }

@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:36:17 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/01 15:18:34 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/01 18:41:46 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,10 @@ static void	heredoc(t_redirects *redir, int pipefd[2])
 	ft_free(res);
 }
 
-static void	do_heredoc(t_redirects *redir)
+void	do_redirect(t_redirects *redirect)
 {
 	int		pipefd[2];
 
-	heredoc(redir, pipefd);
-	ft_dup2(pipefd[PIPE_READ], STDIN_FILENO);
-	ft_close(pipefd[PIPE_READ]);
-	ft_close(pipefd[PIPE_WRITE]);
-}
-
-void	do_redirect(t_redirects *redirect)
-{
 	if (redirect->type == REDIRECT_INPUT || redirect->type == REDIRECT_OUTPUT
 		|| redirect->type == REDIRECT_APPEND_OUTPUT)
 	{
@@ -66,7 +58,30 @@ void	do_redirect(t_redirects *redirect)
 		ft_dup2(redirect->fd_file, redirect->fd);
 		return ;
 	}
-	return (do_heredoc(redirect));
+	else
+	{
+		heredoc(redirect, pipefd);
+		ft_dup2(pipefd[PIPE_READ], STDIN_FILENO);
+		ft_close(pipefd[PIPE_READ]);
+		ft_close(pipefd[PIPE_WRITE]);
+	}
+	return ;
+}
+
+void	exec_redir(t_redirects *redir, t_directory *dir, t_env_var **env_vars)
+{
+	while (redir != NULL)
+	{
+		redir->filename = expansion(redir->filename, dir, env_vars);
+		if (redir->type != REDIRECT_HEREDOC)
+		{
+			redir->fd_file = open_redir_file(redir);
+			if (redir->fd_file == -1)
+				exit(EXIT_FAILURE);
+		}
+		do_redirect(redir);
+		redir = redir->next;
+	}
 }
 
 void	restore_fd(t_redirects *redirect)
