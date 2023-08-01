@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:17:39 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/30 11:00:05 by minabe           ###   ########.fr       */
+/*   Updated: 2023/07/30 19:38:49 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,7 @@ t_token	*lexer(char *str, int *error)
 			return (NULL);
 		lex.word_start += lex.word_len;
 	}
+	if (DEBUG)
+		debug_lexer(&lex);
 	return (lex.list_head);
 }
