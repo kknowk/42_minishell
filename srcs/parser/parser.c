@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:41:09 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/01 19:10:39 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/01 20:07:01 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ static size_t	data_size(t_token *token)
 		return (size);
 	while (token->type == CHAR_PIPE)
 		token = token->next;
-	while (token != NULL && token->type != CHAR_PIPE && \
-			!is_redirect(token->type))
+	printf("token->type: %d\n", token->type);
+	while (token != NULL && token->type != CHAR_PIPE && !is_redirect(token->type))
 	{
 		size++;
 		token = token->next;
@@ -51,7 +51,7 @@ void	store_data(t_node *node, t_token **token)
 	size_t	size;
 
 	size = data_size((*token));
-	// printf("size: %zu\n", size);
+	printf("size: %zu\n", size);
 	node->data = ft_calloc(size + 1, sizeof(char *));
 	i = 0;
 	while ((*token) != NULL && (*token)->type != CHAR_PIPE)

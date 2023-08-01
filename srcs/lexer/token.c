@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 15:23:15 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/26 12:49:23 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/01 20:20:26 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_token	*tokenlistadd_back(t_token *token, char *data)
 		return (token);
 	}
 	head = token;
-	new = token_new(data);
+	new = token_new(data); // >file という入力があった場合、NULLになっている問題を解消したい
 	while (token->next != NULL)
 		token = token->next;
 	token->next = new;
