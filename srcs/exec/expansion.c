@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 15:39:48 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/01 16:24:03 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/01 16:59:53 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ int	judgement_desuno(char **cmds, t_directory *dir, t_env_var **env_vars)
 	return (0);
 }
 
-void	expand_filename(t_redirects *redir, t_directory *dir, t_env_var **env_vars)
+void	expand_filename(t_redirects *redir,
+			t_directory *dir, t_env_var **env_vars)
 {
 	while (redir != NULL)
 	{

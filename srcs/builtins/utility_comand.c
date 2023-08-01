@@ -6,39 +6,18 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 17:10:32 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/30 11:51:26 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/01 18:57:25 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-static void	execute_command_from_path(char *command_path,
-		char **cmds)
+void	error_printf(const char *msg, const char *path)
 {
-	struct stat	s;
-
-	if (stat(command_path, &s) == 0)
-	{
-		if (S_ISDIR(s.st_mode))
-		{
-			printf("%s: is a directory\n", command_path);
-			return ;
-		}
-		else if (access(command_path, X_OK) == 0)
-		{
-			if (ft_fork() == 0)
-			{
-				execve(command_path, cmds, NULL);
-				perror("execve failed");
-				exit(1);
-			}
-			else
-			{
-				wait(NULL);
-				return ;
-			}
-		}
-	}
+	write(STDERR_FILENO, msg, strlen(msg));
+	write(STDERR_FILENO, ": ", 2);
+	write(STDERR_FILENO, path, strlen(path));
+	write(STDERR_FILENO, "\n", 1);
 }
 
 static char	*ft_strtok(char *str, const char *delim)
@@ -58,60 +37,62 @@ static char	*ft_strtok(char *str, const char *delim)
 	return (token);
 }
 
-char	*add_current_directory_to_path(void)
+static void	execute_command_from_path(char *command_path, char **cmds)
 {
-	char	*original_path;
-	char	cwd[PATH_MAX];
-	char	*new_path;
+	struct stat	s;
 
-	original_path = getenv("PATH");
-	if (getcwd(cwd, sizeof(cwd)) != NULL)
+	if (stat(command_path, &s) == 0)
 	{
-		new_path = malloc(strlen(original_path) + strlen(cwd) + 2);
-		if (new_path == NULL)
+		if (S_ISDIR(s.st_mode))
 		{
-			perror("malloc failed");
-			exit(EXIT_FAILURE);
+			error_printf("minishell: is a directory\n", command_path);
+			return ;
 		}
-		ms_cpca(new_path, original_path, ":", cwd);
-		return (new_path);
-	}
-	else
-	{
-		perror("getcwd() error");
-		return (NULL);
+		else if (access(command_path, X_OK) == 0)
+		{
+			if (ft_fork() == 0)
+			{
+				execve(command_path, cmds, NULL);
+				perror("execve failed");
+				exit(1);
+			}
+			else
+			{
+				wait(NULL);
+				return ;
+			}
+		}
 	}
 }
 
-static int	helper_execute(char	*args[PATH_MAX], char **cmds)
+static int	helper_execute(char *args[PATH_MAX],
+				char **cmds, t_env_var **env_vars)
 {
-	char	*path;
-	char	*path_copy;
-	char	*path_token;
 	char	command_path[PATH_MAX];
+	char	**path_dirs;
+	int		i;
 
-	path = add_current_directory_to_path();
-	path_copy = ft_strdup(path);
-	ft_free(path);
-	if (path_copy == NULL)
-		error_put("Memory allocation failed");
-	path_token = ft_strtok(path_copy, ":");
-	while (path_token != NULL)
+	path_dirs = search(env_vars, "PATH");
+	if (path_dirs == NULL)
 	{
-		ms_cpca(command_path, path_token, "/", args[0]);
+		printf("%s: No such file or directory\n", args[0]);
+		return (FAILURE);
+	}
+	i = 0;
+	while (path_dirs[i])
+	{
+		ms_cpca(command_path, path_dirs[i], "/", args[0]);
 		execute_command_from_path(command_path, cmds);
 		if (access(command_path, X_OK) == 0)
 		{
-			free(path_copy);
 			return (SUCCESS);
 		}
-		path_token = ft_strtok(NULL, ":");
+		i++;
 	}
-	free(path_copy);
 	return (error_str(args[0]));
 }
 
-int	execute_command(char *command, char **cmds)
+int	execute_command(char *command, char **cmds, t_env_var **env_vars)
 {
 	char	command_buffer[PATH_MAX];
 	char	*command_name;
@@ -128,35 +109,5 @@ int	execute_command(char *command, char **cmds)
 		args_count++;
 	}
 	args[args_count] = NULL;
-	return (helper_execute(args, cmds));
+	return (helper_execute(args, cmds, env_vars));
 }
-
-// #include <string.h>
-// #include <readline/readline.h>
-// #include <readline/history.h>
-
-// int	main(void)
-// {
-// 	char	*command;
-
-// 	while (1)
-// 	{
-// 		command = readline(">> ");
-// 		if (command == NULL)
-// 			break ;
-// 		if (strcmp(command, "exit") == 0)
-// 		{
-// 			free(command);
-// 			break ;
-// 		}
-// 		add_history(command);
-// 		execute_command(command);
-// 		free(command);
-// 	}
-// 	return (0);
-// }
-
-// __attribute__((destructor)) static void destructor()
-// {
-// 	system("leaks -q a.out");
-// }
