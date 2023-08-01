@@ -33,6 +33,7 @@ SRCS	=	$(SRCSDIR)/builtins/cd.c \
 			$(SRCSDIR)/exec/execution.c \
 			$(SRCSDIR)/exec/pipe.c \
 			$(SRCSDIR)/exec/redirect.c \
+			$(SRCSDIR)/exec/expansion.c \
 			$(SRCSDIR)/expansion/expansion.c \
 			$(SRCSDIR)/expansion/handle_dollar.c \
 			$(SRCSDIR)/expansion/handle_quotation.c \
