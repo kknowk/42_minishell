@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 16:06:37 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/30 14:21:46 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/01 14:57:45 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	set_redirect(t_node *node, t_token **token)
 		new->fd = STDIN_FILENO;
 	else if ((*token)->type == CHAR_GREATER)
 		new->fd = STDOUT_FILENO;
-	else if ((*token)->type == CHAR_D_LESSER)
+	else if ((*token)->type == CHAR_D_GREATER)
 		new->fd = STDOUT_FILENO;
 	if (node->redirects == NULL)
 		node->redirects = new;

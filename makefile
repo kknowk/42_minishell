@@ -43,11 +43,10 @@ SRCS	=	$(SRCSDIR)/builtins/cd.c \
 			$(SRCSDIR)/lexer/utils.c \
 			$(SRCSDIR)/main.c \
 			$(SRCSDIR)/minishell.c \
-			$(SRCSDIR)/signal.c \
 			$(SRCSDIR)/parser/parser.c \
 			$(SRCSDIR)/parser/redirect.c \
-			# $(SRCSDIR)/parser/debug_parser.c \
-			# $(SRCSDIR)/lexer/debug_lexer.c \
+			$(SRCSDIR)/parser/debug_parser.c \
+			$(SRCSDIR)/lexer/debug_lexer.c \
 			$(SRCSDIR)/signal.c
 
 OBJS	=	$(patsubst $(SRCSDIR)/%.c,$(OBJSDIR)/%.o,$(SRCS))

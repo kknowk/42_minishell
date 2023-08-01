@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:41:09 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/30 14:59:56 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/01 15:19:45 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,5 +122,7 @@ void	destroy_parser(t_node *node)
 	}
 	if (node->redirects)
 		destroy_redirects(node->redirects);
+	// if (DEBUG)
+	// 	debug_parser(node);
 	ft_free(node);
 }
