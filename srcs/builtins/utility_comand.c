@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utility_comand.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 17:10:32 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/01 18:57:25 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/01 19:20:42 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	execute_command_from_path(char *command_path, char **cmds)
 	{
 		if (S_ISDIR(s.st_mode))
 		{
-			error_printf("minishell: is a directory\n", command_path);
+			error_printf("minishell: is a directory", command_path);
 			return ;
 		}
 		else if (access(command_path, X_OK) == 0)
