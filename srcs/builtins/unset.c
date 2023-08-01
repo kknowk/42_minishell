@@ -6,30 +6,45 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 13:40:41 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/24 17:35:21 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/31 15:09:27 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
+static void	free_env_var(t_env_var *var)
+{
+	int	i;
+
+	i = 0;
+	ft_free(var->key);
+	while (i < var->num_values)
+	{
+		ft_free(var->values[i]);
+		i++;
+	}
+	ft_free(var->values);
+	ft_free(var);
+}
+
 static int	helper_unset(t_env_var **head, char *key)
 {
 	t_env_var	*current;
 	t_env_var	*prev;
+	int			i;
 
 	current = *head;
 	prev = NULL;
 	while (current)
 	{
+		i = 0;
 		if (ft_strcmp(current->key, key) == 0)
 		{
 			if (prev == NULL)
 				*head = current->next;
 			else
 				prev->next = current->next;
-			free(current->key);
-			free(current->value);
-			free(current);
+			free_env_var(current);
 			return (SUCCESS);
 		}	
 		prev = current;

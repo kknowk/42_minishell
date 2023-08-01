@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/30 11:22:03 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/31 18:47:49 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,6 @@ static t_env_var	*init_minishell(char *envp[], t_directory *dir)
 	return (env_vars);
 }
 
-static void	execute_and_reset_error(t_node *node, t_directory *dir,
-		t_env_var **env_vars, int *error)
-{
-	if (node == NULL)
-	{
-		if (*error == 2)
-			dir->error.error_num = 2;
-	}
-	execution(node, dir, env_vars);
-	*error = 0;
-}
-
 void	minishell(char *envp[], int *error)
 {
 	char				*line;
@@ -60,9 +48,7 @@ void	minishell(char *envp[], int *error)
 			add_history(line);
 		token = lexer(line, error);
 		node = parser(token);
-		execute_and_reset_error(node, &dir, &env_vars, error);
-		if (handle_interruption(line))
-			return ;
+		handle_interruption(node, &dir, env_vars, error);
 		destroy_parser(node);
 		ft_free(line);
 	}

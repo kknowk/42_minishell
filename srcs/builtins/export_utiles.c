@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:00:31 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/28 14:19:01 by khorike          ###   ########.fr       */
+/*   Updated: 2023/07/31 16:19:29 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ char	*is_valid_name(char *name)
 		return (error_in_export(name));
 	while (name[i])
 	{
-		if (!ft_isalnum(name[i]) && name[i] != '_' && name[i] != '=')
+		if (!ft_isalnum(name[i]) && name[i] != '_' && name[i] != '='
+			&& name[i] != ':')
 			return (error_in_export(name));
 		i++;
 	}
@@ -57,32 +58,33 @@ char	*is_valid_name(char *name)
 int	declare(t_env_var *head)
 {
 	t_env_var	*current;
+	int			i;
 
 	current = head;
 	while (current)
 	{
+		i = 0;
 		printf("%s", "declare -x ");
-		printf("%s=%s\n", current->key, current->value);
+		printf("%s=", current->key);
+		while (i < current->num_values)
+		{
+			printf("%s", current->values[i]);
+			if (i < current->num_values - 1)
+				printf("%s", ":");
+			i++;
+		}
+		printf("%s", "\n");
 		current = current->next;
 	}
 	return (SUCCESS);
 }
 
-// char	*get_next_var(char **cmds, char *s1)
-// {
-// 	int		i;
+int	ft_count_values(char **values)
+{
+	int	i;
 
-// 	i = 0;
-// 	while (cmds[i])
-// 	{
-// 		if (ft_strcmp(cmds[i], s1))
-// 		{
-// 			s1 = search_equal(cmds + i + 1);
-// 			if (!s1)
-// 				return (NULL);
-// 			return (s1);
-// 		}
-// 		i++;
-// 	}
-// 	return (NULL);
-// }
+	i = 0;
+	while (values[i])
+		i++;
+	return (i);
+}
