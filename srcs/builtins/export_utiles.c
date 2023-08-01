@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:00:31 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/31 16:19:29 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/01 17:05:48 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	declare(t_env_var *head)
 		printf("%s=", current->key);
 		while (i < current->num_values)
 		{
-			printf("%s", current->values[i]);
+			printf("\"%s\"", current->values[i]);
 			if (i < current->num_values - 1)
 				printf("%s", ":");
 			i++;

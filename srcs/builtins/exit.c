@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 16:30:43 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/31 19:47:44 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/01 17:39:46 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ static long	atat(const char **nptr, int sign)
 		digit = (*nptr)[i] - '0';
 		if (sign != -1 && ((j > LONG_MAX / 10)
 				|| (j == LONG_MAX / 10 && digit > LONG_MAX % 10)))
-			return (LONG_MAX);
+			numeric_error_exit();
 		if (sign == -1 && ((j > LONG_MAX / 10)
 				|| (j == LONG_MAX / 10 && digit > LONG_MAX % 10 + 1)))
-			return (LONG_MIN);
+			numeric_error_exit();
 		j = j * 10 + digit;
 		i++;
 	}
@@ -70,7 +70,7 @@ bool	is_valid_number(char *arg, int *status)
 	long	val;
 
 	val = ft_strtol(arg, &endptr);
-	if (*endptr != '\0' || val == LONG_MIN || val == LONG_MAX)
+	if (*endptr != '\0')
 		return (false);
 	val = val % 256;
 	if (val < 0)

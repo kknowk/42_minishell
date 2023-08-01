@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 13:40:41 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/31 15:09:27 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/01 17:06:43 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static char	*is_valid_name_unset(char *key)
 	return (NULL);
 }
 
-int	ft_unset(t_env_var **head, char **keys)
+int	ft_unset(t_env_var **head, char **keys, int *flags)
 {
 	int		status;
 	int		i;
@@ -86,7 +86,7 @@ int	ft_unset(t_env_var **head, char **keys)
 	i = 1;
 	while (keys[i])
 	{
-		if (is_valid_name_unset(keys[i]))
+		if (flags[i] == 0 && is_valid_name_unset(keys[i]))
 			status = FAILURE;
 		helper_unset(head, keys[i]);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 17:25:01 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/24 14:31:06 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/01 17:40:03 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,10 @@ int	is_valid_varname(char *varname)
 		p++;
 	}	
 	return (FAILURE);
+}
+
+void	numeric_error_exit(void)
+{
+	write(STDERR_FILENO, "exit: numeric argument required\n", 33);
+	exit (255);
 }

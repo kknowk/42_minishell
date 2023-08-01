@@ -31,6 +31,7 @@ SRCS	=	$(SRCSDIR)/builtins/cd.c \
 			$(SRCSDIR)/builtins/utility_comand.c \
 			$(SRCSDIR)/exec/builtins.c \
 			$(SRCSDIR)/exec/execution.c \
+			$(SRCSDIR)/exec/execute_command.c \
 			$(SRCSDIR)/exec/pipe.c \
 			$(SRCSDIR)/exec/redirect.c \
 			$(SRCSDIR)/exec/expansion.c \
