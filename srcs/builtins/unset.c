@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 13:40:41 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/01 17:06:43 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/02 13:20:24 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ static int	helper_unset(t_env_var **head, char *key)
 
 	current = *head;
 	prev = NULL;
+	if (key[0] == '_')
+		return (SUCCESS);
 	while (current)
 	{
 		i = 0;
