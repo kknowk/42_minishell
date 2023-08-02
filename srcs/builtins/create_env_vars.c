@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 17:30:19 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/31 13:19:12 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/02 13:09:39 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static void	helper_env(char **split_result, t_env_var **head, t_env_var **prev)
 	ft_free(split_result);
 }
 
-t_env_var	*create_env_vars(char *envp[])
+t_env_var	*create_env_vars(char *envp[], char *path)
 {
 	t_env_var	*head;
 	t_env_var	*prev;
@@ -92,6 +92,11 @@ t_env_var	*create_env_vars(char *envp[])
 	i = 0;
 	head = NULL;
 	prev = NULL;
+	if (envp[i] == NULL)
+	{
+		set_initial_env_vars(&head, path);
+		return (head);
+	}
 	while (envp[i] != NULL)
 	{
 		split_result = ft_split(envp[i], '=');
