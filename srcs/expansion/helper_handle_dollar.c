@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper_handle_dollar.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 16:07:28 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/27 17:08:01 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/03 13:20:12 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,10 @@ char	*handle_default(char *str, char *tmp, t_env_var **head)
 	{
 		ft_free(str);
 		str = processed;
-		tmp = ft_strchr(str, '$');
+		tmp = ft_strchr(str, '$'); // tmp使ってる？？
 	}
 	else
 		ft_free(str);
+	(void)tmp;
 	return (str);
 }

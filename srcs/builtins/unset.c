@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 13:40:41 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/01 17:06:43 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/03 13:18:58 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,11 @@ static int	helper_unset(t_env_var **head, char *key)
 {
 	t_env_var	*current;
 	t_env_var	*prev;
-	int			i;
 
 	current = *head;
 	prev = NULL;
 	while (current)
 	{
-		i = 0;
 		if (ft_strcmp(current->key, key) == 0)
 		{
 			if (prev == NULL)
@@ -46,7 +44,7 @@ static int	helper_unset(t_env_var **head, char *key)
 				prev->next = current->next;
 			free_env_var(current);
 			return (SUCCESS);
-		}	
+		}
 		prev = current;
 		current = current->next;
 	}
