@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 15:23:15 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/26 12:49:23 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/03 21:50:26 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,12 @@ t_token	*tokenlistadd_back(t_token *token, char *data)
 	t_token	*new;
 	t_token	*head;
 
-	if (token == NULL)
-	{
-		token = token_new(data);
-		return (token);
-	}
 	if (*data == '\0')
 		return (token);
 	if (token->data == NULL)
 	{
 		token->data = data;
+		token->type = judge_tokentype(data);
 		return (token);
 	}
 	head = token;
