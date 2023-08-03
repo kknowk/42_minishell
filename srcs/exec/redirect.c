@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:36:17 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/03 17:59:05 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/03 18:21:04 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	exec_redir(t_redirects *redir, t_directory *dir, t_env_var **env_vars)
 		redir->filename = expansion(redir->filename, dir, env_vars);
 		if (redir->type != REDIRECT_HEREDOC)
 		{
+			/* fileのpermission確認 */
 			redir->fd_file = open_redir_file(redir);
 			if (redir->fd_file == -1)
 				exit(EXIT_FAILURE);
