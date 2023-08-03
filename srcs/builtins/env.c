@@ -6,11 +6,17 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:57:29 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/31 13:28:25 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/02 13:28:17 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
+
+static int	put_line_return(void)
+{
+	printf("\n");
+	return (SUCCESS);
+}
 
 int	ft_env(t_env_var *head)
 {
@@ -18,6 +24,8 @@ int	ft_env(t_env_var *head)
 	int			i;
 
 	current = head;
+	if (!current)
+		return (put_line_return());
 	while (current)
 	{
 		printf("%s=", current->key);

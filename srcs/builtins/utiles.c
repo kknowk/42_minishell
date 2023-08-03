@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 13:33:45 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/24 17:35:48 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/02 14:48:45 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	error_str(char *str)
 	write(STDERR_FILENO, str, ft_strlen(str));
 	write(STDERR_FILENO, ": command not found", 19);
 	write(STDERR_FILENO, "\n", 1);
-	return (FAILURE);
+	return (127);
 }
 
 size_t	ft_strcspn(const char *s1r, const char *s2r)

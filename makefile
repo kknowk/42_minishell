@@ -18,6 +18,7 @@ SRCSDIR = ./srcs
 OBJSDIR = ./objs
 SRCS	=	$(SRCSDIR)/builtins/cd.c \
 			$(SRCSDIR)/builtins/create_env_vars.c \
+			$(SRCSDIR)/builtins/create_env_vars_helper.c \
 			$(SRCSDIR)/builtins/echo.c \
 			$(SRCSDIR)/builtins/env.c \
 			$(SRCSDIR)/builtins/exit.c \
@@ -29,6 +30,7 @@ SRCS	=	$(SRCSDIR)/builtins/cd.c \
 			$(SRCSDIR)/builtins/utiles.c \
 			$(SRCSDIR)/builtins/utiles2.c \
 			$(SRCSDIR)/builtins/utility_comand.c \
+			$(SRCSDIR)/builtins/utility_comand_helper.c \
 			$(SRCSDIR)/exec/builtins.c \
 			$(SRCSDIR)/exec/execution.c \
 			$(SRCSDIR)/exec/execute_command.c \
