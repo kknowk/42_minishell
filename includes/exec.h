@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 16:18:14 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/01 19:08:38 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/03 18:16:46 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	exec_redir(t_redirects *redir, t_directory *dir, t_env_var **env_vars);
 
 void	exec_pipe(t_node *node, t_directory *dir, t_env_var **env_vars);
 
-void	select_builtin(char **cmds, t_directory *dir, t_env_var **env_vars);
+bool	is_builtins(char *command);
+void	exec_builtin(char **cmds, t_directory *dir, t_env_var **env_vars);
 int		judgement_desuno(char **cmds, t_directory *dir, t_env_var **env_vars);
 
 void	exec_from_bin(char **cmds, t_directory *dir, t_env_var **env_vars);

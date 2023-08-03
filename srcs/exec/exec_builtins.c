@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.c                                         :+:      :+:    :+:   */
+/*   exec_builtins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:26:36 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/03 17:59:54 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/03 18:15:30 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,36 @@ static int	*init_flags(char **cmds)
 	return (flags);
 }
 
-void	select_builtin(char **cmds, t_directory *dir, t_env_var **env_vars)
+bool	is_builtins(char *command)
+{
+	char	**commands;
+	int		i;
+
+	commands = ft_split("echo cd pwd export unset env exit", ' ');
+	i = 0;
+	while (commands[i])
+	{
+		if (ft_strlen(command) != ft_strlen(commands[i]))
+		{
+			ft_free(commands[i]);
+			i++;
+			continue ;
+		}
+		if (ft_strcmp(command, commands[i]) == 0)
+		{
+			while (commands[i])
+				ft_free(commands[i++]);
+			ft_free(commands);
+			return (true);
+		}
+		ft_free(commands[i]);
+		i++;
+	}
+	ft_free(commands);
+	return (false);
+}
+
+void	exec_builtin(char **cmds, t_directory *dir, t_env_var **env_vars)
 {
 	int	*flags;
 
