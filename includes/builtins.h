@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:54:35 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/02 13:12:22 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/02 15:09:43 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ t_env_var	*create_env_vars(char *envp[], char *path);
 void		set_initial_env_vars(t_env_var **head, char *path);
 
 int			execute_command(char *command, char **cmds, t_env_var **env_vars);
+int			execute_command_from_path(char *command_path, char **cmds);
 void		ft_exit(void);
 void		numeric_error_exit(void);
 
