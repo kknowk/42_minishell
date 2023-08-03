@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 15:39:48 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/01 19:07:45 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/03 22:43:19 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	judgement_desuno(char **cmds, t_directory *dir, t_env_var **env_vars)
 	{
 		cmds[j] = expansion(cmds[j], dir, env_vars);
 		if (!cmds[j])
-			exit(1);
+			exit(EXIT_FAILURE);
 		j++;
 	}
 	if (!cmds)

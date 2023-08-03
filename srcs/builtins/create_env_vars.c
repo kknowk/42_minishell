@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_env_vars.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 17:30:19 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/02 13:09:39 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/03 22:42:47 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ static t_env_var	*init_new_var(char *key, char *value, bool is_shell_var)
 	if (!new_var)
 	{
 		perror("Memory allocation failed");
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	new_var->values = ft_split(value, ':');
 	if (!new_var->values)
-		exit(1);
+		exit(EXIT_FAILURE);
 	new_var->num_values = 0;
 	p = new_var->values;
 	while (*p)

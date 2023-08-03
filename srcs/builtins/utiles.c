@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utiles.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 13:33:45 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/02 14:48:45 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/03 22:43:07 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	error_failure(char *str, char **str1)
 void	error_put(char *str)
 {
 	perror(str);
-	exit(1);
+	exit(EXIT_FAILURE);
 }
 
 int	error_str(char *str)

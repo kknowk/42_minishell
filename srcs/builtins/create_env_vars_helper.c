@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_env_vars_helper.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 13:08:59 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/02 13:11:45 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/03 22:42:37 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ static void	add_env_var(t_env_var **head, char *key,
 
 	new_var = (t_env_var *)malloc(sizeof(t_env_var));
 	if (!new_var)
-		exit(1);
+		exit(EXIT_FAILURE);
 	new_var->key = ft_strdup(key);
 	new_var->values = (char **)malloc(2 * sizeof(char *));
 	if (!new_var->key || !new_var->values)
-		exit(1);
+		exit(EXIT_FAILURE);
 	new_var->values[0] = ft_strdup(value);
 	if (!new_var->values[0])
-		exit(1);
+		exit(EXIT_FAILURE);
 	new_var->values[1] = NULL;
 	new_var->num_values = 1;
 	new_var->is_shell_var = is_shell_var;
