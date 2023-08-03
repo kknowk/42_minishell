@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:41:09 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/03 22:37:04 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/03 22:54:33 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static int	store_data(t_node *node, t_token **token)
 		{
 			if (set_redirect(node, token) == FAILURE)
 			{
-				printf("syntax error: near unexpected token `newline'\n");
+				printf(NO_FILENAME);
 				return (FAILURE);
 			}
 			continue ;

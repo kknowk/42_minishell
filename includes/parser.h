@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:04:13 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/03 22:31:44 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/03 22:54:21 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define PARSER_H
 
 # include "minishell.h"
+
+# define NO_FILENAME "minishell: syntax error near unexpected token `newline'\n"
 
 typedef enum e_nodetype
 {
