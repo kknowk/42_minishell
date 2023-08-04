@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 16:06:37 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/01 14:57:45 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/03 22:33:59 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,14 @@ static t_redirect_type	judge_redir_type(t_token **token)
 		return (REDIRECT_HEREDOC);
 }
 
-void	set_redirect(t_node *node, t_token **token)
+int	set_redirect(t_node *node, t_token **token)
 {
+	t_redirects	*redir;
 	t_redirects	*new;
 
-	new = create_redirect();
 	if ((*token)->next == NULL)
-	{
-		printf("syntax error: near unexpected token `newline'\n");
-		exit(EXIT_FAILURE);
-	}
+		return (FAILURE);
+	new = create_redirect();
 	new->type = judge_redir_type(token);
 	new->filename = ft_strdup((*token)->next->data);
 	if ((*token)->type == CHAR_LESSER)
@@ -63,11 +61,13 @@ void	set_redirect(t_node *node, t_token **token)
 		node->redirects = new;
 	else
 	{
-		while (node->redirects->next != NULL)
-			node->redirects = node->redirects->next;
-		node->redirects->next = new;
+		redir = node->redirects;
+		while (redir->next != NULL)
+			redir = redir->next;
+		redir->next = new;
 	}
-	(*token) = (*token)->next;
+	(*token) = (*token)->next->next;
+	return (SUCCESS);
 }
 
 void	destroy_redirects(t_redirects *redirects)

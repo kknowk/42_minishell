@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_command.c                                  :+:      :+:    :+:   */
+/*   exec_from_bin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:41:58 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/01 18:58:17 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/03 22:43:22 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	support_fork(char **cmds)
 	{
 		execve(cmds[0], cmds, NULL);
 		perror("execve failed");
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	else
 	{
@@ -37,7 +37,7 @@ void	exec_from_bin(char **cmds, t_directory *dir, t_env_var **env_vars)
 	{
 		if (S_ISDIR(s.st_mode))
 		{
-			error_printf("minishell: is a directory\n", cmds[0]);
+			error_printf("minishell: is a directory", cmds[0]);
 			dir->error.error_num = 126;
 			return ;
 		}

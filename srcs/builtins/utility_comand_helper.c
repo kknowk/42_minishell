@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utility_comand_helper.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 15:07:29 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/02 17:21:01 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/03 22:43:10 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	execute_in_child_process(char *command_path, char **cmds)
 {
 	execve(command_path, cmds, NULL);
 	perror("execve failed");
-	exit(1);
+	exit(EXIT_FAILURE);
 }
 
 static int	handle_child_execution(char *command_path, char **cmds)

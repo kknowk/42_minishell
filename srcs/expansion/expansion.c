@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 15:13:18 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/31 14:55:16 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/03 22:47:34 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	temp_result(t_expand *exp, char **result)
 	ft_free(exp->temp);
 	if (!result)
 	{
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 }
 
@@ -79,13 +79,13 @@ static void	handle_no_dollar_sign(t_expand *exp, char **result)
 
 	buffer = (char *)malloc(2 * sizeof(char));
 	if (!buffer)
-		exit(1);
+		exit(EXIT_FAILURE);
 	buffer[0] = *exp->start;
 	buffer[1] = '\0';
 	exp->temp = *result;
 	*result = ft_strjoin(*result, buffer);
 	if (!result)
-		exit(1);
+		exit(EXIT_FAILURE);
 	ft_free(exp->temp);
 	ft_free(buffer);
 	exp->start++;
@@ -99,7 +99,7 @@ char	*expand_and_replace(char *input, t_env_var **head)
 
 	result = (char *)malloc(MAX_BUFFER_SIZE * sizeof(char));
 	if (!result)
-		exit(1);
+		exit(EXIT_FAILURE);
 	result[0] = '\0';
 	exp.start = input;
 	while (*exp.start != '\0')

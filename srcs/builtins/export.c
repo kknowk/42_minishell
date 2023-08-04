@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:47:53 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/01 17:01:11 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/03 22:43:03 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static t_env_var	*create_new_env_var(char *key, char *value)
 
 	new_var = malloc(sizeof(t_env_var));
 	if (!new_var)
-		exit(1);
+		exit(EXIT_FAILURE);
 	new_var->key = key;
 	new_var->values = ft_split(value, ':');
 	new_var->num_values = ft_count_values(new_var->values);
@@ -82,7 +82,7 @@ static int	add_env_var_to_list(t_env_var **head, char *env_str)
 
 	split_result = ft_split_first(env_str, '=');
 	if (!split_result)
-		exit(1);
+		exit(EXIT_FAILURE);
 	key = split_result[0];
 	value = split_result[1];
 	existing_node = find_node(head, key);

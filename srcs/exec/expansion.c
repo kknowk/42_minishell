@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 15:39:48 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/01 16:59:53 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/03 22:43:19 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static char	*expansion(char *str, t_directory *dir, t_env_var **env_vars);
 
 int	judgement_desuno(char **cmds, t_directory *dir, t_env_var **env_vars)
 {
@@ -25,7 +23,7 @@ int	judgement_desuno(char **cmds, t_directory *dir, t_env_var **env_vars)
 	{
 		cmds[j] = expansion(cmds[j], dir, env_vars);
 		if (!cmds[j])
-			exit(1);
+			exit(EXIT_FAILURE);
 		j++;
 	}
 	if (!cmds)
@@ -35,17 +33,7 @@ int	judgement_desuno(char **cmds, t_directory *dir, t_env_var **env_vars)
 	return (0);
 }
 
-void	expand_filename(t_redirects *redir,
-			t_directory *dir, t_env_var **env_vars)
-{
-	while (redir != NULL)
-	{
-		redir->filename = expansion(redir->filename, dir, env_vars);
-		redir = redir->next;
-	}
-}
-
-static char	*expansion(char *str, t_directory *dir, t_env_var **env_vars)
+char	*expansion(char *str, t_directory *dir, t_env_var **env_vars)
 {
 	if (is_quoted(str))
 		str = quote_handle(str, dir, env_vars);

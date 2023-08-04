@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 17:58:34 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/02 18:02:43 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/03 22:46:44 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ static void	close_wait(int pipefd[2], pid_t pid1, pid_t pid2, t_directory *dir)
 	int	status1;
 	int	status2;
 
-	ft_close(pipefd[0]);
-	ft_close(pipefd[1]);
+	ft_close(pipefd[PIPE_READ]);
+	ft_close(pipefd[PIPE_WRITE]);
 	ft_waitpid(pid1, &status1, 0);
 	ft_waitpid(pid2, &status2, 0);
 	if (WIFEXITED(status1))
@@ -34,9 +34,9 @@ static void	close_wait(int pipefd[2], pid_t pid1, pid_t pid2, t_directory *dir)
 static void	p1(t_node *node, t_directory *dir,
 		t_env_var **env_vars, int pipefd[2])
 {
-	ft_close(pipefd[0]);
-	ft_dup2(pipefd[1], STDOUT_FILENO);
-	ft_close(pipefd[1]);
+	ft_close(pipefd[PIPE_READ]);
+	ft_dup2(pipefd[PIPE_WRITE], STDOUT_FILENO);
+	ft_close(pipefd[PIPE_WRITE]);
 	if (node->left != NULL)
 		execution(node->left, dir, env_vars);
 	exit(dir->error.error_num);
@@ -45,9 +45,9 @@ static void	p1(t_node *node, t_directory *dir,
 static void	p2(t_node *node, t_directory *dir,
 		t_env_var **env_vars, int pipefd[2])
 {
-	ft_close(pipefd[1]);
-	ft_dup2(pipefd[0], STDIN_FILENO);
-	ft_close(pipefd[0]);
+	ft_close(pipefd[PIPE_WRITE]);
+	ft_dup2(pipefd[PIPE_READ], STDIN_FILENO);
+	ft_close(pipefd[PIPE_READ]);
 	if (node->right != NULL)
 		execution(node->right, dir, env_vars);
 	exit(dir->error.error_num);

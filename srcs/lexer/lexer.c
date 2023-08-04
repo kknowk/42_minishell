@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:17:39 by minabe            #+#    #+#             */
-/*   Updated: 2023/07/30 19:38:49 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/03 22:53:04 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static void	tokenize(t_lexer *lex, char *str, int *error)
 	}
 	if (lex->is_quoted == true)
 	{
-		lexer_error(lex, "minishell: syntax error: unexpected EOF", error);
+		lexer_error(lex, "minishell: syntax error unexpected EOF", error);
 		return ;
 	}
 	tokenlistadd_back(lex->token, ft_substr(str, start, lex->word_len));

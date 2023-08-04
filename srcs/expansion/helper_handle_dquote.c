@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper_handle_dquote.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 19:29:29 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/27 17:09:26 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/03 22:43:37 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ void	process_dollar(t_parse_context *ctx)
 	var_length = get_var_length(ctx->str + ctx->i);
 	substring = ft_strndup(ctx->str + ctx->i, var_length);
 	if (!substring)
-		exit(1);
+		exit(EXIT_FAILURE);
 	expanded = dollar_handle(substring, ctx->dir, ctx->env_vars);
 	if (!expanded)
-		exit(1);
+		exit(EXIT_FAILURE);
 	expanded_length = ft_strlen(expanded);
 	if (expanded_length < MAX_BUFFER_SIZE - ctx->j)
 	{
