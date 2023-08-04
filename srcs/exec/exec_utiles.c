@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 14:06:54 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/04 14:14:31 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/04 21:59:21 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	check_file_permission(char *path)
 		write(STDERR_FILENO, ": ", 2);
 		write(STDERR_FILENO, path, ft_strlen(path));
 		write(STDERR_FILENO, "\n", 1);
-		return (FAILURE);
+		return (127);
 	}
 	if ((statbuf.st_mode & S_IRUSR) == 0)
 	{
@@ -30,7 +30,28 @@ int	check_file_permission(char *path)
 		write(STDERR_FILENO, ": ", 2);
 		write(STDERR_FILENO, path, ft_strlen(path));
 		write(STDERR_FILENO, "\n", 1);
+		return (126);
+	}
+	return (SUCCESS);
+}
+
+int	check_fd_or_dir(char *path)
+{
+	int	fd;
+
+	fd = open(path, O_RDONLY);
+	if (fd == -1)
+		exit(EXIT_FAILURE);
+	if (fd > 0)
+	{
+		write(STDERR_FILENO, "minishell: command not found", 28);
+		write(STDERR_FILENO, path, ft_strlen(path));
+		write(STDERR_FILENO, ": ", 2);
+		write(STDERR_FILENO, "\n", 1);
+		ft_close(fd);
+		printf("aaa\n");
 		return (FAILURE);
 	}
+	ft_close(fd);
 	return (SUCCESS);
 }

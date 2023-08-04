@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utility_comand.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 17:10:32 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/03 16:36:10 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/04 20:47:51 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	error_printf(const char *msg, const char *path)
 {
-	write(STDERR_FILENO, msg, strlen(msg));
+	write(STDERR_FILENO, msg, ft_strlen(msg));
 	write(STDERR_FILENO, ": ", 2);
-	write(STDERR_FILENO, path, strlen(path));
+	write(STDERR_FILENO, path, ft_strlen(path));
 	write(STDERR_FILENO, "\n", 1);
 }
 
