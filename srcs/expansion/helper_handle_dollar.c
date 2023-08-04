@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper_handle_dollar.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 16:07:28 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/03 13:20:12 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/04 13:19:44 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ static char	*cpy_itoa(char *tmp, char *str, t_directory *dir)
 
 	num = ft_itoa(dir->error.error_num);
 	if (!num)
-		return (NULL);
+		exit(1);
 	result = malloc(ft_strlen(str) + ft_strlen(num) - 1);
 	if (!result)
 	{
 		ft_free(num);
-		return (NULL);
+		exit(1);
 	}
 	ft_memcpy(result, str, tmp - str);
 	result[tmp - str] = '\0';
@@ -41,12 +41,12 @@ static char	*cpy_itoa_dd(char *tmp, char *str)
 
 	num = ft_itoa(20870);
 	if (!num)
-		return (NULL);
+		exit(1);
 	result = malloc(ft_strlen(str) + ft_strlen(num) - 1);
 	if (!result)
 	{
 		ft_free(num);
-		return (NULL);
+		exit(1);
 	}
 	ft_memcpy(result, str, tmp - str);
 	result[tmp - str] = '\0';
@@ -65,7 +65,6 @@ char	*handle_question_mark(char *str, char *tmp, t_directory *dir)
 	{
 		ft_free(str);
 		str = processed;
-		tmp = ft_strchr(str, '$');
 	}
 	else
 		ft_free(str);
@@ -81,7 +80,6 @@ char	*handle_dollar_sign(char *str, char *tmp)
 	{
 		ft_free(str);
 		str = processed;
-		tmp = ft_strchr(str, '$');
 	}
 	else
 		ft_free(str);
@@ -92,15 +90,14 @@ char	*handle_default(char *str, char *tmp, t_env_var **head)
 {
 	char	*processed;
 
+	(void)tmp;
 	processed = expand_and_replace(str, head);
 	if (processed)
 	{
 		ft_free(str);
 		str = processed;
-		tmp = ft_strchr(str, '$'); // tmp使ってる？？
 	}
 	else
 		ft_free(str);
-	(void)tmp;
 	return (str);
 }

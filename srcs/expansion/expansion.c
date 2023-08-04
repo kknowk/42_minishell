@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 15:13:18 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/03 22:47:34 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/04 13:59:45 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,6 @@ static void	handle_values(t_expand *exp, char **values, char **result)
 			i++;
 		}
 	}
-	else
-	{
-		*result[ft_strlen(*result)] = '\0';
-	}
 }
 
 static void	handle_dollar_sign_1(t_expand *exp, char *varname,
@@ -52,6 +48,7 @@ static void	handle_dollar_sign_1(t_expand *exp, char *varname,
 {
 	char	**values;
 
+	exp->flag = 1;
 	if (*(exp->start + 1) == '{')
 	{
 		exp->end = ft_strstr(exp->start, "}");
@@ -97,7 +94,8 @@ char	*expand_and_replace(char *input, t_env_var **head)
 	char		*result;
 	t_expand	exp;
 
-	result = (char *)malloc(MAX_BUFFER_SIZE * sizeof(char));
+	exp.flag = 0;
+	result = (char *)ft_calloc(MAX_BUFFER_SIZE, sizeof(char));
 	if (!result)
 		exit(EXIT_FAILURE);
 	result[0] = '\0';
@@ -106,12 +104,15 @@ char	*expand_and_replace(char *input, t_env_var **head)
 	{
 		if (*exp.start == '$')
 		{
+			if (exp.flag == 1)
+			{
+				ft_strlcat(result, exp.start, MAX_BUFFER_SIZE);
+				break ;
+			}
 			handle_dollar_sign_1(&exp, varname, &result, head);
 		}
 		else
-		{
 			handle_no_dollar_sign(&exp, &result);
-		}
 	}
 	return (result);
 }

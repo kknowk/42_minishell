@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_from_bin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:41:58 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/03 22:43:22 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/04 14:19:05 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,6 @@ void	exec_from_bin(char **cmds, t_directory *dir, t_env_var **env_vars)
 		}
 	}
 	else
-		dir->error.error_num = execute_command(cmds[0], cmds, env_vars) * 127;
+		dir->error.error_num = execute_command(cmds[0], cmds, env_vars);
 	return ;
 }
