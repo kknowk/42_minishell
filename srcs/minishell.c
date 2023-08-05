@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/02 13:07:22 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/04 17:09:52 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@ static t_env_var	*init_minishell(char *envp[], t_directory *dir)
 
 	setup_signals();
 	if (getcwd(dir->path, sizeof(dir->path)) == NULL)
-		exit(1);
+		exit(EXIT_FAILURE);
 	env_vars = create_env_vars(envp, dir->path);
 	dir->error.error_num = 0;
+	dir->error.flag = 0;
 	return (env_vars);
 }
 

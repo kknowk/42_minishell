@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_quotation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 15:09:39 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/28 12:54:04 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/03 22:43:30 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*quote_handle(char *str, t_directory *dir, t_env_var **env_vars)
 
 	ctx = init_parse_context(str, dir, env_vars);
 	if (!ctx.result)
-		exit(1);
+		exit(EXIT_FAILURE);
 	state = STATE_NORMAL;
 	while (ctx.str[ctx.i] != '\0')
 	{

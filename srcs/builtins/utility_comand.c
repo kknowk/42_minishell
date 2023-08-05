@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utility_comand.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 17:10:32 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/01 19:20:42 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/04 20:47:51 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	error_printf(const char *msg, const char *path)
 {
-	write(STDERR_FILENO, msg, strlen(msg));
+	write(STDERR_FILENO, msg, ft_strlen(msg));
 	write(STDERR_FILENO, ": ", 2);
-	write(STDERR_FILENO, path, strlen(path));
+	write(STDERR_FILENO, path, ft_strlen(path));
 	write(STDERR_FILENO, "\n", 1);
 }
 
@@ -37,40 +37,13 @@ static char	*ft_strtok(char *str, const char *delim)
 	return (token);
 }
 
-static void	execute_command_from_path(char *command_path, char **cmds)
-{
-	struct stat	s;
-
-	if (stat(command_path, &s) == 0)
-	{
-		if (S_ISDIR(s.st_mode))
-		{
-			error_printf("minishell: is a directory", command_path);
-			return ;
-		}
-		else if (access(command_path, X_OK) == 0)
-		{
-			if (ft_fork() == 0)
-			{
-				execve(command_path, cmds, NULL);
-				perror("execve failed");
-				exit(1);
-			}
-			else
-			{
-				wait(NULL);
-				return ;
-			}
-		}
-	}
-}
-
 static int	helper_execute(char *args[PATH_MAX],
 				char **cmds, t_env_var **env_vars)
 {
 	char	command_path[PATH_MAX];
 	char	**path_dirs;
 	int		i;
+	int		exec_status;
 
 	path_dirs = search(env_vars, "PATH");
 	if (path_dirs == NULL)
@@ -82,7 +55,9 @@ static int	helper_execute(char *args[PATH_MAX],
 	while (path_dirs[i])
 	{
 		ms_cpca(command_path, path_dirs[i], "/", args[0]);
-		execute_command_from_path(command_path, cmds);
+		exec_status = execute_command_from_path(command_path, cmds);
+		if (exec_status != SUCCESS)
+			return (exec_status);
 		if (access(command_path, X_OK) == 0)
 		{
 			return (SUCCESS);

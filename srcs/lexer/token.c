@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 15:23:15 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/01 20:20:26 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/05 11:13:10 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,20 +51,16 @@ t_token	*tokenlistadd_back(t_token *token, char *data)
 	t_token	*new;
 	t_token	*head;
 
-	if (token == NULL)
-	{
-		token = token_new(data);
-		return (token);
-	}
 	if (*data == '\0')
 		return (token);
 	if (token->data == NULL)
 	{
 		token->data = data;
+		token->type = judge_tokentype(data);
 		return (token);
 	}
 	head = token;
-	new = token_new(data); // >file という入力があった場合、NULLになっている問題を解消したい
+	new = token_new(data);
 	while (token->next != NULL)
 		token = token->next;
 	token->next = new;

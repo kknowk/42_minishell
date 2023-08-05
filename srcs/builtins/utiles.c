@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 13:33:45 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/24 17:35:48 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/04 22:01:54 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,25 @@ int	error_failure(char *str, char **str1)
 void	error_put(char *str)
 {
 	perror(str);
-	exit(1);
+	exit(EXIT_FAILURE);
 }
 
 int	error_str(char *str)
 {
+	if (ft_strchr(str, '/'))
+	{
+		write(STDERR_FILENO, "minishell: No such file or directory", 36);
+		write(STDERR_FILENO, ": ", 2);
+		write(STDERR_FILENO, str, ft_strlen(str));
+		write(STDERR_FILENO, "\n", 1);
+		return (127);
+	}
 	write(STDERR_FILENO, "minishell", 9);
 	write(STDERR_FILENO, ": ", 2);
 	write(STDERR_FILENO, str, ft_strlen(str));
 	write(STDERR_FILENO, ": command not found", 19);
 	write(STDERR_FILENO, "\n", 1);
-	return (FAILURE);
+	return (127);
 }
 
 size_t	ft_strcspn(const char *s1r, const char *s2r)

@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:39:22 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/27 17:03:51 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/04 17:09:28 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 typedef struct s_error
 {
 	int	error_num;
+	int	flag;
 }	t_error;
 
 typedef struct s_directory

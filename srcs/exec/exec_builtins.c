@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.c                                         :+:      :+:    :+:   */
+/*   exec_builtins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:26:36 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/01 16:54:21 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/03 22:43:15 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	handle_export(char **cmds, t_env_var **env_vars, int *falgs)
 		return (declare(*env_vars));
 	status = ft_export(env_vars, cmds, falgs);
 	if (status == EXIT_ERROR)
-		exit(1);
+		exit(EXIT_FAILURE);
 	return (status);
 }
 
@@ -62,7 +62,7 @@ static int	*init_flags(char **cmds)
 		i++;
 	flags = ft_calloc(i, sizeof(int));
 	if (!flags)
-		exit(1);
+		exit(EXIT_FAILURE);
 	k = 0;
 	while (cmds[k])
 	{
@@ -73,7 +73,36 @@ static int	*init_flags(char **cmds)
 	return (flags);
 }
 
-void	select_builtin(char **cmds, t_directory *dir, t_env_var **env_vars)
+bool	is_builtins(char *command)
+{
+	char	**commands;
+	int		i;
+
+	commands = ft_split("echo cd pwd export unset env exit", ' ');
+	i = 0;
+	while (commands[i])
+	{
+		if (ft_strlen(command) != ft_strlen(commands[i]))
+		{
+			ft_free(commands[i]);
+			i++;
+			continue ;
+		}
+		if (ft_strcmp(command, commands[i]) == 0)
+		{
+			while (commands[i])
+				ft_free(commands[i++]);
+			ft_free(commands);
+			return (true);
+		}
+		ft_free(commands[i]);
+		i++;
+	}
+	ft_free(commands);
+	return (false);
+}
+
+void	exec_builtin(char **cmds, t_directory *dir, t_env_var **env_vars)
 {
 	int	*flags;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:36:17 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/01 18:41:46 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/04 22:05:03 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	open_redir_file(t_redirects *redir)
 	if (redir->type == REDIRECT_INPUT)
 		return (open(redir->filename, O_RDONLY, 0));
 	if (redir->type == REDIRECT_OUTPUT)
-		return (open(redir->filename, O_WRONLY | O_CREAT | O_TRUNC, FILE_MODE)); 
+		return (open(redir->filename, O_WRONLY | O_CREAT | O_TRUNC, FILE_MODE));
 	return (open(redir->filename, O_WRONLY | O_CREAT | O_APPEND, FILE_MODE));
 }
 
@@ -77,7 +77,14 @@ void	exec_redir(t_redirects *redir, t_directory *dir, t_env_var **env_vars)
 		{
 			redir->fd_file = open_redir_file(redir);
 			if (redir->fd_file == -1)
-				exit(EXIT_FAILURE);
+			{
+				// ft_free(redir->filename);
+				// dir->error.error_num = check_file_permission(redir->filename);
+				// dir->error.flag = 1;
+				// return ;
+				exit(1);
+			}
+			ft_free(redir->filename);
 		}
 		do_redirect(redir);
 		redir = redir->next;

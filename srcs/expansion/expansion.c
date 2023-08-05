@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 15:13:18 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/31 14:55:16 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/04 13:59:45 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	temp_result(t_expand *exp, char **result)
 	ft_free(exp->temp);
 	if (!result)
 	{
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 }
 
@@ -41,10 +41,6 @@ static void	handle_values(t_expand *exp, char **values, char **result)
 			i++;
 		}
 	}
-	else
-	{
-		*result[ft_strlen(*result)] = '\0';
-	}
 }
 
 static void	handle_dollar_sign_1(t_expand *exp, char *varname,
@@ -52,6 +48,7 @@ static void	handle_dollar_sign_1(t_expand *exp, char *varname,
 {
 	char	**values;
 
+	exp->flag = 1;
 	if (*(exp->start + 1) == '{')
 	{
 		exp->end = ft_strstr(exp->start, "}");
@@ -79,13 +76,13 @@ static void	handle_no_dollar_sign(t_expand *exp, char **result)
 
 	buffer = (char *)malloc(2 * sizeof(char));
 	if (!buffer)
-		exit(1);
+		exit(EXIT_FAILURE);
 	buffer[0] = *exp->start;
 	buffer[1] = '\0';
 	exp->temp = *result;
 	*result = ft_strjoin(*result, buffer);
 	if (!result)
-		exit(1);
+		exit(EXIT_FAILURE);
 	ft_free(exp->temp);
 	ft_free(buffer);
 	exp->start++;
@@ -97,21 +94,25 @@ char	*expand_and_replace(char *input, t_env_var **head)
 	char		*result;
 	t_expand	exp;
 
-	result = (char *)malloc(MAX_BUFFER_SIZE * sizeof(char));
+	exp.flag = 0;
+	result = (char *)ft_calloc(MAX_BUFFER_SIZE, sizeof(char));
 	if (!result)
-		exit(1);
+		exit(EXIT_FAILURE);
 	result[0] = '\0';
 	exp.start = input;
 	while (*exp.start != '\0')
 	{
 		if (*exp.start == '$')
 		{
+			if (exp.flag == 1)
+			{
+				ft_strlcat(result, exp.start, MAX_BUFFER_SIZE);
+				break ;
+			}
 			handle_dollar_sign_1(&exp, varname, &result, head);
 		}
 		else
-		{
 			handle_no_dollar_sign(&exp, &result);
-		}
 	}
 	return (result);
 }

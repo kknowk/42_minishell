@@ -3,33 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 15:39:48 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/01 19:07:45 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/04 17:32:49 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	judgement_desuno(char **cmds, t_directory *dir, t_env_var **env_vars)
+void	remove_empty_entries(char **cmds, t_directory *dir,
+			t_env_var **env_vars)
 {
+	int	i;
 	int	j;
 
-	if (cmds[0] == NULL)
-		return (1);
+	i = 0;
 	j = 0;
-	while (cmds[j])
+	while (cmds[i])
 	{
-		cmds[j] = expansion(cmds[j], dir, env_vars);
-		if (!cmds[j])
-			exit(1);
-		j++;
+		cmds[i] = expansion(cmds[i], dir, env_vars);
+		if (cmds[i] && cmds[i][0] != '\0')
+		{
+			cmds[j++] = cmds[i];
+		}
+		i++;
 	}
-	if (!cmds)
+	cmds[j] = NULL;
+}
+
+int	judgement_desuno(char **cmds, t_directory *dir, t_env_var **env_vars)
+{
+	remove_empty_entries(cmds, dir, env_vars);
+	if (!cmds || cmds[0] == NULL || cmds[0][0] == '\0')
+	{
 		return (1);
-	if (cmds[0][0] == '\0')
-		return (1);
+	}
 	return (0);
 }
 
