@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper_handle_dollar.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 16:07:28 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/04 13:19:44 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/05 12:33:11 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ static char	*cpy_itoa(char *tmp, char *str, t_directory *dir)
 
 	num = ft_itoa(dir->error.error_num);
 	if (!num)
-		exit(1);
+		exit(EXIT_FAILURE);
 	result = malloc(ft_strlen(str) + ft_strlen(num) - 1);
 	if (!result)
 	{
 		ft_free(num);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	ft_memcpy(result, str, tmp - str);
 	result[tmp - str] = '\0';
@@ -41,12 +41,12 @@ static char	*cpy_itoa_dd(char *tmp, char *str)
 
 	num = ft_itoa(20870);
 	if (!num)
-		exit(1);
+		exit(EXIT_FAILURE);
 	result = malloc(ft_strlen(str) + ft_strlen(num) - 1);
 	if (!result)
 	{
 		ft_free(num);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	ft_memcpy(result, str, tmp - str);
 	result[tmp - str] = '\0';
@@ -86,11 +86,10 @@ char	*handle_dollar_sign(char *str, char *tmp)
 	return (str);
 }
 
-char	*handle_default(char *str, char *tmp, t_env_var **head)
+char	*handle_default(char *str, t_env_var **head)
 {
 	char	*processed;
 
-	(void)tmp;
 	processed = expand_and_replace(str, head);
 	if (processed)
 	{

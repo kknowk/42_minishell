@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 15:13:18 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/04 13:59:45 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/05 12:28:35 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,13 +116,3 @@ char	*expand_and_replace(char *input, t_env_var **head)
 	}
 	return (result);
 }
-
-// int	main(int ac, char *av[])
-// {
-// 	(void)ac;
-// 	if (has_error(av[1]))
-// 		printf("Error!\n");
-// 	else
-// 		expand_and_print(av[1]);
-// 	return (0);
-// }

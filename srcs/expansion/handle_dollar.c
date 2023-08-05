@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_dollar.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 16:51:32 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/04 14:03:20 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/05 12:33:04 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*dollar_handle(char *str, t_directory *dir, t_env_var **head)
 			str = handle_dollar_sign(str, tmp);
 		else
 		{
-			str = handle_default(str, tmp, head);
+			str = handle_default(str, head);
 		}
 		if (!str)
 			break ;
@@ -55,46 +55,3 @@ char	*dollar_handle(char *str, t_directory *dir, t_env_var **head)
 	}
 	return (str);
 }
-
-// char *dollar_handle(char *str, t_directory *dir, t_env_var **head)
-// {
-//     char *start, *end;
-//     char *result = NULL;
-//     char *substring = NULL;
-//     int len;
-
-//     start = str;
-//     while (start)
-//     {
-//         end = ft_strchr(start + 1, '$');
-//         // If two '$'s are consecutive, consider them as one unit.
-//         if (end && *(end - 1) == '$')
-//         {
-//             end++;
-//         }
-
-//         len = end ? end - start : ft_strlen(start);
-//         substring = ft_substr(start, 0, len);
-
-//         if (substring[0] == '$')
-//         {
-//             if (substring[1] == '?')
-//             {
-//                 substring = handle_question_mark(substring, substring, dir);
-//             }
-//             else if (substring[1] == '$')
-//             {
-//                 substring = handle_dollar_sign(substring, substring);
-//             }
-//             else
-//             {
-//                 substring = handle_default(substring, substring, head);
-//             }
-//         }
-
-//         result = ft_strjoin(result, substring);
-//         start = end;
-//     }
-
-//     return result;
-// }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirect.c                                         :+:      :+:    :+:   */
+/*   parse_redirect.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 16:06:37 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/03 22:33:59 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/05 12:06:21 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ void	destroy_redirects(t_redirects *redirects)
 	while (redirects != NULL)
 	{
 		tmp = redirects->next;
+		if (redirects->filename != NULL)
+			ft_free(redirects->filename);
 		ft_free(redirects);
 		redirects = tmp;
 	}
