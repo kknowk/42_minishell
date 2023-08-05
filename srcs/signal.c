@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 11:15:47 by khorike           #+#    #+#             */
-/*   Updated: 2023/07/31 18:53:39 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/05 16:04:25 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,27 +22,22 @@ void	handle_signal(int signal)
 		write(STDOUT_FILENO, "\n", 1);
 		rl_replace_line("", 0);
 		rl_redisplay();
-		g_interrupted = 1;
 	}
 	else if (signal == SIGQUIT)
 		;
+	g_interrupted = 1;
 }
 
 void	setup_signals(void)
 {
-	struct sigaction	sa;
-	struct sigaction	ss;
-
-	sa.sa_handler = handle_signal;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	ss.sa_handler = SIG_IGN;
-	sigemptyset(&ss.sa_mask);
-	ss.sa_flags = 0;
-	if (sigaction(SIGINT, &sa, NULL) == -1)
+	if (signal(SIGINT, handle_signal) == SIG_ERR)
+	{
 		exit(EXIT_FAILURE);
-	if (sigaction(SIGQUIT, &ss, NULL) == -1)
+	}
+	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
+	{
 		exit(EXIT_FAILURE);
+	}
 }
 
 static void	execute_and_reset_error(t_node *node, t_directory *dir,
@@ -60,7 +55,7 @@ static void	execute_and_reset_error(t_node *node, t_directory *dir,
 }
 
 void	handle_interruption(t_node *node, t_directory *dir,
-			t_env_var *env_vars, int *error)
+			t_env_var **env_vars, int *error)
 {
 	if (g_interrupted == 1)
 	{
@@ -68,5 +63,5 @@ void	handle_interruption(t_node *node, t_directory *dir,
 		dir->error.error_num = g_interrupted;
 		g_interrupted = 0;
 	}
-	execute_and_reset_error(node, dir, &env_vars, error);
+	execute_and_reset_error(node, dir, env_vars, error);
 }

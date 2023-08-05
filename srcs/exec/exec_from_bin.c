@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   exec_from_bin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:41:58 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/05 12:18:50 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/05 16:03:06 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	support_fork(char **cmds)
+static void	support_fork(char **cmds, t_directory *dir)
 {
+	int	status2;
+
 	if (ft_fork() == 0)
 	{
 		execve(cmds[0], cmds, NULL);
@@ -22,7 +24,11 @@ static void	support_fork(char **cmds)
 	}
 	else
 	{
-		wait(NULL);
+		wait(&status2);
+		if (WIFEXITED(status2))
+		{
+			dir->error.error_num = WEXITSTATUS(status2);
+		}
 		return ;
 	}
 }
@@ -51,7 +57,7 @@ void	exec_from_bin(char **cmds, t_directory *dir, t_env_var **env_vars)
 			return ;
 		}
 		else if (access(cmds[0], X_OK) == 0)
-			support_fork(cmds);
+			support_fork(cmds, dir);
 		else
 		{
 			if (!check_permission_fd(cmds, dir))
