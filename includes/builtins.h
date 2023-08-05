@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:54:35 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/04 13:58:01 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/05 12:32:59 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void		numeric_error_exit(void);
 
 char		*handle_question_mark(char *str, char *tmp, t_directory *dir);
 char		*handle_dollar_sign(char *str, char *tmp);
-char		*handle_default(char *str, char *tmp, t_env_var **head);
+char		*handle_default(char *str, t_env_var **head);
 
 char		*dollar_handle(char *str, t_directory *dir, t_env_var **head);
 char		**search(t_env_var **head, char *key);

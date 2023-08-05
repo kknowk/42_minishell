@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 14:08:10 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/03 22:43:40 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/05 12:29:47 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,23 +108,3 @@ int	ft_cd(t_directory *dir, char *path, t_env_var **head)
 	ft_strlcpy(dir->path, resolved_path, sizeof(dir->path));
 	return (SUCCESS);
 }
-
-// int	ft_pwd(t_directory *dir)
-// {
-// 	printf("%s\n", dir->path);
-// 	return (SUCCESS);
-// }
-
-// int main(void)
-// {
-// 	t_directory	dir;
-// 	if (getcwd(dir.path, sizeof(dir.path)) == NULL)
-// 	{
-// 		perror("getcwd() error");
-// 		exit(1);
-// 	}
-// 	ft_cd(&dir, "../");
-// 	// ft_cd(&dir, "aaaa");
-// 	ft_pwd(&dir);
-// 	return (0);
-// }

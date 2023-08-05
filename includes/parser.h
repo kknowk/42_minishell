@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:04:13 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/03 22:54:21 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/05 12:34:11 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_node
 }	t_node;
 
 t_node	*parser(t_token *token);
-void		debug_parser(t_node *node);
+// void		debug_parser(t_node *node);
 
 t_node	*destroy_parser(t_node *node);
 
@@ -60,13 +60,3 @@ int		set_redirect(t_node *node, t_token **token);
 void	destroy_redirects(t_redirects *redirects);
 
 #endif
-
-// ex)
-
-// echo aaa | ls | cat aaaa
-
-// node->data[0] = '|'
-// node->right->data = cat aaaa
-// node->left->data[0] = '|'
-// node->left->left->data = echo aaa
-// node->left->right->data = ls

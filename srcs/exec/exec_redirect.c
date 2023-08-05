@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:36:17 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/05 12:12:54 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/05 12:31:02 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,22 +73,13 @@ int	exec_redir(t_redirects *redir, t_directory *dir, t_env_var **env_vars)
 	while (redir != NULL)
 	{
 		redir->filename = expansion(redir->filename, dir, env_vars);
-		// if (!check_file_permission(redir->filename, dir))
-		// {
-		// 	dir->error.error_num = 1;
-		// 	return (FAILURE);
-		// }
 		if (redir->type != REDIRECT_HEREDOC)
 		{
 			redir->fd_file = open_redir_file(redir);
 			if (redir->fd_file == -1)
 			{
-				// ft_free(redir->filename);
-				// dir->error.flag = 1;
 				dir->error.error_num = 1;
 				return (FAILURE);
-				// puts("error");
-				// exit(1);
 			}
 		}
 		do_redirect(redir);
