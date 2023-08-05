@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/04 17:09:52 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/05 15:36:08 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	minishell(char *envp[], int *error)
 			add_history(line);
 		token = lexer(line, error);
 		node = parser(token);
-		handle_interruption(node, &dir, env_vars, error);
+		handle_interruption(node, &dir, &env_vars, error);
 		destroy_parser(node);
 		ft_free(line);
 	}

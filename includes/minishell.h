@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/04 20:57:40 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/05 15:22:38 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	minishell(char *envp[], int *error);
 void	handle_signal(int signal);
 void	setup_signals(void);
 void	handle_interruption(t_node *node, t_directory *dir,
-			t_env_var *env_vars, int *error);
+			t_env_var **env_vars, int *error);
 int		check_file_permission(char *path);
 int		check_fd_or_dir(char *path);
 

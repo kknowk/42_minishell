@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 14:06:54 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/04 21:59:21 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/05 14:30:24 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int	check_fd_or_dir(char *path)
 		write(STDERR_FILENO, ": ", 2);
 		write(STDERR_FILENO, "\n", 1);
 		ft_close(fd);
-		printf("aaa\n");
 		return (FAILURE);
 	}
 	ft_close(fd);
