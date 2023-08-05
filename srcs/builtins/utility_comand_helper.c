@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 15:07:29 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/03 22:43:10 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/05 12:01:41 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 static int	execute_in_child_process(char *command_path, char **cmds)
 {
 	execve(command_path, cmds, NULL);
-	perror("execve failed");
-	exit(EXIT_FAILURE);
+	// perror("execve failed");
+	printf("%s\n", strerror(errno));
+	exit(errno);
 }
 
 static int	handle_child_execution(char *command_path, char **cmds)

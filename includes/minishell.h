@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/05 11:12:55 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/05 11:45:42 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 # include "directory.h"
 
 # ifndef DEBUG
-#  define DEBUG 1
+#  define DEBUG 0
 # endif
 
 void	minishell(char *envp[], int *error);
@@ -49,7 +49,5 @@ void	handle_signal(int signal);
 void	setup_signals(void);
 void	handle_interruption(t_node *node, t_directory *dir,
 			t_env_var *env_vars, int *error);
-int		check_file_permission(char *path);
-int		check_fd_or_dir(char *path);
 
 #endif
