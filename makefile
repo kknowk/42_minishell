@@ -36,7 +36,7 @@ SRCS	=	$(SRCSDIR)/builtins/cd.c \
 			$(SRCSDIR)/exec/exec_from_bin.c \
 			$(SRCSDIR)/exec/exec_utiles.c \
 			$(SRCSDIR)/exec/pipe.c \
-			$(SRCSDIR)/exec/redirect.c \
+			$(SRCSDIR)/exec/exec_redirect.c \
 			$(SRCSDIR)/exec/expansion.c \
 			$(SRCSDIR)/expansion/expansion.c \
 			$(SRCSDIR)/expansion/handle_dollar.c \
@@ -50,9 +50,7 @@ SRCS	=	$(SRCSDIR)/builtins/cd.c \
 			$(SRCSDIR)/main.c \
 			$(SRCSDIR)/minishell.c \
 			$(SRCSDIR)/parser/parser.c \
-			$(SRCSDIR)/parser/redirect.c \
-			$(SRCSDIR)/parser/debug_parser.c \
-			$(SRCSDIR)/lexer/debug_lexer.c \
+			$(SRCSDIR)/parser/parse_redirect.c \
 			$(SRCSDIR)/signal.c
 
 OBJS	=	$(patsubst $(SRCSDIR)/%.c,$(OBJSDIR)/%.o,$(SRCS))

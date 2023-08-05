@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:41:58 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/05 14:34:05 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/05 16:03:06 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,22 +33,13 @@ static void	support_fork(char **cmds, t_directory *dir)
 	}
 }
 
-static int	check_permission_fd(char **cmds, t_directory *dir)
+static bool	check_permission_fd(char **cmds, t_directory *dir)
 {
-	int	tmp;
-
-	tmp = check_file_permission(cmds[0]);
-	if (tmp)
-	{
-		dir->error.error_num = tmp;
-		return (FAILURE);
-	}
-	else if (check_fd_or_dir(cmds[0]))
-	{
-		dir->error.error_num = 127;
-		return (FAILURE);
-	}
-	return (SUCCESS);
+	if (!check_file_permission(cmds[0], dir))
+		return (false);
+	else if (!check_fd_or_dir(cmds[0], dir))
+		return (false);
+	return (true);
 }
 
 void	exec_from_bin(char **cmds, t_directory *dir, t_env_var **env_vars)
@@ -69,7 +60,7 @@ void	exec_from_bin(char **cmds, t_directory *dir, t_env_var **env_vars)
 			support_fork(cmds, dir);
 		else
 		{
-			if (check_permission_fd(cmds, dir))
+			if (!check_permission_fd(cmds, dir))
 				return ;
 		}
 	}

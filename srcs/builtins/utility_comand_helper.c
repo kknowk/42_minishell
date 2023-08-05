@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 15:07:29 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/03 22:43:10 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/05 12:30:12 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,12 @@ static int	handle_child_execution(char *command_path, char **cmds)
 	int	status;
 
 	if (ft_fork() == 0)
-	{
 		execute_in_child_process(command_path, cmds);
-	}
 	else
 	{
 		wait(&status);
 		if (WIFEXITED(status))
-		{
 			return (WEXITSTATUS(status));
-		}
 		else
 			return (FAILURE);
 	}
@@ -52,9 +48,7 @@ int	execute_command_from_path(char *command_path, char **cmds)
 			return (FAILURE);
 		}
 		else if (access(command_path, X_OK) == 0)
-		{
 			return (handle_child_execution(command_path, cmds));
-		}
 	}
 	return (SUCCESS);
 }
