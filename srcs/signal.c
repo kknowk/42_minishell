@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 11:15:47 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/05 15:48:07 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/05 16:04:25 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,12 @@ void	handle_signal(int signal)
 
 void	setup_signals(void)
 {
-	if (signal(SIGINT, handle_signal) == SIG_ERR) {
+	if (signal(SIGINT, handle_signal) == SIG_ERR)
+	{
 		exit(EXIT_FAILURE);
 	}
-
-	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR) {
+	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
+	{
 		exit(EXIT_FAILURE);
 	}
 }
