@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:54:35 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/02 15:09:43 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/04 13:58:01 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_expand
 	char	*end;
 	char	*value;
 	char	*temp;
+	int		flag;
 }	t_expand;
 
 typedef enum e_parse_state

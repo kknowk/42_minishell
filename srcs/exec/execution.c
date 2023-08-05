@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:07:37 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/03 18:16:10 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/04 17:10:39 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ void	exec_command(t_node *node, t_directory *dir, t_env_var **env_vars)
 
 	head = node->redirects;
 	exec_redir(node->redirects, dir, env_vars);
+	if (dir->error.flag)
+	{
+		dir->error.flag = 0;
+		return ;
+	}
 	if (is_builtins(node->data[0]))
 		exec_builtin(node->data, dir, env_vars);
 	else

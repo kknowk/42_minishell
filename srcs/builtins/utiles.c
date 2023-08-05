@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utiles.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 13:33:45 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/03 22:43:07 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/04 22:01:54 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,14 @@ void	error_put(char *str)
 
 int	error_str(char *str)
 {
+	if (ft_strchr(str, '/'))
+	{
+		write(STDERR_FILENO, "minishell: No such file or directory", 36);
+		write(STDERR_FILENO, ": ", 2);
+		write(STDERR_FILENO, str, ft_strlen(str));
+		write(STDERR_FILENO, "\n", 1);
+		return (127);
+	}
 	write(STDERR_FILENO, "minishell", 9);
 	write(STDERR_FILENO, ": ", 2);
 	write(STDERR_FILENO, str, ft_strlen(str));

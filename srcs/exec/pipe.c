@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 17:58:34 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/03 22:46:44 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/05 10:46:11 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,7 @@ static void	close_wait(int pipefd[2], pid_t pid1, pid_t pid2, t_directory *dir)
 	ft_close(pipefd[PIPE_WRITE]);
 	ft_waitpid(pid1, &status1, 0);
 	ft_waitpid(pid2, &status2, 0);
-	if (WIFEXITED(status1))
-	{
-		dir->error.error_num = WEXITSTATUS(status1);
-	}
-	else if (WIFEXITED(status2))
+	if (WIFEXITED(status2))
 	{
 		dir->error.error_num = WEXITSTATUS(status2);
 	}

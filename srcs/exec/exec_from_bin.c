@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_from_bin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:41:58 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/03 22:43:22 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/04 22:04:07 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,31 @@ static void	support_fork(char **cmds)
 	}
 }
 
+static int	check_permission_fd(char **cmds, t_directory *dir)
+{
+	int	tmp;
+
+	tmp = check_file_permission(cmds[0]);
+	if (tmp)
+	{
+		dir->error.error_num = tmp;
+		return (FAILURE);
+	}
+	else if (check_fd_or_dir(cmds[0]))
+	{
+		dir->error.error_num = 127;
+		return (FAILURE);
+	}
+	return (SUCCESS);
+}
+
 void	exec_from_bin(char **cmds, t_directory *dir, t_env_var **env_vars)
 {
 	struct stat	s;
 
 	if (judgement_desuno(cmds, dir, env_vars))
 		return ;
-	if (stat(cmds[0], &s) == 0)
+	if (stat(cmds[0], &s) == 0 && ft_strchr(cmds[0], '/'))
 	{
 		if (S_ISDIR(s.st_mode))
 		{
@@ -42,11 +60,14 @@ void	exec_from_bin(char **cmds, t_directory *dir, t_env_var **env_vars)
 			return ;
 		}
 		else if (access(cmds[0], X_OK) == 0)
-		{
 			support_fork(cmds);
+		else
+		{
+			if (check_permission_fd(cmds, dir))
+				return ;
 		}
 	}
 	else
-		dir->error.error_num = execute_command(cmds[0], cmds, env_vars) * 127;
+		dir->error.error_num = execute_command(cmds[0], cmds, env_vars);
 	return ;
 }
