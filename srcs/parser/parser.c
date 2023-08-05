@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:41:09 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/05 11:16:02 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/05 11:16:50 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,13 +88,7 @@ static int	store_data(t_node *node, t_token **token)
 {
 	size_t	i;
 
-<<<<<<< HEAD
-	size = data_size((*token));
-	printf("size: %zu\n", size);
-	node->data = ft_calloc(size + 1, sizeof(char *));
-=======
 	node->data = ft_calloc(data_size((*token)) + 1, sizeof(char *));
->>>>>>> origin/master
 	i = 0;
 	while ((*token) != NULL && (*token)->type != CHAR_PIPE)
 	{
