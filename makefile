@@ -2,7 +2,7 @@ NAME = minishell
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -MMD -MP
-CFLAGS += -g -fsanitize=address
+# CFLAGS += -g -fsanitize=address
 
 # sanitizeが有る無しで挙動が変わります。。謎
 
@@ -52,6 +52,8 @@ SRCS	=	$(SRCSDIR)/builtins/cd.c \
 			$(SRCSDIR)/minishell.c \
 			$(SRCSDIR)/parser/parser.c \
 			$(SRCSDIR)/parser/parse_redirect.c \
+			$(SRCSDIR)/lexer/debug_lexer.c \
+			$(SRCSDIR)/parser/debug_parser.c \
 			$(SRCSDIR)/signal.c
 
 OBJS	=	$(patsubst $(SRCSDIR)/%.c,$(OBJSDIR)/%.o,$(SRCS))
