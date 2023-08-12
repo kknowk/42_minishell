@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 15:13:18 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/05 12:28:35 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/12 13:11:04 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,23 +49,11 @@ static void	handle_dollar_sign_1(t_expand *exp, char *varname,
 	char	**values;
 
 	exp->flag = 1;
-	if (*(exp->start + 1) == '{')
-	{
-		exp->end = ft_strstr(exp->start, "}");
-		if (exp->end)
-		{
-			ft_strlcpy(varname, exp->start + 2, exp->end - exp->start - 1);
-			exp->start = exp->end + 1;
-		}
-	}
-	else
-	{
-		exp->end = exp->start + 1;
-		while (ft_isalnum(*exp->end) || *exp->end == '_')
-			exp->end++;
-		ft_strlcpy(varname, exp->start + 1, exp->end - exp->start);
-		exp->start = exp->end;
-	}
+	exp->end = exp->start + 1;
+	while (ft_isalnum(*exp->end) || *exp->end == '_')
+		exp->end++;
+	ft_strlcpy(varname, exp->start + 1, exp->end - exp->start + 1);
+	exp->start = exp->end;
 	values = search(head, varname);
 	handle_values(exp, values, result);
 }
@@ -114,5 +102,6 @@ char	*expand_and_replace(char *input, t_env_var **head)
 		else
 			handle_no_dollar_sign(&exp, &result);
 	}
+	printf("%s\n", result);
 	return (result);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_dollar.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 16:51:32 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/05 12:33:04 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/12 13:15:20 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,16 @@ char	*dollar_handle(char *str, t_directory *dir, t_env_var **head)
 	tmp = ft_strchr(str, '$');
 	if (!tmp || !tmp[1])
 		return (str);
-	while (tmp)
+	while (tmp && *tmp)
 	{
-		if (!(tmp + 1)[0])
+		if (!*(tmp + 1))
 			break ;
-		if ((tmp + 1)[0] == '?')
-		{
+		if (*(tmp + 1) == '?')
 			str = handle_question_mark(str, tmp, dir);
-		}
-		else if ((tmp + 1)[0] == '$')
+		else if (*(tmp + 1) == '$')
 			str = handle_dollar_sign(str, tmp);
 		else
-		{
 			str = handle_default(str, head);
-		}
 		if (!str)
 			break ;
 		tmp = ft_strchr(str, '$');
