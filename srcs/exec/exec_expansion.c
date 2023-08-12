@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expansion.c                                        :+:      :+:    :+:   */
+/*   exec_expansion.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 15:39:48 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/04 17:32:49 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/12 13:54:07 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ char	*expansion(char *str, t_directory *dir, t_env_var **env_vars)
 {
 	if (is_quoted(str))
 		str = quote_handle(str, dir, env_vars);
-	else
-		str = dollar_handle(str, dir, env_vars);
+	str = dollar_handle(str, dir, env_vars);
 	return (str);
 }
