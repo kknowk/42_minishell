@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 15:39:48 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/12 13:54:07 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/12 18:31:03 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	remove_empty_entries(char **cmds, t_directory *dir,
 		{
 			cmds[j++] = cmds[i];
 		}
+		else if (cmds[i][0] == '\0')
+			ft_free(cmds[i]);
 		i++;
 	}
 	cmds[j] = NULL;
@@ -46,6 +48,7 @@ char	*expansion(char *str, t_directory *dir, t_env_var **env_vars)
 {
 	if (is_quoted(str))
 		str = quote_handle(str, dir, env_vars);
-	str = dollar_handle(str, dir, env_vars);
+	else
+		str = dollar_handle(str, dir, env_vars);
 	return (str);
 }
