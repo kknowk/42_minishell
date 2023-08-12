@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:00:31 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/01 17:05:48 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/12 14:25:24 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ char	*is_valid_name(char *name)
 	while (name[i])
 	{
 		if (!ft_isalnum(name[i]) && name[i] != '_' && name[i] != '='
-			&& name[i] != ':')
+			&& name[i] != ':' && name[i] != '/'
+			&& name[i] != '-' && name[i] != '.')
 			return (error_in_export(name));
 		i++;
 	}
