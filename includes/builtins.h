@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:54:35 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/05 12:32:59 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/12 13:45:12 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,5 +114,7 @@ void		process_dollar(t_parse_context *ctx);
 void		process_normal_character(t_parse_context *ctx);
 
 void		error_printf(const char *msg, const char *path);
+
+void		append_expanded(t_expand *exp, char **result);
 
 #endif

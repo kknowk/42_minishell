@@ -1,29 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   helper_expansion.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/10 20:26:51 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/12 13:37:12 by khorike          ###   ########.fr       */
+/*   Created: 2023/08/12 13:44:39 by khorike           #+#    #+#             */
+/*   Updated: 2023/08/12 13:44:50 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "builtins.h"
 
-int	main(int argc, char *argv[], char *envp[])
+void	append_expanded(t_expand *exp, char **result)
 {
-	int	error;
-
-	(void)argv;
-	error = 0;
-	if (argc == 1)
-		minishell(envp, &error);
-	return (0);
+	exp->temp = *result;
+	*result = ft_strjoin(*result, exp->start);
+	if (!*result)
+		exit(EXIT_FAILURE);
+	ft_free(exp->temp);
 }
-
-// __attribute__((destructor)) static void destructor()
-// {
-// 	system("leaks -q minishell");
-// }

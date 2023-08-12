@@ -2,7 +2,7 @@ NAME = minishell
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -MMD -MP
-CFLAGS += -g -fsanitize=address
+# CFLAGS += -g -fsanitize=address
 
 # sanitizeが有る無しで挙動が変わります。。謎
 
@@ -37,8 +37,9 @@ SRCS	=	$(SRCSDIR)/builtins/cd.c \
 			$(SRCSDIR)/exec/exec_utiles.c \
 			$(SRCSDIR)/exec/pipe.c \
 			$(SRCSDIR)/exec/exec_redirect.c \
-			$(SRCSDIR)/exec/expansion.c \
+			$(SRCSDIR)/exec/exec_expansion.c \
 			$(SRCSDIR)/expansion/expansion.c \
+			$(SRCSDIR)/expansion/helper_expansion.c \
 			$(SRCSDIR)/expansion/handle_dollar.c \
 			$(SRCSDIR)/expansion/handle_quotation.c \
 			$(SRCSDIR)/expansion/helper_handle_dollar.c \

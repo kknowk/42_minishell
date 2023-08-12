@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 15:13:18 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/12 13:11:04 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/12 13:44:17 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	handle_dollar_sign_1(t_expand *exp, char *varname,
 	exp->end = exp->start + 1;
 	while (ft_isalnum(*exp->end) || *exp->end == '_')
 		exp->end++;
-	ft_strlcpy(varname, exp->start + 1, exp->end - exp->start + 1);
+	ft_strlcpy(varname, exp->start + 1, exp->end - exp->start);
 	exp->start = exp->end;
 	values = search(head, varname);
 	handle_values(exp, values, result);
@@ -86,7 +86,6 @@ char	*expand_and_replace(char *input, t_env_var **head)
 	result = (char *)ft_calloc(MAX_BUFFER_SIZE, sizeof(char));
 	if (!result)
 		exit(EXIT_FAILURE);
-	result[0] = '\0';
 	exp.start = input;
 	while (*exp.start != '\0')
 	{
@@ -94,7 +93,7 @@ char	*expand_and_replace(char *input, t_env_var **head)
 		{
 			if (exp.flag == 1)
 			{
-				ft_strlcat(result, exp.start, MAX_BUFFER_SIZE);
+				append_expanded(&exp, &result);
 				break ;
 			}
 			handle_dollar_sign_1(&exp, varname, &result, head);
@@ -102,6 +101,5 @@ char	*expand_and_replace(char *input, t_env_var **head)
 		else
 			handle_no_dollar_sign(&exp, &result);
 	}
-	printf("%s\n", result);
 	return (result);
 }
