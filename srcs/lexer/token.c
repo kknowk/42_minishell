@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 15:23:15 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/05 11:13:10 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/13 09:42:07 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ t_token	*token_new(char *data)
 	new->data = data;
 	new->next = NULL;
 	new->type = judge_tokentype(data);
-	new->prev = NULL;
 	return (new);
 }
 
@@ -64,7 +63,6 @@ t_token	*tokenlistadd_back(t_token *token, char *data)
 	while (token->next != NULL)
 		token = token->next;
 	token->next = new;
-	new->prev = token;
 	return (head);
 }
 
