@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 16:18:14 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/05 12:21:15 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/13 13:09:55 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ bool	check_file_permission(char *path, t_directory *dir);
 int		judgement_desuno(char **cmds, t_directory *dir, t_env_var **env_vars);
 char	*expansion(char *str, t_directory *dir, t_env_var **env_vars);
 
-int		open_redir_file(t_redirects *redir);
-void	do_redirect(t_redirects *redirect);
 void	restore_fd(t_redirects *redirect);
 
 #endif
