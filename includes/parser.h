@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:04:13 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/05 12:34:11 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/14 13:10:58 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_redirects
 	int					fd;
 	int					fd_file;
 	int					fd_backup;
+	int					heredoc_flag;
 	char				*filename;
 	struct s_redirects	*prev;
 	struct s_redirects	*next;

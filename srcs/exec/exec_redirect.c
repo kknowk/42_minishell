@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirect.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:36:17 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/05 12:31:02 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/14 13:33:25 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static void	heredoc(t_redirects *redir, int pipefd[2])
 	char	*line;
 	char	*res;
 
+	res = NULL;
 	ft_pipe(pipefd);
 	while (true)
 	{
@@ -35,11 +36,22 @@ static void	heredoc(t_redirects *redir, int pipefd[2])
 			break ;
 		if (!ft_strncmp(line, redir->filename, ft_strlen(redir->filename)))
 		{
+			redir->heredoc_flag = 1;
 			ft_free(line);
 			break ;
 		}
 		tmp = ft_strjoin(line, "\n");
-		res = ft_strjoin(res, tmp);
+		if (res == NULL)
+		{
+		    res = tmp;
+		}
+		else
+		{
+		    char *new_res = ft_strjoin(res, tmp);
+		    ft_free(res);  // 前のresを解放
+		    ft_free(tmp);  // tmpを解放
+		    res = new_res;
+		}
 		ft_free(tmp);
 		ft_free(line);
 	}
@@ -50,12 +62,15 @@ static void	heredoc(t_redirects *redir, int pipefd[2])
 void	do_redirect(t_redirects *redirect)
 {
 	int		pipefd[2];
+	int		stdin_backup;
 
+	stdin_backup = ft_dup(STDIN_FILENO);
 	if (redirect->type == REDIRECT_INPUT || redirect->type == REDIRECT_OUTPUT
 		|| redirect->type == REDIRECT_APPEND_OUTPUT)
 	{
 		redirect->fd_backup = ft_dup(redirect->fd);
 		ft_dup2(redirect->fd_file, redirect->fd);
+		close(stdin_backup);
 		return ;
 	}
 	else
@@ -64,6 +79,8 @@ void	do_redirect(t_redirects *redirect)
 		ft_dup2(pipefd[PIPE_READ], STDIN_FILENO);
 		ft_close(pipefd[PIPE_READ]);
 		ft_close(pipefd[PIPE_WRITE]);
+		ft_dup2(stdin_backup, STDIN_FILENO);
+		close(stdin_backup);
 	}
 	return ;
 }
@@ -90,8 +107,11 @@ int	exec_redir(t_redirects *redir, t_directory *dir, t_env_var **env_vars)
 
 void	restore_fd(t_redirects *redirect)
 {
-	if (redirect == NULL)
+	if (redirect == NULL || redirect->heredoc_flag == 1)
+	{
+		redirect->heredoc_flag = 0;
 		return ;
+	}
 	ft_dup2(redirect->fd_backup, redirect->fd);
 	ft_close(redirect->fd_backup);
 	redirect->fd_backup = -1;
