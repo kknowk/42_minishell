@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:36:17 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/14 13:33:25 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/14 14:03:59 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ static void	heredoc(t_redirects *redir, int pipefd[2])
 		    ft_free(tmp);  // tmpを解放
 		    res = new_res;
 		}
-		ft_free(tmp);
 		ft_free(line);
 	}
 	ft_putstr_fd(pipefd[PIPE_WRITE], res);
@@ -107,7 +106,11 @@ int	exec_redir(t_redirects *redir, t_directory *dir, t_env_var **env_vars)
 
 void	restore_fd(t_redirects *redirect)
 {
-	if (redirect == NULL || redirect->heredoc_flag == 1)
+	if (redirect == NULL)
+	{
+		return ;
+	}
+	if (redirect->heredoc_flag == 1)
 	{
 		redirect->heredoc_flag = 0;
 		return ;
