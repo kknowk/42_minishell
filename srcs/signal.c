@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 11:15:47 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/05 16:04:25 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/13 15:02:48 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ static void	execute_and_reset_error(t_node *node, t_directory *dir,
 			dir->error.error_num = 1;
 	}
 	execution(node, dir, env_vars);
+	setup_signals();
 	*error = 0;
 }
 
@@ -63,5 +64,24 @@ void	handle_interruption(t_node *node, t_directory *dir,
 		dir->error.error_num = g_interrupted;
 		g_interrupted = 0;
 	}
+	else
+	{
+		dir->error.error_num = g_interrupted;
+		g_interrupted = 0;
+	}
 	execute_and_reset_error(node, dir, env_vars, error);
+}
+
+void	handle_exec_signal(int signal)
+{
+	if (signal == SIGINT)
+	{
+		write(STDOUT_FILENO, "\n", 1);
+		g_interrupted = 130;
+	}
+	else if (signal == SIGQUIT)
+	{
+		write(STDOUT_FILENO, "Quit: 3\n", 9);
+		g_interrupted = 131;
+	}
 }

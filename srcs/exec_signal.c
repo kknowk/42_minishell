@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   directory.h                                        :+:      :+:    :+:   */
+/*   exec_signal.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/26 12:39:22 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/13 14:11:32 by khorike          ###   ########.fr       */
+/*   Created: 2023/08/13 13:23:57 by khorike           #+#    #+#             */
+/*   Updated: 2023/08/13 14:50:50 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DIRECTORY_H
-# define DIRECTORY_H
+#include "minishell.h"
 
-# define PATH_MAX 1024
-
-typedef struct s_error
+void	exec_signals(void)
 {
-	int	error_num;
-}	t_error;
-
-typedef struct s_directory
-{
-	char	path[PATH_MAX];
-	int		signal_received;
-	t_error	error;
-}	t_directory;
-
-#endif
+	if (signal(SIGINT, handle_exec_signal) == SIG_ERR)
+	{
+		exit(EXIT_FAILURE);
+	}
+	if (signal(SIGQUIT, handle_exec_signal) == SIG_ERR)
+	{
+		exit(EXIT_FAILURE);
+	}
+}

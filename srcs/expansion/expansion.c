@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 15:13:18 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/12 13:44:17 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/13 12:43:37 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,13 @@ static void	handle_values(t_expand *exp, char **values, char **result)
 			exp->value = values[i];
 			temp_result(exp, result);
 			if (values[i + 1])
-				*result = ft_strjoin(*result, " ");
+			{
+				exp->temp = *result;
+				*result = ft_strjoin(*result, ":");
+				ft_free(exp->temp);
+				if (!result)
+					exit(EXIT_FAILURE);
+			}
 			i++;
 		}
 	}
