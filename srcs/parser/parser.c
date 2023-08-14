@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:41:09 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/05 12:34:36 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/12 18:54:19 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ t_node	*parser(t_token *token)
 		node->left = left;
 		node->right = right;
 	}
+	if (DEBUG)
+		debug_parser(node);
 	tokenlist_clear(head);
 	return (node);
 }

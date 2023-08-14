@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 16:06:37 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/14 13:09:59 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/14 13:44:04 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static t_redirects	*create_redirect(void)
 	redirect->fd_backup = -1;
 	redirect->heredoc_flag = 0;
 	redirect->filename = NULL;
-	redirect->prev = NULL;
 	redirect->next = NULL;
 	return (redirect);
 }

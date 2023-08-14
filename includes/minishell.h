@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/13 14:51:06 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/14 13:43:56 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 # include "directory.h"
 
 # ifndef DEBUG
-#  define DEBUG 0
+#  define DEBUG 1
 # endif
 
 void	minishell(char *envp[], int *error);

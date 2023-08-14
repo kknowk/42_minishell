@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:04:13 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/14 13:10:58 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/14 13:44:01 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ typedef struct s_redirects
 	int					fd_backup;
 	int					heredoc_flag;
 	char				*filename;
-	struct s_redirects	*prev;
 	struct s_redirects	*next;
 }	t_redirects;
 
@@ -53,7 +52,7 @@ typedef struct s_node
 }	t_node;
 
 t_node	*parser(t_token *token);
-// void		debug_parser(t_node *node);
+void		debug_parser(t_node *node);
 
 t_node	*destroy_parser(t_node *node);
 

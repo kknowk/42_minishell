@@ -52,8 +52,9 @@ SRCS	=	$(SRCSDIR)/builtins/cd.c \
 			$(SRCSDIR)/minishell.c \
 			$(SRCSDIR)/parser/parser.c \
 			$(SRCSDIR)/parser/parse_redirect.c \
-			$(SRCSDIR)/signal.c \
-			$(SRCSDIR)/exec_signal.c
+			$(SRCSDIR)/lexer/debug_lexer.c \
+			$(SRCSDIR)/parser/debug_parser.c \
+			$(SRCSDIR)/signal.c
 
 OBJS	=	$(patsubst $(SRCSDIR)/%.c,$(OBJSDIR)/%.o,$(SRCS))
 DEPS	=	$(OBJS:.o=.d)
