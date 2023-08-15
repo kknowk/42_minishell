@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirect.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 16:06:37 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/14 13:44:04 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/15 09:57:10 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static t_redirects	*create_redirect(void)
 	redirect->fd = -1;
 	redirect->fd_file = -1;
 	redirect->fd_backup = -1;
-	redirect->heredoc_flag = 0;
 	redirect->filename = NULL;
 	redirect->next = NULL;
 	return (redirect);

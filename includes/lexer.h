@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/12 19:19:57 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/15 09:48:40 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,6 @@ typedef struct s_lexer
 t_token	*lexer(char *str, int *error);
 size_t	redirect_size(char *str);
 
-void		debug_lexer(t_lexer *lex);
+// void		debug_lexer(t_lexer *lex);
 
 #endif
