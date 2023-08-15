@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:41:09 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/15 18:02:07 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/15 19:30:41 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static t_node	*node_new(void);
 static size_t	data_size(t_token *token);
 static int		store_data(t_node *node, t_token **token);
 
-t_node	*parser(t_token *token)
+t_node	*parser(t_token *token, int *error)
 {
 	t_node	*node;
 	t_node	*left;
@@ -34,6 +34,12 @@ t_node	*parser(t_token *token)
 		token = token->next;
 		left = node;
 		right = node_new();
+		if (token == NULL)
+		{
+			printf("syntax error near unexpected token `newline'\n");
+			*error = 2;
+			return (destroy_parser(node));
+		}
 		if (store_data(right, &token) == FAILURE)
 			return (destroy_parser(node));
 		node = node_new();
@@ -86,11 +92,6 @@ static int	store_data(t_node *node, t_token **token)
 {
 	size_t	i;
 
-	if (node == NULL && (*token)->type == CHAR_PIPE)
-	{
-		printf("syntax error\n");
-		return (FAILURE);
-	}
 	node->data = ft_calloc(data_size((*token)) + 1, sizeof(char *));
 	i = 0;
 	while ((*token) != NULL && (*token)->type != CHAR_PIPE)

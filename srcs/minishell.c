@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:16:03 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/15 14:07:14 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/15 19:29:43 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	minishell(char *envp[], int *error)
 		else
 			add_history(line);
 		token = lexer(line, error);
-		node = parser(token);
+		node = parser(token, error);
 		exec_and_signals(node, &dir, &env_vars, error);
 		destroy_parser(node);
 		ft_free(line);

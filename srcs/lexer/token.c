@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 15:23:15 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/13 09:42:07 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/15 19:28:05 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,13 @@ t_token	*token_new(char *data)
 	if (!new)
 		exit(EXIT_FAILURE);
 	new->data = data;
+	new->prev = NULL;
 	new->next = NULL;
 	new->type = judge_tokentype(data);
 	return (new);
 }
 
-t_token	*tokenlistadd_back(t_token *token, char *data)
+t_token	*tokenlistadd_back(t_token *token, char *data, int *flag)
 {
 	t_token	*new;
 	t_token	*head;
@@ -56,6 +57,11 @@ t_token	*tokenlistadd_back(t_token *token, char *data)
 	{
 		token->data = data;
 		token->type = judge_tokentype(data);
+		if (token->type == CHAR_PIPE && token->next == NULL)
+		{
+			*flag = 1;
+			return (NULL);
+		}
 		return (token);
 	}
 	head = token;

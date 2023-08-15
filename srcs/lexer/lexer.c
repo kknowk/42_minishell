@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:17:39 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/15 09:49:02 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/15 19:29:12 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	lexer_error(t_lexer *lex, char *str)
 	}
 }
 
-static void	tokenize(t_lexer *lex, char *str, int *error)
+static void	tokenize(t_lexer *lex, char *str, int *error, int *flag)
 {
 	size_t	start;
 	char	c;
@@ -83,13 +83,15 @@ static void	tokenize(t_lexer *lex, char *str, int *error)
 		*error = QUOTED_ERROR;
 		return ;
 	}
-	tokenlistadd_back(lex->token, ft_substr(str, start, lex->word_len));
+	tokenlistadd_back(lex->token, ft_substr(str, start, lex->word_len), flag);
 }
 
 t_token	*lexer(char *str, int *error)
 {
 	t_lexer	lex;
+	int		flag;
 
+	flag = 0;
 	init_lexer(&lex);
 	lex.word_start = 0;
 	while (str[lex.word_start] != '\0')
@@ -100,7 +102,13 @@ t_token	*lexer(char *str, int *error)
 			continue ;
 		}
 		lex.word_len = 0;
-		tokenize(&lex, str, error);
+		tokenize(&lex, str, error, &flag);
+		if (flag == 1)
+		{
+			lexer_error(&lex, "minishell: syntax error near unexpected token `|'");
+			*error = 2;
+			return (NULL);
+		}
 		if (*error == QUOTED_ERROR)
 		{
 			lexer_error(&lex, NOT_CLOSE_QUOTED);

@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 16:13:54 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/13 09:41:07 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/15 19:10:08 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,11 @@ typedef struct s_token
 {
 	t_tokentype		type;
 	char			*data;
+	struct s_token	*prev;
 	struct s_token	*next;
 }	t_token;
 
-t_token	*tokenlistadd_back(t_token *token, char *data);
+t_token	*tokenlistadd_back(t_token *token, char *data, int *flag);
 void	tokenlist_clear(t_token *token);
 t_token	*token_new(char *data);
 
