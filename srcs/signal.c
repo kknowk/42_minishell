@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 11:15:47 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/13 15:02:48 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/15 14:07:40 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	execute_and_reset_error(t_node *node, t_directory *dir,
 	*error = 0;
 }
 
-void	handle_interruption(t_node *node, t_directory *dir,
+void	exec_and_signals(t_node *node, t_directory *dir,
 			t_env_var **env_vars, int *error)
 {
 	if (g_interrupted == 1)

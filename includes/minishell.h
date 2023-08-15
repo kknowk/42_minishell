@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/14 13:43:56 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/15 14:08:55 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	minishell(char *envp[], int *error);
 
 void	handle_signal(int signal);
 void	setup_signals(void);
-void	handle_interruption(t_node *node, t_directory *dir,
+void	exec_and_signals(t_node *node, t_directory *dir,
 			t_env_var **env_vars, int *error);
 
 void	exec_signals(void);
