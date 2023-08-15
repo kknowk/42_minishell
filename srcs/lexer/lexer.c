@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:17:39 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/15 19:51:00 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/15 20:15:49 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	switch_quote_state(t_lexer *lex, char c)
 	}
 }
 
-static void	lexer_error(t_lexer *lex, char *str)
+static void	*lexer_error(t_lexer *lex, char *str)
 {
 	t_token	*token;
 	t_token	*tmp;
@@ -55,6 +55,7 @@ static void	lexer_error(t_lexer *lex, char *str)
 		free(token);
 		token = tmp;
 	}
+	return (NULL);
 }
 
 static void	tokenize(t_lexer *lex, char *str, int *error, int *flag)
@@ -105,15 +106,11 @@ t_token	*lexer(char *str, int *error)
 		tokenize(&lex, str, error, &flag);
 		if (flag == 1)
 		{
-			lexer_error(&lex, PIPE_ERR1);
 			*error = 2;
-			return (NULL);
+			return (lexer_error(&lex, PIPE_ERR1));
 		}
 		if (*error == QUOTED_ERROR)
-		{
-			lexer_error(&lex, NOT_CLOSE_QUOTED);
-			return (NULL);
-		}
+			return (lexer_error(&lex, NOT_CLOSE_QUOTED));
 		lex.word_start += lex.word_len;
 	}
 	return (lex.list_head);
