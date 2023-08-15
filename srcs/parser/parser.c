@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:41:09 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/15 20:05:06 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/15 20:31:37 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ t_node	*parser(t_token *token, int *error)
 		token = token->next;
 		node = handle_pipe(&token, node, error);
 		if (*error)
-			return NULL;
+		{
+			tokenlist_clear(head);
+			return (NULL);
+		}
 	}
 	tokenlist_clear(head);
 	return (node);
