@@ -6,7 +6,7 @@
 /*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:47:53 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/13 12:32:53 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/15 15:02:57 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ static t_env_var	*create_new_env_var(char *key, char *value)
 	new_var->key = key;
 	new_var->values = ft_split(value, ':');
 	new_var->num_values = ft_count_values(new_var->values);
-	ft_free(key);
 	ft_free(value);
 	new_var->is_shell_var = false;
 	new_var->next = NULL;
