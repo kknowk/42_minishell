@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:17:39 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/05 12:34:24 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/15 09:49:02 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,17 @@ static void	switch_quote_state(t_lexer *lex, char c)
 	}
 }
 
-static void	lexer_error(t_lexer *lex, char *str, int *error)
+static void	lexer_error(t_lexer *lex, char *str)
 {
 	t_token	*token;
 	t_token	*tmp;
 
 	printf("%s\n", str);
-	*error = QUOTED_ERROR;
 	token = lex->list_head;
 	while (token != NULL)
 	{
 		tmp = token->next;
+		free(token->data);
 		free(token);
 		token = tmp;
 	}
@@ -80,7 +80,7 @@ static void	tokenize(t_lexer *lex, char *str, int *error)
 	}
 	if (lex->is_quoted == true)
 	{
-		lexer_error(lex, "minishell: syntax error unexpected EOF", error);
+		*error = QUOTED_ERROR;
 		return ;
 	}
 	tokenlistadd_back(lex->token, ft_substr(str, start, lex->word_len));
@@ -102,7 +102,10 @@ t_token	*lexer(char *str, int *error)
 		lex.word_len = 0;
 		tokenize(&lex, str, error);
 		if (*error == QUOTED_ERROR)
+		{
+			lexer_error(&lex, NOT_CLOSE_QUOTED);
 			return (NULL);
+		}
 		lex.word_start += lex.word_len;
 	}
 	return (lex.list_head);

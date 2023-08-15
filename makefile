@@ -55,6 +55,7 @@ SRCS	=	$(SRCSDIR)/builtins/cd.c \
 			$(SRCSDIR)/signal.c \
 			$(SRCSDIR)/exec_signal.c
 
+
 OBJS	=	$(patsubst $(SRCSDIR)/%.c,$(OBJSDIR)/%.o,$(SRCS))
 DEPS	=	$(OBJS:.o=.d)
 

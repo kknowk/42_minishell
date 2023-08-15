@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
+/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 20:26:51 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/12 13:37:12 by khorike          ###   ########.fr       */
+/*   Updated: 2023/08/15 14:03:37 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int argc, char *argv[], char *envp[])
 	return (0);
 }
 
-// __attribute__((destructor)) static void destructor()
-// {
-// 	system("leaks -q minishell");
-// }
+__attribute__((destructor)) static void destructor()
+{
+	system("leaks -q minishell");
+}

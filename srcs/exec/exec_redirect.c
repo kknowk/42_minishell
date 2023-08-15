@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:36:17 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/05 12:31:02 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/15 10:18:29 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,12 @@ int	open_redir_file(t_redirects *redir)
 
 static void	heredoc(t_redirects *redir, int pipefd[2])
 {
+	char	*tmp_add_newline;
 	char	*tmp;
 	char	*line;
 	char	*res;
 
-	ft_pipe(pipefd);
+	res = ft_strdup("");
 	while (true)
 	{
 		line = readline("> ");
@@ -38,9 +39,11 @@ static void	heredoc(t_redirects *redir, int pipefd[2])
 			ft_free(line);
 			break ;
 		}
-		tmp = ft_strjoin(line, "\n");
-		res = ft_strjoin(res, tmp);
-		ft_free(tmp);
+		tmp_add_newline = ft_strjoin(line, "\n");
+		tmp = ft_strjoin(res, tmp_add_newline);
+		ft_free(res);
+		ft_free(tmp_add_newline);
+		res = tmp;
 		ft_free(line);
 	}
 	ft_putstr_fd(pipefd[PIPE_WRITE], res);
@@ -50,6 +53,7 @@ static void	heredoc(t_redirects *redir, int pipefd[2])
 void	do_redirect(t_redirects *redirect)
 {
 	int		pipefd[2];
+	int		stdin_backup;
 
 	if (redirect->type == REDIRECT_INPUT || redirect->type == REDIRECT_OUTPUT
 		|| redirect->type == REDIRECT_APPEND_OUTPUT)
@@ -60,10 +64,14 @@ void	do_redirect(t_redirects *redirect)
 	}
 	else
 	{
+		stdin_backup = ft_dup(STDIN_FILENO);
+		ft_pipe(pipefd);
 		heredoc(redirect, pipefd);
 		ft_dup2(pipefd[PIPE_READ], STDIN_FILENO);
 		ft_close(pipefd[PIPE_READ]);
 		ft_close(pipefd[PIPE_WRITE]);
+		ft_dup2(stdin_backup, STDIN_FILENO);
+		close(stdin_backup);
 	}
 	return ;
 }
@@ -91,6 +99,8 @@ int	exec_redir(t_redirects *redir, t_directory *dir, t_env_var **env_vars)
 void	restore_fd(t_redirects *redirect)
 {
 	if (redirect == NULL)
+		return ;
+	if (redirect->type == REDIRECT_HEREDOC)
 		return ;
 	ft_dup2(redirect->fd_backup, redirect->fd);
 	ft_close(redirect->fd_backup);
