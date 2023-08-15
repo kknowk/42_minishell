@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: khorike <khorike@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 11:15:47 by khorike           #+#    #+#             */
-/*   Updated: 2023/08/15 14:07:40 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/15 14:19:55 by khorike          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	exec_and_signals(t_node *node, t_directory *dir,
 		dir->error.error_num = g_interrupted;
 		g_interrupted = 0;
 	}
-	else
+	else if (g_interrupted == 130 || g_interrupted == 131)
 	{
 		dir->error.error_num = g_interrupted;
 		g_interrupted = 0;
