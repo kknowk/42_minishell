@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:04:13 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/15 19:30:04 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/15 19:50:13 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "minishell.h"
 
 # define NO_FILENAME "minishell: syntax error near unexpected token `newline'\n"
+# define PIPE_ERR2 "minishell: syntax error near unexpected token `|'\n"
 
 typedef enum e_nodetype
 {
@@ -57,5 +58,8 @@ t_node	*destroy_parser(t_node *node);
 
 int		set_redirect(t_node *node, t_token **token);
 void	destroy_redirects(t_redirects *redirects);
+
+size_t	data_size(t_token *token);
+t_node	*node_new(void);
 
 #endif

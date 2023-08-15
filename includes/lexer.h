@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:24:12 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/15 09:48:40 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/15 19:50:39 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # define D_REDIR_SIZE 2
 # define QUOTED_ERROR 2
 # define NOT_CLOSE_QUOTED "minishell: syntax error unexpected EOF"
+# define PIPE_ERR1 "minishell: syntax error near unexpected token `|'"
 
 typedef enum e_token_state
 {

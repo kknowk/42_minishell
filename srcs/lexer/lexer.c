@@ -6,7 +6,7 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:17:39 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/15 19:29:12 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/15 19:51:00 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ t_token	*lexer(char *str, int *error)
 		tokenize(&lex, str, error, &flag);
 		if (flag == 1)
 		{
-			lexer_error(&lex, "minishell: syntax error near unexpected token `|'");
+			lexer_error(&lex, PIPE_ERR1);
 			*error = 2;
 			return (NULL);
 		}

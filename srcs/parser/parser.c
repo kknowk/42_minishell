@@ -6,21 +6,39 @@
 /*   By: minabe <minabe@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 17:41:09 by minabe            #+#    #+#             */
-/*   Updated: 2023/08/15 19:30:41 by minabe           ###   ########.fr       */
+/*   Updated: 2023/08/15 20:05:06 by minabe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_node	*node_new(void);
-static size_t	data_size(t_token *token);
-static int		store_data(t_node *node, t_token **token);
+static int	store_data(t_node *node, t_token **token);
+
+t_node	*handle_pipe(t_token **token, t_node *node, int *error)
+{
+	t_node	*left;
+	t_node	*right;
+
+	left = node;
+	if (*token == NULL)
+	{
+		printf(PIPE_ERR2);
+		*error = 2;
+		return (destroy_parser(node));
+	}
+	right = node_new();
+	if (store_data(right, token) == FAILURE)
+		return (destroy_parser(node));
+	node = node_new();
+	node->type = NODE_PIPE;
+	node->right = right;
+	node->left = left;
+	return (node);
+}
 
 t_node	*parser(t_token *token, int *error)
 {
 	t_node	*node;
-	t_node	*left;
-	t_node	*right;
 	t_token	*head;
 
 	if (token == NULL)
@@ -32,60 +50,12 @@ t_node	*parser(t_token *token, int *error)
 	while (token != NULL && token->type == CHAR_PIPE)
 	{
 		token = token->next;
-		left = node;
-		right = node_new();
-		if (token == NULL)
-		{
-			printf("syntax error near unexpected token `newline'\n");
-			*error = 2;
-			return (destroy_parser(node));
-		}
-		if (store_data(right, &token) == FAILURE)
-			return (destroy_parser(node));
-		node = node_new();
-		node->type = NODE_PIPE;
-		node->left = left;
-		node->right = right;
+		node = handle_pipe(&token, node, error);
+		if (*error)
+			return NULL;
 	}
 	tokenlist_clear(head);
 	return (node);
-}
-
-static t_node	*node_new(void)
-{
-	t_node	*node;
-
-	node = malloc(sizeof(t_node));
-	if (!node)
-		exit(EXIT_FAILURE);
-	node->type = NODE_COMMAND;
-	node->data = NULL;
-	node->redirects = NULL;
-	node->right = NULL;
-	node->left = NULL;
-	return (node);
-}
-
-static size_t	data_size(t_token *token)
-{
-	size_t	size;
-
-	size = 0;
-	if (token == NULL)
-		return (size);
-	while (token->type == CHAR_PIPE && token->next != NULL)
-		token = token->next;
-	while (token != NULL && token->type != CHAR_PIPE)
-	{
-		if (is_redirect(token->type) && token->next != NULL)
-		{
-			token = token->next->next;
-			continue ;
-		}
-		size++;
-		token = token->next;
-	}
-	return (size);
 }
 
 static int	store_data(t_node *node, t_token **token)

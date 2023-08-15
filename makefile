@@ -52,6 +52,7 @@ SRCS	=	$(SRCSDIR)/builtins/cd.c \
 			$(SRCSDIR)/minishell.c \
 			$(SRCSDIR)/parser/parser.c \
 			$(SRCSDIR)/parser/parse_redirect.c \
+			$(SRCSDIR)/parser/parser_utils.c \
 			$(SRCSDIR)/signal.c \
 			$(SRCSDIR)/exec_signal.c
 
