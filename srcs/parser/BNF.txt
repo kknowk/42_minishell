@@ -1,0 +1,27 @@
+<command line>        ::= '\n' | <piped sequence> '\n'
+
+<piped sequence>      ::= <command> | <command> '|' <piped sequence>
+
+<command>             ::= <arguments>
+
+<arguments>           ::= <argument> | <argument> <arguments>
+
+<argument>            ::= <redirection> | <string>
+
+<string>              ::= <expandable> no_space <string>
+                        | <expandable>
+                        | <not expandable> no_space <string>
+                        | <not expandable>
+                        | <expandable quoted> no_space <string>
+                        | <expandable quoted>
+
+<redirection>         ::= '<' filename
+                        | '>' filename
+                        | ">>" filename
+                        | "<<" heredoc_end
+
+<expandable>          ::= /* implementation-defined */
+<not expandable>      ::= /* implementation-defined */
+<expandable quoted>   ::= /* implementation-defined */
+<filename>            ::= /* implementation-defined */
+<heredoc_end>         ::= /* implementation-defined */

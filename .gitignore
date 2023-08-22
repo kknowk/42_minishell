@@ -1,7 +1,7 @@
 *.a
 minishell
 a.out*
-*.txt
+# *.txt
 .vscode
 .DS_Store
 *.o
